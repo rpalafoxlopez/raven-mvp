@@ -13,8 +13,8 @@ const SprintSchema = new Schema<Sprint>({
 });
 
 const AIPlanSchema = new Schema<IAIPlan>(
-  {
-    user_id: { type: Schema.Types.ObjectId, ref: 'User', required: true, index: true },
+ {
+    user_id: { type: String, ref: 'User', required: true, index: true },
     diagnostico: {
       recurso_dominante: String,
       recurso_secundario: String,
@@ -36,6 +36,7 @@ const AIPlanSchema = new Schema<IAIPlan>(
   { timestamps: { createdAt: 'created_at', updatedAt: 'updated_at' } }
 );
 
+
 export const AIPlanModel = mongoose.model<IAIPlan>('AIPlan', AIPlanSchema);
 
 // Conversación IA
@@ -49,11 +50,12 @@ const MensajeSchema = new Schema({
 
 const ConversacionSchema = new Schema<IConversacion>(
   {
-    user_id: { type: Schema.Types.ObjectId, ref: 'User', required: true, index: true },
-    setlist_id: { type: Schema.Types.ObjectId, ref: 'AIPlan', required: true },
+    user_id: { type: String, ref: 'User', required: true, index: true },  // <-- FIX: String en vez de ObjectId
+    setlist_id: { type: String, ref: 'AIPlan', required: true },         // <-- FIX: String en vez de ObjectId
     mensajes: [MensajeSchema]
   },
   { timestamps: { createdAt: 'created_at' } }
 );
+
 
 export const ConversacionModel = mongoose.model<IConversacion>('Conversacion', ConversacionSchema);

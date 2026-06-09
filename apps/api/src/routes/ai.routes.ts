@@ -1,5 +1,5 @@
 import { Router } from 'express';
-import { AIPlanModel, ConversacionModel } from '../models/AIPlan';
+import { AIPlanModel, ConversacionModel, IAIPlan } from '../models/AIPlan';
 import { generateSetlistWithAI, chatWithAgent } from '../services/aiAgent.service';
 import { authMiddleware, AuthRequest, requirePlan } from '../middleware/auth.middleware';
 import { aiRateLimit } from '../middleware/rateLimit.middleware';
@@ -65,7 +65,7 @@ router.post('/chat', authMiddleware, requirePlan(['premium', 'pro']), aiRateLimi
     }
 
     // Obtener diagnóstico del usuario
-    const plan = await AIPlanModel.findOne({ user_id: req.user!.id });
+    const plan = await AIPlanModel.findOne({ user_id: req.user!.id }).lean() as IAIPlan | null;
     if (!plan) {
       return res.status(404).json({ success: false, error: 'Setlist no encontrado' });
     }
@@ -94,7 +94,7 @@ router.post('/chat', authMiddleware, requirePlan(['premium', 'pro']), aiRateLimi
 
     // Generar respuesta con IA
     const response = await chatWithAgent(
-      conversacion.mensajes.map((m) => ({ role: m.role, content: m.content })),
+      conversacion.mensajes.map((m: any) => ({ role: m.role, content: m.content })),
       plan.diagnostico
     );
 
@@ -137,8 +137,6 @@ router.get('/conversation/:setlistId', authMiddleware, async (req: AuthRequest, 
   }
 });
 
-export default router;
-
 // PATCH /api/ai/sprint/:setlistId/:semana — Marcar sprint como completado
 router.patch('/sprint/:setlistId/:semana', authMiddleware, async (req: AuthRequest, res) => {
   try {
@@ -148,7 +146,7 @@ router.patch('/sprint/:setlistId/:semana', authMiddleware, async (req: AuthReque
     const plan = await AIPlanModel.findOne({
       _id: setlistId,
       user_id: req.user!.id
-    });
+    }).lean() as IAIPlan | null;
 
     if (!plan) {
       return res.status(404).json({ success: false, error: 'Setlist no encontrado' });
@@ -160,11 +158,22 @@ router.patch('/sprint/:setlistId/:semana', authMiddleware, async (req: AuthReque
     }
 
     sprint.completado = completado;
-    plan.updated_at = new Date();
-    await plan.save();
+    // FIX: No usar updated_at en lean(), usar updateOne en su lugar
+    await AIPlanModel.updateOne(
+      { _id: setlistId },
+      { 
+        $set: { 
+          'sprints.$[elem].completado': completado,
+          updated_at: new Date()
+        }
+      },
+      { arrayFilters: [{ 'elem.semana': parseInt(semana) }] }
+    );
 
     return res.json({ success: true, data: { semana: parseInt(semana), completado } });
   } catch (error: any) {
     return res.status(500).json({ success: false, error: error.message });
   }
 });
+
+export default router;

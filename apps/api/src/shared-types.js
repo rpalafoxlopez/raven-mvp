@@ -1,0 +1,29 @@
+// ============================================================================
+// PILARES RAVEN — shared-types en JS puro
+// ============================================================================
+
+const PILARES = ['P1','P2','P3','P4','P5','P6','P7','P8'];
+
+const PILARES_INFO = {
+  P1: { id:'P1', nombre:'El Arquitecto Sónico',      rockstars:['Cerati','Roger Waters','Jimmy Page'],      color:'#00d4ff', descripcion:'Control absoluto, sofisticación, estructura milimétrica.',   tonoIA:'perfeccionista, obsesivo técnico, crea universos donde otros ven bits.' },
+  P2: { id:'P2', nombre:'El Alienígena Camaleón',     rockstars:['David Bowie','Bunbury','Thom Yorke'],      color:'#990000', descripcion:'Reinvención constante, desapego del pasado, vanguardia.',    tonoIA:'mutante maduro, odiado por los pulcros, amado por los melodiosos.' },
+  P3: { id:'P3', nombre:'El Chamán de la Tribu',      rockstars:['Saúl Hernández','Dave Grohl','Fito Páez'], color:'#D4AF37', descripcion:'Resiliencia luminosa, empatía, ritual colectivo.',           tonoIA:'resiliencia luminosa, empatía brutal, ritual colectivo sin eufemismos.' },
+  P4: { id:'P4', nombre:'El Nobel Errante',           rockstars:['Bob Dylan','Indio Solari','Spinetta'],     color:'#708090', descripcion:'Hermetismo, misticismo, desprecio por el aplauso fácil.',   tonoIA:'hermético, místico, desprecia el aplauso fácil.' },
+  P5: { id:'P5', nombre:'El Forajido del Duelo',      rockstars:['Johnny Cash','Nick Cave','Nacho Vegas'],   color:'#C0C0C0', descripcion:'Mirar de frente al dolor, transmutar sombra en belleza.',   tonoIA:'mirar de frente al dolor, transmutar sombra en belleza.' },
+  P6: { id:'P6', nombre:'El Iconoclasta Satírico',    rockstars:['Frank Zappa','Charly García','Calamaro'],  color:'#e9c349', descripcion:'Ironía letal, lucidez peligrosa, deconstrucción del absurdo.',tonoIA:'ironía letal, lucidez peligrosa, deconstrucción del absurdo.' },
+  P7: { id:'P7', nombre:'La Resistencia Obrera',      rockstars:['Bruce Springsteen','Patti Smith','Alex Lora'], color:'#F0F5F9', descripcion:'Honestidad de clase, resistencia física extrema.', tonoIA:'honestidad de clase, resistencia física extrema.' },
+  P8: { id:'P8', nombre:'El Canalla Dionisíaco',      rockstars:['Mick Jagger','Iggy Pop','Rod Stewart'],    color:'#ff4444', descripcion:'Hedonismo, vitalidad corporal salvaje, carisma animal.',    tonoIA:'hedonismo, vitalidad corporal salvaje, carisma animal.' }
+};
+
+const ANTIDOTOS = {
+  P1: { pilar:'P1', titulo:'Bloqueo de Control y Estructura',     diagnostico:'Le tienes alergia visceral a los presupuestos y procesos técnicos. Estás intentando resolver un problema de ingeniería con pura intuición.',                                          accion:'Siéntate frente a una hoja en blanco y vacía tu caos en un sistema numérico. Calcula tu presupuesto real, mapea tus horas, sométete a un calendario.' },
+  P2: { pilar:'P2', titulo:'Bloqueo de Transformación y Mutación',diagnostico:'Te estás hundiendo con el barco por lealtad a un "yo" del pasado. Le tienes terror a soltar porque crees que renunciar es fracasar.',                                                   accion:'Ejecuta una amputación táctica: cancela ese proyecto zombi, renuncia a la dinámica que te asfixia. Tu salida no es la reparación, es la evacuación.' },
+  P3: { pilar:'P3', titulo:'Bloqueo de Comunidad y Alianza',      diagnostico:'Tu síndrome de lobo solitario y tu orgullo te están aislando. Prefieres asfixiarte antes que mostrarte vulnerable.',                                                                    accion:'Tienes prohibido intentar resolver esto solo. Llama a un aliado, expón tu agotamiento real y pide soporte directo. Trágate el ego.' },
+  P4: { pilar:'P4', titulo:'Bloqueo de Retiro y Silencio',        diagnostico:'Tienes pánico a detenerte. Usas la hiperactividad como anestesia para no escuchar el crujido de tu propia crisis.',                                                                    accion:'Frena el motor en seco. Cancela la agenda, apaga notificaciones y aíslate. Soporta la incomodidad de estar a solas contigo mismo.' },
+  P5: { pilar:'P5', titulo:'Bloqueo de Duelo y Alquimia',         diagnostico:'Estás huyendo del dolor real a través del positivismo tóxico. No te has permitido sentir la herida de lo que perdiste.',                                                               accion:'No hagas nada para "mejorar" la situación. Siéntate cara a cara con tu pérdida y asimila el luto. Acepta que esa pieza se rompió para siempre.' },
+  P6: { pilar:'P6', titulo:'Bloqueo de Humor e Iconoclasia',      diagnostico:'Has convertido tu crisis en una tragedia griega. El exceso de gravedad y dramatismo te tiene paralizado.',                                                                            accion:'Pierde el respeto a tu propia crisis. Encuentra la grieta absurda y búrlate de tu ego. Cuando desmitifiques el monstruo, recuperarás agilidad mental.' },
+  P7: { pilar:'P7', titulo:'Bloqueo de Resistencia y Ética',      diagnostico:'Buscas atajos e inspiración para no hacer el trabajo aburrido. Huyes de la fricción cuando las cosas dejan de ser divertidas.',                                                       accion:'Se acabó la búsqueda de magia. Elige la tarea más pesada y aburrida. Sin motivación, sin música épica: aprieta los dientes y ejecútala por dignidad obrera.' },
+  P8: { pilar:'P8', titulo:'Bloqueo de Vitalidad e Instinto',     diagnostico:'Estás atrapado en parálisis por análisis, desconectado del mundo físico. Le tienes miedo al riesgo no calculado.',                                                                    accion:'Apaga el cerebro analítico. Toma una decisión rápida e imperfecta con las tripas. Mueve el cuerpo: sal a correr, busca un estímulo físico intenso.' }
+};
+
+module.exports = { PILARES, PILARES_INFO, ANTIDOTOS };

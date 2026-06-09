@@ -29,11 +29,18 @@ router.post('/callback', async (req, res) => {
       await dbUser.save();
     }
 
+       // FIX: Verificar que JWT_SECRET existe y usar dbUser._id en vez de user._id
+    const jwtSecret = process.env.JWT_SECRET;
+    if (!jwtSecret) {
+      throw new Error('JWT_SECRET no está configurado');
+    }
+
+    
     // Generar JWT propio para el frontend
     const token = jwt.sign(
-      { id: dbUser._id, email: dbUser.email, plan: dbUser.plan },
-      process.env.JWT_SECRET!,
-      { expiresIn: process.env.JWT_EXPIRES_IN || '7d' }
+       { userId: user._id, email: user.email },
+        process.env.JWT_SECRET as string,  // <-- cast explícito
+        { expiresIn: '7d' }
     );
 
     return res.json({

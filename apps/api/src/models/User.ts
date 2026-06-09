@@ -9,7 +9,7 @@ const UserSchema = new Schema<IUser>(
     nombre: { type: String },
     avatar: { type: String },
     auth_provider: { type: String, enum: ['supabase', 'google', 'github'], required: true },
-    auth_id: { type: String, required: true, unique: true },
+    auth_id: { type: String, required: true, unique: true, index: true },
     plan: { type: String, enum: ['free', 'premium', 'pro'], default: 'free' },
   },
   { timestamps: { createdAt: 'created_at', updatedAt: 'updated_at' } }
