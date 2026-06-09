@@ -1,0 +1,18 @@
+{
+  "name": "raven",
+  "version": "1.0.0",
+  "description": "Raven — Plataforma de coaching personalizado basada en arquetipos rockstar",
+  "private": true,
+  "workspaces": [
+    "apps/*",
+    "packages/*"
+  ],
+  "scripts": {
+    "dev": "concurrently "npm run dev -w @raven/api" "npm run dev -w @raven/web"",
+    "build": "npm run build -w @raven/shared-types && npm run build -w @raven/api && npm run build -w @raven/web",
+    "lint": "npm run lint -w @raven/api && npm run lint -w @raven/web"
+  },
+  "devDependencies": {
+    "concurrently": "^8.2.0"
+  }
+}
