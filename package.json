@@ -8,7 +8,7 @@
     "packages/*"
   ],
   "scripts": {
-    "dev": "concurrently "npm run dev -w @raven/api" "npm run dev -w @raven/web"",
+    "dev": "concurrently \"npm run dev -w @raven/api\" \"npm run dev -w @raven/web\"",
     "build": "npm run build -w @raven/shared-types && npm run build -w @raven/api && npm run build -w @raven/web",
     "lint": "npm run lint -w @raven/api && npm run lint -w @raven/web"
   },
