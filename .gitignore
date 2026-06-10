@@ -1,15 +1,17 @@
 # Dependencies
 node_modules/
-.pnpm-store/
+package-lock.json
+yarn.lock
+pnpm-lock.yaml
 
-# Build outputs
-dist/
-build/
-
-# Environment variables
+# Environment
 .env
 .env.local
 .env.*.local
+
+# Build
+dist/
+build/
 
 # IDE
 .vscode/
@@ -24,10 +26,5 @@ Thumbs.db
 # Logs
 *.log
 npm-debug.log*
-
-# Testing
-coverage/
-
-# Misc
-*.tmp
-*.temp
+yarn-debug.log*
+yarn-error.log*
