@@ -7,6 +7,12 @@ export default {
   theme: {
     extend: {
       colors: {
+        solstis: '#D4AF37',
+        folsom: '#050505',
+        loriga: '#F0F5F9',
+        halford: '#C0C0C0',
+        vegas: '#708090',
+        bocanada: '#0A192F',
         rock: {
           50: '#fdf2f4',
           100: '#fce7eb',

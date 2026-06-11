@@ -14,7 +14,7 @@
         </div>
         <button 
           @click="startQuiz"
-          class="bg-solstis text-folsom px-6 py-2 font-body text-xs tracking-[0.1em] uppercase hover:scale-105 transition-all duration-300 interactive-button"
+          class="bg-[#D4AF37] bg-solstis text-folsom px-6 py-2 font-body text-xs tracking-[0.1em] uppercase hover:scale-105 transition-all duration-300 interactive-button"
         >
           <span class="button-glow"></span>
           <span class="relative z-20">{{ isAuthenticated ? 'Dashboard' : 'Get Started' }}</span>
@@ -43,7 +43,7 @@
         <div class="flex flex-col items-center justify-center gap-6 hero-entrance md:flex-row" style="animation-delay: 0.6s">
           <button 
             @click="startQuiz"
-            class="w-full md:w-auto bg-solstis text-folsom px-10 py-5 font-body text-lg hover:scale-105 transition-all duration-300 gold-glow interactive-button shadow-[0_0_15px_rgba(212,175,55,0.3)]"
+            class="w-full md:w-auto bg-[#D4AF37] bg-solstis text-folsom px-10 py-5 font-body text-lg hover:scale-105 transition-all duration-300 gold-glow interactive-button shadow-[0_0_15px_rgba(212,175,55,0.3)]"
           >
             <span class="button-glow"></span>
             <span class="relative z-20">🎸 Descubre tu arquetipo</span>
@@ -172,7 +172,7 @@
       <div class="max-w-4xl mx-auto reveal">
         <h2 class="mb-12 text-4xl font-display md:text-7xl">El micrófono está <span class="italic underline text-solstis decoration-1 underline-offset-8">abierto.</span></h2>
         <p class="mb-12 text-lg font-body text-halford">Sé el frontman de tu vida. No hay teloneros aquí.</p>
-        <button @click="startQuiz" class="bg-solstis text-folsom px-16 py-8 font-body text-2xl hover:scale-110 transition-all duration-500 gold-glow shadow-[0_0_50px_rgba(212,175,55,0.4)] interactive-button">
+        <button @click="startQuiz" class="bg-solstis  bg-[#D4AF37] text-folsom px-16 py-8 font-body text-2xl hover:scale-110 transition-all duration-500 gold-glow shadow-[0_0_50px_rgba(212,175,55,0.4)] interactive-button">
           <span class="button-glow"></span>
           <span class="relative z-20">🎸 DESCUBRE TU ARQUETIPO</span>
         </button>
@@ -292,6 +292,8 @@ onMounted(() => {
 .border-outline-variant\/10 { border-color: rgba(68, 71, 72, 0.1); }
 .border-outline-variant\/20 { border-color: rgba(68, 71, 72, 0.2); }
 .border-outline-variant\/30 { border-color: rgba(68, 71, 72, 0.3); }
+
+.bg-solstis { background-color: #D4AF37; }
 
 .selection\:bg-solstis::selection { background-color: #D4AF37; }
 .selection\:text-folsom::selection { color: #050505; }
