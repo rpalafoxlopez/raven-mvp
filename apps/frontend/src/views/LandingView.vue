@@ -2,32 +2,51 @@
   <div class="overflow-x-hidden bg-folsom text-loriga selection:bg-solstis selection:text-folsom scroll-smooth">
     <!-- Navigation -->
     <nav class="fixed top-0 z-50 w-full border-b bg-folsom/80 backdrop-blur-md border-outline-variant/20">
-      <div class="flex justify-between items-center px-5 md:px-16 py-4 max-w-[1280px] mx-auto">
-        <div class="text-2xl italic tracking-tighter uppercase font-display md:text-4xl text-solstis">
-          ROCKYOURSELF
-        </div>
+      <div class="flex items-center justify-between px-5 py-4 mx-auto md:px-16 max-w-[1280px]">
+        
+        <!-- Logo -->
+        <router-link to="/" class="flex items-center gap-3">
+          <img 
+            src="/logo_rus.webp" 
+            alt="RockYourself" 
+            class="object-contain w-auto h-12 md:h-16"
+          >
+        </router-link>
+
+        <!-- Links -->
         <div class="hidden space-x-8 md:flex">
           <a href="#viaje" class="font-body text-xs tracking-[0.1em] uppercase text-halford hover:text-solstis transition-colors">El Viaje</a>
           <a href="#plan" class="font-body text-xs tracking-[0.1em] uppercase text-halford hover:text-solstis transition-colors">El Plan</a>
           <a href="#arquetipos" class="font-body text-xs tracking-[0.1em] uppercase text-halford hover:text-solstis transition-colors">Arquetipos</a>
           <a href="#faq" class="font-body text-xs tracking-[0.1em] uppercase text-halford hover:text-solstis transition-colors">FAQ</a>
         </div>
+
+        <!-- CTA Button -->
         <button 
           @click="startQuiz"
-          class="bg-[#D4AF37] bg-solstis text-folsom px-6 py-2 font-body text-xs tracking-[0.1em] uppercase hover:scale-105 transition-all duration-300 interactive-button"
+          class="bg-solstis text-folsom px-6 py-2 font-body text-xs tracking-[0.1em] uppercase hover:scale-105 transition-all duration-300 interactive-button"
         >
           <span class="button-glow"></span>
-          <span class="relative z-20">{{ isAuthenticated ? 'Dashboard' : 'Get Started' }}</span>
+          <span class="relative z-20">{{ isAuthenticated ? 'Dashboard' : 'Comencemos' }}</span>
         </button>
       </div>
     </nav>
 
+
     <!-- Hero Section -->
     <section class="relative flex items-center justify-center min-h-screen pt-20 overflow-hidden">
+      <!-- Imagen de fondo -->
       <div class="absolute inset-0 z-0">
-        <div class="absolute inset-0 bg-gradient-to-b from-background via-transparent to-background"></div>
+        <img 
+          src="./hero-bg.webp" 
+          alt="Backstage" 
+          class="absolute inset-0 object-cover w-full h-full opacity-40 mix-blend-luminosity animate-slow-zoom"
+        >
+        <div class="absolute inset-0 bg-gradient-to-b from-folsom via-transparent to-folsom"></div>
         <div class="absolute inset-0 bg-[radial-gradient(circle_at_50%_50%,rgba(212,175,55,0.05)_0%,transparent_70%)]"></div>
       </div>
+      
+      <!-- Contenido -->
       <div class="relative z-10 max-w-4xl px-5 text-center">
         <span class="hero-entrance font-body text-xs tracking-[0.4em] uppercase text-solstis block mb-6 animate-pulse" style="animation-delay: 0.2s">
           El escenario es tuyo · El micrófono está abierto
@@ -43,7 +62,7 @@
         <div class="flex flex-col items-center justify-center gap-6 hero-entrance md:flex-row" style="animation-delay: 0.6s">
           <button 
             @click="startQuiz"
-            class="w-full md:w-auto bg-[#D4AF37] bg-solstis text-folsom px-10 py-5 font-body text-lg hover:scale-105 transition-all duration-300 gold-glow interactive-button shadow-[0_0_15px_rgba(212,175,55,0.3)]"
+            class="w-full md:w-auto bg-solstis text-folsom px-10 py-5 font-body text-lg hover:scale-105 transition-all duration-300 gold-glow interactive-button shadow-[0_0_15px_rgba(212,175,55,0.3)]"
           >
             <span class="button-glow"></span>
             <span class="relative z-20">🎸 Descubre tu arquetipo</span>
@@ -153,9 +172,9 @@
           <div v-for="(faq, i) in faqs" :key="i"
                class="py-6 border-b cursor-pointer reveal border-outline-variant/30 group"
                @click="toggleFaq(i)">
-            <div class="flex items-center justify-between">
+            <div class="flex items-center justify-between gap-4">
               <h3 class="text-xl transition-colors font-display md:text-2xl text-loriga group-hover:text-solstis">{{ faq.q }}</h3>
-              <span class="transition-transform duration-300 material-symbols-outlined text-solstis"
+              <span class="flex-shrink-0 transition-transform duration-300 material-symbols-outlined text-solstis"
                     :style="openFaq === i ? 'transform: rotate(180deg)' : ''">expand_more</span>
             </div>
             <div class="px-4 mt-4 faq-answer bg-surface-container/50" :class="{ open: openFaq === i }">
@@ -172,7 +191,7 @@
       <div class="max-w-4xl mx-auto reveal">
         <h2 class="mb-12 text-4xl font-display md:text-7xl">El micrófono está <span class="italic underline text-solstis decoration-1 underline-offset-8">abierto.</span></h2>
         <p class="mb-12 text-lg font-body text-halford">Sé el frontman de tu vida. No hay teloneros aquí.</p>
-        <button @click="startQuiz" class="bg-solstis  bg-[#D4AF37] text-folsom px-16 py-8 font-body text-2xl hover:scale-110 transition-all duration-500 gold-glow shadow-[0_0_50px_rgba(212,175,55,0.4)] interactive-button">
+        <button @click="startQuiz" class="bg-solstis text-folsom px-16 py-8 font-body text-2xl hover:scale-110 transition-all duration-500 gold-glow shadow-[0_0_50px_rgba(212,175,55,0.4)] interactive-button">
           <span class="button-glow"></span>
           <span class="relative z-20">🎸 DESCUBRE TU ARQUETIPO</span>
         </button>
@@ -181,28 +200,42 @@
 
     <!-- Footer -->
     <footer class="px-5 py-20 border-t bg-folsom border-outline-variant/10 md:px-16">
-      <div class="max-w-[1280px] mx-auto flex flex-col md:flex-row justify-between items-center gap-12">
-        <div class="max-w-md font-mono text-sm text-center text-halford md:text-right">
-          Quien no tiene la inteligencia para transformarlo todo, solo tiene la inercia para seguir siendo una pieza de recambio. 
-          <em class="text-solstis">El escenario es tuyo.</em>
+        <div class="max-w-[1280px] mx-auto flex flex-col md:flex-row justify-between items-center gap-12">
+          <!-- Izquierda: Tagline -->
+          <div class="max-w-md font-mono text-sm text-center text-halford md:text-left">
+            Quien no tiene la inteligencia para transformarlo todo, solo tiene la inercia para seguir siendo una pieza de recambio. 
+            <em class="text-solstis">El escenario es tuyo.</em>
+          </div>
+
+          <!-- Centro: Redes -->
+          <div class="flex gap-8">
+            <a href="#" class="font-body text-xs tracking-[0.1em] uppercase text-vegas hover:text-solstis transition-colors">Instagram</a>
+            <a href="#" class="font-body text-xs tracking-[0.1em] uppercase text-vegas hover:text-solstis transition-colors">Twitter/X</a>
+            <a href="#" class="font-body text-xs tracking-[0.1em] uppercase text-vegas hover:text-solstis transition-colors">TikTok</a>
+            <a href="#" class="font-body text-xs tracking-[0.1em] uppercase text-vegas hover:text-solstis transition-colors">Contacto</a>
+          </div>
+
+          <!-- Derecha: Logo + Copyright -->
+          <div class="flex flex-col items-center justify-center text-center ">
+            <router-link to="/" class="flex items-center">
+              <img 
+                src="/logo_rus.webp" 
+                alt="RockYourself" 
+                class="object-contain w-auto h-12 transition-opacity md:h-16 opacity-90 hover:opacity-100"
+              >
+            </router-link>
+            <div class="py-1 font-mono text-xs tracking-wider text-halford">
+              © 2026 ROCKYOURSELF.ORG
+            </div>
+          </div>
+
         </div>
-        <div class="flex gap-8">
-          <a href="#" class="font-body text-xs tracking-[0.1em] uppercase text-vegas hover:text-solstis transition-colors">Instagram</a>
-          <a href="#" class="font-body text-xs tracking-[0.1em] uppercase text-vegas hover:text-solstis transition-colors">Twitter/X</a>
-          <a href="#" class="font-body text-xs tracking-[0.1em] uppercase text-vegas hover:text-solstis transition-colors">TikTok</a>
-          <a href="#" class="font-body text-xs tracking-[0.1em] uppercase text-vegas hover:text-solstis transition-colors">Contacto</a>
-        </div>
-        <div>
-          <div class="mb-4 text-3xl italic font-display md:text-5xl text-solstis">ROCKYOURSELF.ORG</div>
-          <div class="font-mono text-sm text-halford">© 2026 ROCKYOURSELF.ORG · TODOS LOS DERECHOS RESERVADOS</div>
-        </div>
-      </div>
-    </footer>
+      </footer>
   </div>
 </template>
 
 <script setup>
-import { ref, computed, onMounted } from 'vue'
+import { ref, computed, onMounted, onUnmounted } from 'vue'
 import { useRouter } from 'vue-router'
 import { useAuthStore } from '../stores/auth'
 
@@ -254,7 +287,32 @@ const faqs = [
   { q: '¿Qué pasa si mi arquetipo es muy oscuro o melancólico (como Nacho Vegas)?', a: 'Como diría Nacho Vegas, no nos interesa mendigar un lugar en este mundo mediocre. Si tu arquetipo es denso, aprendes a crear tu propio lugar bajo tus reglas y con tu propia voz. Tu lado oscuro no es un bug, es tu mayor feature de combate.' }
 ]
 
+// ===== INTERACTIVE BUTTON GLOW EFFECT =====
+const handleButtonMouseMove = (e) => {
+  const btn = e.currentTarget
+  const glow = btn.querySelector('.button-glow')
+  if (!glow) return
+  const rect = btn.getBoundingClientRect()
+  const x = e.clientX - rect.left
+  const y = e.clientY - rect.top
+  glow.style.left = x + 'px'
+  glow.style.top = y + 'px'
+}
+
+const attachButtonListeners = () => {
+  document.querySelectorAll('.interactive-button').forEach(btn => {
+    btn.addEventListener('mousemove', handleButtonMouseMove)
+  })
+}
+
+const detachButtonListeners = () => {
+  document.querySelectorAll('.interactive-button').forEach(btn => {
+    btn.removeEventListener('mousemove', handleButtonMouseMove)
+  })
+}
+
 onMounted(() => {
+  // Intersection Observer for reveal animations
   const observer = new IntersectionObserver((entries) => {
     entries.forEach(entry => {
       if (entry.isIntersecting) {
@@ -265,6 +323,13 @@ onMounted(() => {
   }, { threshold: 0.1, rootMargin: '0px 0px -50px 0px' })
 
   document.querySelectorAll('.reveal').forEach(el => observer.observe(el))
+  
+  // Attach button glow listeners
+  attachButtonListeners()
+})
+
+onUnmounted(() => {
+  detachButtonListeners()
 })
 </script>
 
@@ -292,8 +357,6 @@ onMounted(() => {
 .border-outline-variant\/10 { border-color: rgba(68, 71, 72, 0.1); }
 .border-outline-variant\/20 { border-color: rgba(68, 71, 72, 0.2); }
 .border-outline-variant\/30 { border-color: rgba(68, 71, 72, 0.3); }
-
-.bg-solstis { background-color: #D4AF37; }
 
 .selection\:bg-solstis::selection { background-color: #D4AF37; }
 .selection\:text-folsom::selection { color: #050505; }
@@ -328,6 +391,15 @@ onMounted(() => {
 }
 @keyframes heroFadeIn {
   to { opacity: 1; transform: translateY(0); }
+}
+
+/* SLOW ZOOM FOR HERO BACKGROUND */
+@keyframes slowZoom {
+  0% { transform: scale(1); }
+  100% { transform: scale(1.15); }
+}
+.animate-slow-zoom {
+  animation: slowZoom 20s ease-in-out infinite alternate;
 }
 
 .interactive-button {
