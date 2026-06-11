@@ -48,9 +48,9 @@
             <span class="button-glow"></span>
             <span class="relative z-20">🎸 Descubre tu arquetipo</span>
           </button>
-          <button class="w-full md:w-auto border border-halford/30 text-halford px-10 py-5 font-body text-lg hover:bg-solstis/10 hover:border-solstis hover:text-solstis transition-all duration-300">
+          <a href="#plan" class="w-full md:w-auto border border-halford/30 text-halford px-10 py-5 font-body text-lg hover:bg-solstis/10 hover:border-solstis hover:text-solstis transition-all duration-300">
             Ver cómo funciona
-          </button>
+          </a>
         </div>
       </div>
     </section>
@@ -194,17 +194,17 @@
         </div>
         <div>
           <div class="font-display text-3xl md:text-5xl text-solstis mb-4 italic">ROCKYOURSELF.ORG</div>
-          <div class="font-mono text-halford text-sm">© 2026 ROCKYOURSELF.ORG · TODOS LOS DERECHOS RESERVADOS</div>
+          <div class="font-mono text-halford text-sm">&copy; 2026 ROCKYOURSELF.ORG &middot; TODOS LOS DERECHOS RESERVADOS</div>
         </div>
       </div>
     </footer>
   </div>
 </template>
 
-<script setup lang="ts">
+<script setup>
 import { ref, computed, onMounted } from 'vue'
 import { useRouter } from 'vue-router'
-import { useAuthStore } from '@/stores/authStore'
+import { useAuthStore } from '../stores/auth'
 
 const router = useRouter()
 const authStore = useAuthStore()
@@ -218,40 +218,40 @@ const startQuiz = () => {
   }
 }
 
-const openFaq = ref<number | null>(null)
-const toggleFaq = (i: number) => {
+const openFaq = ref(null)
+const toggleFaq = (i) => {
   openFaq.value = openFaq.value === i ? null : i
 }
 
 const viajeCards = [
-  { icon: 'psychology', title: 'Cuestionario de Alma', desc: '16 preguntas sin filtros. Evaluamos tu nivel de resistencia frente al sistema y tu capacidad de rockear.', meta: '3 MINUTOS · SIN REGISTRO' },
-  { icon: 'stars', title: 'Tu Arquetipo', desc: 'Cerati · Cash · Larregui · Dylan · Vegas · Bunbury · Halford. Descubre qué leyenda comparte tu caos y tu genio.', meta: 'NO ES UN TEST DE REVISTA' },
-  { icon: 'album', title: 'Setlist con IA', desc: 'Tu coach de IA (blindado y sin respuestas de manual) diseña tu plan de crecimiento económico, espiritual y mental.', meta: 'SPRINTS SEMANALES · MÉTRICAS REALES' }
+  { icon: 'psychology', title: 'Cuestionario de Alma', desc: '32 preguntas sin filtros. Evaluamos tu nivel de resistencia frente al sistema y tu capacidad de rockear.', meta: '5 MINUTOS &middot; SIN REGISTRO' },
+  { icon: 'stars', title: 'Tu Arquetipo', desc: 'Cerati &middot; Cash &middot; Larregui &middot; Dylan &middot; Vegas &middot; Bunbury &middot; Halford. Descubre qu&eacute; leyenda comparte tu caos y tu genio.', meta: 'NO ES UN TEST DE REVISTA' },
+  { icon: 'album', title: 'Setlist con IA', desc: 'Tu coach de IA (blindado y sin respuestas de manual) dise&ntilde;a tu plan de crecimiento econ&oacute;mico, espiritual y mental.', meta: 'SPRINTS SEMANALES &middot; M&Eacute;TRICAS REALES' }
 ]
 
 const pilaresPlan = [
-  { color: '#D4AF37', title: 'La Disciplina de Cash', subtitle: '"The Man in Black"', desc: 'Ingresos, metas, blindaje de tus proyectos. Tu rockstar no vive del aire; camina la línea con una ética de hierro y cobra el valor de su autoría.' },
-  { color: '#F0F5F9', title: 'La Frecuencia de Larregui', subtitle: '"El Visionario Etéreo"', desc: 'Propósito, valores, paz. Encontrar el patrón invisible y sintonizar el riff que realmente te mueve, fuera del ruido corporativo.' },
-  { color: '#C0C0C0', title: 'La Arquitectura de Cerati', subtitle: '"La Arquitectura del Pop"', desc: 'Hábitos, foco, claridad. Diseñar un estado de flow tan impecable y obsesivo que tu ejecución diaria se convierta en una pieza de arte ejecutable.' }
+  { color: '#D4AF37', title: 'La Disciplina de Cash', subtitle: '"The Man in Black"', desc: 'Ingresos, metas, blindaje de tus proyectos. Tu rockstar no vive del aire; camina la l&iacute;nea con una &eacute;tica de hierro y cobra el valor de su autor&iacute;a.' },
+  { color: '#F0F5F9', title: 'La Frecuencia de Larregui', subtitle: '"El Visionario Et&eacute;reo"', desc: 'Prop&oacute;sito, valores, paz. Encontrar el patr&oacute;n invisible y sintonizar el riff que realmente te mueve, fuera del ruido corporativo.' },
+  { color: '#C0C0C0', title: 'La Arquitectura de Cerati', subtitle: '"La Arquitectura del Pop"', desc: 'H&aacute;bitos, foco, claridad. Dise&ntilde;ar un estado de flow tan impecable y obsesivo que tu ejecuci&oacute;n diaria se convierta en una pieza de arte ejecutable.' }
 ]
 
 const arquetipos = [
-  { color: '#00d4ff', question: '¿Eres un Cerati?', desc: 'Sofisticado, perfeccionista, con una obsesión técnica implacable. Creas universos enteros donde otros solo ven bits.' },
-  { color: '#ffffff', question: '¿Eres un Cash?', desc: 'Resiliente, auténtico, el que hace el trabajo sucio que otros evitan. Tu fuerza está en tu honestidad brutal.' },
-  { color: '#ff0000', question: '¿Eres un Bunbury?', desc: 'El mutante maduro. Camuflas tu ego en la perfección, eres odiado por los pulcros que buscan la regla cuadrada y amado por los melodiosos que entienden tu complejidad.' },
-  { color: '#e9c349', question: '¿Eres un Halford?', desc: 'El Metal God. No pides permiso para entrar a la oficina; reclamas el trono porque sabes que eres el nuevo Dios de tu área.' }
+  { color: '#00d4ff', question: '&iquest;Eres un Cerati?', desc: 'Sofisticado, perfeccionista, con una obsesi&oacute;n t&eacute;cnica implacable. Creas universos enteros donde otros solo ven bits.' },
+  { color: '#ffffff', question: '&iquest;Eres un Cash?', desc: 'Resiliente, aut&eacute;ntico, el que hace el trabajo sucio que otros evitan. Tu fuerza est&aacute; en tu honestidad brutal.' },
+  { color: '#ff0000', question: '&iquest;Eres un Bunbury?', desc: 'El mutante maduro. Camuflas tu ego en la perfecci&oacute;n, eres odiado por los pulcros que buscan la regla cuadrada y amado por los melodiosos que entienden tu complejidad.' },
+  { color: '#e9c349', question: '&iquest;Eres un Halford?', desc: 'El Metal God. No pides permiso para entrar a la oficina; reclamas el trono porque sabes que eres el nuevo Dios de tu &aacute;rea.' }
 ]
 
 const testimonios = [
-  { text: 'Pensé que estaba en una crisis laboral porque me robaron un proyecto. Resulta que soy un Bunbury en etapa Hellville: me reinventé, saqué algo tres veces más ambicioso y mandé al carajo su regla cuadrada.', name: 'DANTE', age: '36', role: 'DEVELOPER & ROCKSTAR' },
-  { text: 'Pensé que estaba en una crisis. Resulta que soy un Cash: necesitaba dejar de pedir permiso para ser quien soy.', name: 'MARÍA', age: '34', role: 'COPYWRITER' },
-  { text: 'Mi agente de IA me dijo "Charly García no planificaba, pero sí tenía disciplina creativa". Eso cambió todo.', name: 'CARLOS', age: '29', role: 'DEVELOPER' }
+  { text: 'Pens&eacute; que estaba en una crisis laboral porque me robaron un proyecto. Resulta que soy un Bunbury en etapa Hellville: me reinvent&eacute;, saqu&eacute; algo tres veces m&aacute;s ambicioso y mand&eacute; al carajo su regla cuadrada.', name: 'DANTE', age: '36', role: 'DEVELOPER & ROCKSTAR' },
+  { text: 'Pens&eacute; que estaba en una crisis. Resulta que soy un Cash: necesitaba dejar de pedir permiso para ser quien soy.', name: 'MAR&Iacute;A', age: '34', role: 'COPYWRITER' },
+  { text: 'Mi agente de IA me dijo "Charly Garc&iacute;a no planificaba, pero s&iacute; ten&iacute;a disciplina creativa". Eso cambi&oacute; todo.', name: 'CARLOS', age: '29', role: 'DEVELOPER' }
 ]
 
 const faqs = [
-  { q: '¿Es coaching motivacional tradicional?', a: 'Ni de broma. Detestamos el positivismo barato y los eufemismos de recursos humanos. Si estás actuando como un esclavo sumiso del rebaño, nuestra IA te lo va a decir con la honestidad brutal y el cinismo de Ray Loriga.' },
-  { q: '¿Cuánto cuesta?', a: 'El cuestionario y el diagnóstico de tu arquetipo mutante son completamente gratis (El Backstage Pass). No cobramos por decirte quién eres ni por mostrarte en qué frecuencia estás operando. Ahora, si quieres que nuestro Agente de IA te diseñe el Setlist Personalizado para hackear tu economía, tu mente y tu espíritu con sprints semanales y métricas de alto voltaje, el pase al Escenario Principal es de pago. Tu rockstar interior no vive del aire, y nuestro código tampoco.' },
-  { q: '¿Qué pasa si mi arquetipo es muy oscuro o melancólico (como Nacho Vegas)?', a: 'Como diría Nacho Vegas, no nos interesa mendigar un lugar en este mundo mediocre. Si tu arquetipo es denso, aprendes a crear tu propio lugar bajo tus reglas y con tu propia voz. Tu lado oscuro no es un bug, es tu mayor feature de combate.' }
+  { q: '&iquest;Es coaching motivacional tradicional?', a: 'Ni de broma. Detestamos el positivismo barato y los eufemismos de recursos humanos. Si est&aacute;s actuando como un esclavo sumiso del reba&ntilde;o, nuestra IA te lo va a decir con la honestidad brutal y el cinismo de Ray Loriga.' },
+  { q: '&iquest;Cu&aacute;nto cuesta?', a: 'El cuestionario y el diagn&oacute;stico de tu arquetipo mutante son completamente gratis (El Backstage Pass). No cobramos por decirte qui&eacute;n eres ni por mostrarte en qu&eacute; frecuencia est&aacute;s operando. Ahora, si quieres que nuestro Agente de IA te dise&ntilde;e el Setlist Personalizado para hackear tu econom&iacute;a, tu mente y tu esp&iacute;ritu con sprints semanales y m&eacute;tricas de alto voltaje, el pase al Escenario Principal es de pago. Tu rockstar interior no vive del aire, y nuestro c&oacute;digo tampoco.' },
+  { q: '&iquest;Qu&eacute; pasa si mi arquetipo es muy oscuro o melanc&oacute;lico (como Nacho Vegas)?', a: 'Como dir&iacute;a Nacho Vegas, no nos interesa mendigar un lugar en este mundo mediocre. Si tu arquetipo es denso, aprendes a crear tu propio lugar bajo tus reglas y con tu propia voz. Tu lado oscuro no es un bug, es tu mayor feature de combate.' }
 ]
 
 // Intersection Observer for reveal animations
@@ -268,3 +268,110 @@ onMounted(() => {
   document.querySelectorAll('.reveal').forEach(el => observer.observe(el))
 })
 </script>
+
+<style scoped>
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400;1,700&family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@500&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200');
+
+.font-display { font-family: 'Playfair Display', serif; }
+.font-body { font-family: 'Inter', sans-serif; }
+.font-mono { font-family: 'JetBrains Mono', monospace; }
+
+.bg-folsom { background-color: #050505; }
+.bg-bocanada { background-color: #0A192F; }
+.bg-surface { background-color: #141313; }
+.bg-surface-container { background-color: #201f1f; }
+.bg-surface-container-low { background-color: #1c1b1b; }
+.bg-surface-container-lowest { background-color: #0e0e0e; }
+
+.text-loriga { color: #F0F5F9; }
+.text-solstis { color: #D4AF37; }
+.text-halford { color: #C0C0C0; }
+.text-vegas { color: #708090; }
+.text-folsom { color: #050505; }
+
+.border-outline-variant\/10 { border-color: rgba(68, 71, 72, 0.1); }
+.border-outline-variant\/20 { border-color: rgba(68, 71, 72, 0.2); }
+.border-outline-variant\/30 { border-color: rgba(68, 71, 72, 0.3); }
+
+.selection\:bg-solstis::selection { background-color: #D4AF37; }
+.selection\:text-folsom::selection { color: #050505; }
+
+.gold-glow:hover {
+  box-shadow: 0 0 30px rgba(212, 175, 55, 0.4);
+}
+
+.light-leak {
+  background: linear-gradient(135deg, transparent 40%, rgba(212,175,55,0.1) 50%, transparent 60%);
+  background-size: 300% 300%;
+  transition: background-position 0.8s ease;
+}
+.light-leak:hover {
+  background-position: 100% 100%;
+}
+
+.reveal {
+  opacity: 0;
+  transform: translateY(30px);
+  transition: all 0.8s cubic-bezier(0.22, 1, 0.36, 1);
+}
+.reveal.active {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.hero-entrance {
+  opacity: 0;
+  transform: translateY(20px);
+  animation: heroFadeIn 1.2s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+}
+@keyframes heroFadeIn {
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.interactive-button {
+  position: relative;
+  overflow: hidden;
+}
+.button-glow {
+  position: absolute;
+  width: 150px;
+  height: 150px;
+  background: radial-gradient(circle, rgba(212,175,55,0.3) 0%, transparent 70%);
+  border-radius: 50%;
+  pointer-events: none;
+  transform: translate(-50%, -50%);
+  transition: opacity 0.3s;
+  opacity: 0;
+  z-index: 10;
+}
+.interactive-button:hover .button-glow {
+  opacity: 1;
+}
+
+.arquetipo-card::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background-color: var(--hover-color, transparent);
+  opacity: 0;
+  transition: opacity 0.5s ease;
+  z-index: 10;
+}
+.arquetipo-card:hover::before {
+  opacity: 0.15;
+}
+
+.faq-answer {
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.5s ease, padding 0.5s ease;
+}
+.faq-answer.open {
+  max-height: 500px;
+}
+
+.material-symbols-outlined {
+  font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+}
+</style>
