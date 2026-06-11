@@ -268,11 +268,10 @@
 
 <script setup>
 import { ref, computed, onMounted, onUnmounted } from 'vue'
-import { useRouter, useRoute } from 'vue-router'
+import { useRouter } from 'vue-router'
 import { useAuthStore } from '@/stores/authStore'
 
 const router = useRouter()
-const route = useRoute()
 const authStore = useAuthStore()
 
 const loading = ref(true)
@@ -309,26 +308,9 @@ onMounted(async () => {
     }
   }
 
-  // 3. Fetch from API (requires auth)
-  if (authStore.isAuthenticated) {
-    try {
-      const response = await fetch(`${import.meta.env.VITE_API_URL}/api/results/latest`, {
-        headers: {
-          'Authorization': `Bearer ${authStore.token}`
-        }
-      })
-      if (!response.ok) throw new Error('No results found')
-      diagnostico.value = await response.json()
-    } catch (err) {
-      error.value = 'No encontramos un diagnóstico previo. Haz el quiz primero.'
-    }
-  } else {
-    error.value = 'Necesitas hacer el quiz primero o iniciar sesión para ver resultados guardados.'
-  }
-
+  // 3. No data found
+  error.value = 'No encontramos un diagnóstico previo. Haz el quiz primero.'
   loading.value = false
-  initRevealObserver()
-  attachButtonListeners()
 })
 
 onUnmounted(() => {
@@ -389,7 +371,6 @@ const moduloElasticidad = computed(() => {
 // ===== METHODS =====
 
 function calcularPerfil(d) {
-  // Simplified profile calculation — replace with your actual logic
   const sorted = [...d.metricas].sort((a, b) => b.uso_total - a.uso_total)
   const dominante = PILARES_INFO[sorted[0].id]
   const secundario = PILARES_INFO[sorted[1].id]
@@ -437,7 +418,11 @@ function getPilarColor(id) {
 }
 
 function login(provider) {
-  authStore.loginWithOAuth(provider)
+  if (provider === 'google') {
+    authStore.loginWithGoogle()
+  } else {
+    authStore.loginWithGithub()
+  }
 }
 
 function goToCheckout(plan) {
@@ -501,59 +486,59 @@ const initRevealObserver = () => {
   document.querySelectorAll('.reveal').forEach(el => observer.observe(el))
 }
 
-// ===== DATA CONSTANTS (inline to avoid external deps) =====
+// ===== DATA CONSTANTS (inline — no external deps) =====
 
 const PILARES_INFO = {
-  disciplina: { nombre: 'Disciplina', rockstars: ['Cash', 'Hetfield'], color: '#D4AF37', descripcion: 'Tu fuerza está en la constancia y la ética de trabajo.' },
-  vision: { nombre: 'Visión', rockstars: ['Larregui', 'Bowie'], color: '#F0F5F9', descripcion: 'Ves patrones donde otros ven caos.' },
-  arquitectura: { nombre: 'Arquitectura', rockstars: ['Cerati', 'Fripp'], color: '#C0C0C0', descripcion: 'Construyes sistemas impecables y hermosos.' },
-  rebeldia: { nombre: 'Rebeldía', rockstars: ['Bunbury', 'Jagger'], color: '#ff0000', descripcion: 'Rompes reglas que otros ni siquiera cuestionan.' },
-  espiritu: { nombre: 'Espíritu', rockstars: ['Dylan', 'Marley'], color: '#e9c349', descripcion: 'Tu mensaje trasciende lo material.' },
-  oscuridad: { nombre: 'Oscuridad', rockstars: ['Vegas', 'Cave'], color: '#4a4a4a', descripcion: 'Encuentras belleza en lo sombrío.' },
-  liderazgo: { nombre: 'Liderazgo', rockstars: ['Halford', 'Dio'], color: '#e9c349', descripcion: 'Naces para estar al frente.' },
-  innovacion: { nombre: 'Innovación', rockstars: ['Cerati', 'Eno'], color: '#00d4ff', descripcion: 'Creas lo que no existe todavía.' }
+  disciplina: { nombre: 'Disciplina', rockstars: ['Cash', 'Hetfield'], color: '#D4AF37', descripcion: 'Tu fuerza está en la constancia y la ética de trabajo. No necesitas motivación, necesitas un riff que seguir.' },
+  vision: { nombre: 'Visión', rockstars: ['Larregui', 'Bowie'], color: '#F0F5F9', descripcion: 'Ves patrones donde otros ven caos. Tu mente opera en frecuencias que la mayoría no sintoniza.' },
+  arquitectura: { nombre: 'Arquitectura', rockstars: ['Cerati', 'Fripp'], color: '#C0C0C0', descripcion: 'Construyes sistemas impecables y hermosos. Tu obsesión por la perfección es tu superpoder y tu trampa.' },
+  rebeldia: { nombre: 'Rebeldía', rockstars: ['Bunbury', 'Jagger'], color: '#ff0000', descripcion: 'Rompes reglas que otros ni siquiera cuestionan. Eres el incómodo necesario en cada sala.' },
+  espiritu: { nombre: 'Espíritu', rockstars: ['Dylan', 'Marley'], color: '#e9c349', descripcion: 'Tu mensaje trasciende lo material. Hablas por los que no tienen voz, aunque eso te cueste posiciones.' },
+  oscuridad: { nombre: 'Oscuridad', rockstars: ['Vegas', 'Cave'], color: '#4a4a4a', descripcion: 'Encuentras belleza en lo sombrío. Tu profundidad intimida a los de superficie brillante.' },
+  liderazgo: { nombre: 'Liderazgo', rockstars: ['Halford', 'Dio'], color: '#e9c349', descripcion: 'Naces para estar al frente. No pides permiso; el escenario te pertenece por derecho divino.' },
+  innovacion: { nombre: 'Innovación', rockstars: ['Cerati', 'Eno'], color: '#00d4ff', descripcion: 'Creas lo que no existe todavía. Tu mente es un laboratorio donde la lógica y la locura coexisten.' }
 }
 
 const ANTIDOTOS = {
   disciplina: {
     titulo: 'El Ritual del Caos Controlado',
-    diagnostico: 'Tu exceso de disciplina te ha convertido en una máquina. Necesitas aprender a soltar.',
-    accion: 'Hoy, durante 30 minutos, haz algo que no tenga ningún objetivo productivo. Solo por el placer.'
+    diagnostico: 'Tu exceso de disciplina te ha convertido en una máquina. Necesitas aprender a soltar sin caer en el desorden.',
+    accion: 'Hoy, durante 30 minutos, haz algo que no tenga ningún objetivo productivo. Solo por el placer. Sin métricas, sin deadline.'
   },
   vision: {
     titulo: 'Anclaje en lo Terrenal',
-    diagnostico: 'Vives tanto en el futuro que olvidas el presente. Tu cuerpo te está pidiendo atención.',
-    accion: 'Camina 20 minutos sin música, sin podcast, sin nada. Solo observa lo físico alrededor.'
+    diagnostico: 'Vives tanto en el futuro que olvidas el presente. Tu cuerpo te está pidiendo atención mientras tu mente vuela.',
+    accion: 'Camina 20 minutos sin música, sin podcast, sin nada. Solo observa lo físico alrededor. Ancla tu visión en lo tangible.'
   },
   arquitectura: {
     titulo: 'Deconstrucción Creativa',
-    diagnostico: 'Tu necesidad de control te impide la magia del accidente.',
-    accion: 'Escribe una página de texto sin borrar nada. Deja que sea imperfecto.'
+    diagnostico: 'Tu necesidad de control te impide la magia del accidente. Lo imprevisto te aterra más de lo que admites.',
+    accion: 'Escribe una página de texto sin borrar nada. Deja que sea imperfecto. Publica sin revisar tres veces.'
   },
   rebeldia: {
     titulo: 'Canalización Estratégica',
-    diagnostico: 'Tu rebeldía sin dirección te está aislando. Necesitas una causa, no solo oposición.',
-    accion: 'Identifica una regla injusta en tu entorno y propón una alternativa constructiva.'
+    diagnostico: 'Tu rebeldía sin dirección te está aislando. Necesitas una causa, no solo oposición por oposición.',
+    accion: 'Identifica una regla injusta en tu entorno y propón una alternativa constructiva. Sé el arquitecto del nuevo sistema.'
   },
   espiritu: {
     titulo: 'Materialización de lo Sagrado',
-    diagnostico: 'Tu espiritualidad necesita raíces terrenales para no volverse escapismo.',
-    accion: 'Convierte un ritual espiritual en una acción física concreta hoy.'
+    diagnostico: 'Tu espiritualidad necesita raíces terrenales para no volverse escapismo. Los sueños necesitan presupuesto.',
+    accion: 'Convierte un ritual espiritual en una acción física concreta hoy. Una llamada, un email, un pago, un plan.'
   },
   oscuridad: {
     titulo: 'Integración de la Luz',
-    diagnostico: 'Tu comodidad con la sombra te impide ver oportunidades luminosas.',
-    accion: 'Haz algo que un "optimista tóxico" haría, solo para experimentar la sensación.'
+    diagnostico: 'Tu comodidad con la sombra te impide ver oportunidades luminosas. No todo lo brillante es superficial.',
+    accion: 'Haz algo que un "optimista tóxico" haría, solo para experimentar la sensación. Sonríe a un desconocido. Sin ironía.'
   },
   liderazgo: {
     titulo: 'Servicio Humilde',
-    diagnostico: 'Tu trono está vacío porque nadie quiere estar cerca de un dictador.',
-    accion: 'Pide ayuda genuinamente a alguien que consideras inferior. Escucha sin interrumpir.'
+    diagnostico: 'Tu trono está vacío porque nadie quiere estar cerca de un dictador. El liderazgo sin empatía es soledad con corona.',
+    accion: 'Pide ayuda genuinamente a alguien que consideras inferior. Escucha sin interrumpir. Agradece sin condescendencia.'
   },
   innovacion: {
     titulo: 'Perfección de lo Existente',
-    diagnostico: 'Siempre creas nuevo, nunca terminas. Necesitas completar algo viejo.',
-    accion: 'Termina un proyecto abandonado antes de empezar uno nuevo.'
+    diagnostico: 'Siempre creas nuevo, nunca terminas. Necesitas completar algo viejo antes de que la novedad te devore.',
+    accion: 'Termina un proyecto abandonado antes de empezar uno nuevo. La innovación sin ejecución es fantasía con PowerPoint.'
   }
 }
 </script>
