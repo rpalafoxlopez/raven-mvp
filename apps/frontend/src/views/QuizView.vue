@@ -25,10 +25,7 @@
           </span>
         </div>
         <div class="h-1 overflow-hidden rounded-full bg-surface-container">
-          <div 
-            class="h-full transition-all duration-500 bg-solstis"
-            :style="`width: ${quizStore.progress}%`"
-          ></div>
+          <div class="h-full transition-all duration-500 bg-solstis" :style="`width: ${quizStore.progress}%`"></div>
         </div>
       </div>
 
@@ -46,7 +43,7 @@
         <button 
           @click="quizStore.goBack"
           :disabled="quizStore.currentQuestion === 0"
-          class="px-6 py-3 text-sm tracking-wider uppercase transition-all border border-halford/30 text-halford font-body hover:border-solstis hover:text-solstis disabled:opacity-30 disabled:cursor-not-allowed disabled:hover:border-halford/30 disabled:hover:text-halford"
+          class="px-6 py-3 text-sm tracking-wider uppercase transition-all border border-halford/30 text-halford font-body hover:border-solstis hover:text-solstis disabled:opacity-30 disabled:cursor-not-allowed"
         >
           ← Anterior
         </button>
@@ -78,22 +75,17 @@
 <script setup>
 import { onMounted, onUnmounted } from 'vue'
 import { useRouter } from 'vue-router'
-import { useQuizStore } from '@/stores/quiz'
+import { useQuizStore } from '@/stores/quiz'           // ← AJUSTA ESTO
 import QuestionCard from '@/components/quiz/QuestionCard.vue'
 
 const router = useRouter()
 const quizStore = useQuizStore()
 
 onMounted(() => {
-  // Restore progress from localStorage if exists
   quizStore.loadFromStorage()
-  
-  // Fetch questions if not loaded
   if (!quizStore.questions.length) {
     quizStore.fetchQuestions()
   }
-  
-  // Attach button glow
   attachButtonListeners()
 })
 
@@ -103,7 +95,6 @@ onUnmounted(() => {
 
 const handleAnswer = (answer) => {
   quizStore.answerQuestion(answer)
-  // Auto-save to localStorage after each answer
   quizStore.saveToStorage()
 }
 
@@ -114,24 +105,15 @@ const retryFetch = () => {
 
 async function submitQuiz() {
   const success = await quizStore.submitQuiz()
-  if (success) {
-    // Pass result through router state to avoid extra fetch
+  if (success || quizStore.diagnostico) {
     router.push({
       path: '/results',
       state: { diagnostico: quizStore.diagnostico }
     })
-  } else {
-    // If submit fails but we have local diagnosis, still show results
-    if (quizStore.diagnostico) {
-      router.push({
-        path: '/results',
-        state: { diagnostico: quizStore.diagnostico }
-      })
-    }
   }
 }
 
-// Button glow effect
+// Button glow
 const handleButtonMouseMove = (e) => {
   const btn = e.currentTarget
   const glow = btn.querySelector('.button-glow')
@@ -163,32 +145,3 @@ const detachButtonListeners = () => {
 
 .bg-folsom { background-color: #050505; }
 .bg-surface-container { background-color: #201f1f; }
-.text-loriga { color: #F0F5F9; }
-.text-halford { color: #C0C0C0; }
-.text-solstis { color: #D4AF37; }
-.text-folsom { color: #050505; }
-
-.gold-glow:hover {
-  box-shadow: 0 0 30px rgba(212, 175, 55, 0.4);
-}
-
-.interactive-button {
-  position: relative;
-  overflow: hidden;
-}
-.button-glow {
-  position: absolute;
-  width: 150px;
-  height: 150px;
-  background: radial-gradient(circle, rgba(212,175,55,0.3) 0%, transparent 70%);
-  border-radius: 50%;
-  pointer-events: none;
-  transform: translate(-50%, -50%);
-  transition: opacity 0.3s;
-  opacity: 0;
-  z-index: 10;
-}
-.interactive-button:hover .button-glow {
-  opacity: 1;
-}
-</style>

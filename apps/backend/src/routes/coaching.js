@@ -1,28 +1,23 @@
 import express from 'express';
-import jwt from 'jsonwebtoken';
+import { requireAuth } from '../middleware/auth.js';
 import CoachingPlan from '../models/CoachingPlan.js';
 import User from '../models/User.js';
 import { generateCoachingResponse } from '../services/groq.js';
 
 const router = express.Router();
 
-// Get or create coaching plan
+// Todas las rutas requieren auth — un solo middleware en vez de jwt.verify en cada ruta
+router.use(requireAuth);
+
+// GET /api/coaching/plan
 router.get('/plan', async (req, res) => {
   try {
-    const authHeader = req.headers.authorization;
-    if (!authHeader) return res.status(401).json({ error: 'No token' });
-
-    const token = authHeader.replace('Bearer ', '');
-    const decoded = jwt.verify(token, process.env.JWT_SECRET);
-
-    let plan = await CoachingPlan.findOne({ userId: decoded.userId })
-      .sort({ createdAt: -1 });
+    let plan = await CoachingPlan.findOne({ userId: req.user._id }).sort({ createdAt: -1 });
 
     if (!plan) {
-      const user = await User.findById(decoded.userId);
       plan = await CoachingPlan.create({
-        userId: decoded.userId,
-        archetype: user.archetype || 'presence',
+        userId: req.user._id,
+        archetype: req.user.archetype || 'presence',
         goals: [],
         actionItems: [],
         chatHistory: []
@@ -31,118 +26,82 @@ router.get('/plan', async (req, res) => {
 
     res.json(plan);
   } catch (err) {
+    console.error('Get plan error:', err);
     res.status(500).json({ error: 'Server error' });
   }
 });
 
-// Update goals
+// PUT /api/coaching/goals
 router.put('/goals', async (req, res) => {
   try {
-    const authHeader = req.headers.authorization;
-    if (!authHeader) return res.status(401).json({ error: 'No token' });
-
-    const token = authHeader.replace('Bearer ', '');
-    const decoded = jwt.verify(token, process.env.JWT_SECRET);
-
     const { goals } = req.body;
-
     const plan = await CoachingPlan.findOneAndUpdate(
-      { userId: decoded.userId },
+      { userId: req.user._id },
       { goals, updatedAt: new Date() },
       { sort: { createdAt: -1 }, new: true }
     );
-
     res.json(plan);
   } catch (err) {
     res.status(500).json({ error: 'Server error' });
   }
 });
 
-// Add action item
+// POST /api/coaching/actions
 router.post('/actions', async (req, res) => {
   try {
-    const authHeader = req.headers.authorization;
-    if (!authHeader) return res.status(401).json({ error: 'No token' });
-
-    const token = authHeader.replace('Bearer ', '');
-    const decoded = jwt.verify(token, process.env.JWT_SECRET);
-
     const { title, description, dueDate } = req.body;
-
     const plan = await CoachingPlan.findOneAndUpdate(
-      { userId: decoded.userId },
-      { 
-        $push: { actionItems: { title, description, dueDate } },
-        updatedAt: new Date()
-      },
+      { userId: req.user._id },
+      { $push: { actionItems: { title, description, dueDate } }, updatedAt: new Date() },
       { sort: { createdAt: -1 }, new: true }
     );
-
     res.json(plan);
   } catch (err) {
     res.status(500).json({ error: 'Server error' });
   }
 });
 
-// Toggle action completion
+// PATCH /api/coaching/actions/:actionId
 router.patch('/actions/:actionId', async (req, res) => {
   try {
-    const authHeader = req.headers.authorization;
-    if (!authHeader) return res.status(401).json({ error: 'No token' });
-
-    const token = authHeader.replace('Bearer ', '');
-    const decoded = jwt.verify(token, process.env.JWT_SECRET);
-
     const { completed } = req.body;
-
     const plan = await CoachingPlan.findOneAndUpdate(
-      { userId: decoded.userId, 'actionItems._id': req.params.actionId },
-      { 
-        $set: { 'actionItems.$.completed': completed, updatedAt: new Date() }
-      },
+      { userId: req.user._id, 'actionItems._id': req.params.actionId },
+      { $set: { 'actionItems.$.completed': completed, updatedAt: new Date() } },
       { new: true }
     );
-
     res.json(plan);
   } catch (err) {
     res.status(500).json({ error: 'Server error' });
   }
 });
 
-// Send message to AI coach
+// POST /api/coaching/chat
 router.post('/chat', async (req, res) => {
   try {
-    const authHeader = req.headers.authorization;
-    if (!authHeader) return res.status(401).json({ error: 'No token' });
-
-    const token = authHeader.replace('Bearer ', '');
-    const decoded = jwt.verify(token, process.env.JWT_SECRET);
-
     const { message } = req.body;
+    if (!message) return res.status(400).json({ error: 'message requerido' });
 
-    // Get user data for context
-    const user = await User.findById(decoded.userId);
-    const plan = await CoachingPlan.findOne({ userId: decoded.userId })
-      .sort({ createdAt: -1 });
+    const plan = await CoachingPlan.findOne({ userId: req.user._id }).sort({ createdAt: -1 });
 
-    // Generate AI response
     const aiResponse = await generateCoachingResponse({
       message,
-      archetype: user.archetype,
-      pillars: user.pillars,
+      archetype: req.user.archetype,
+      pillars: req.user.pillars,
       goals: plan?.goals || [],
       chatHistory: plan?.chatHistory.slice(-10) || []
     });
 
-    // Save to chat history
     await CoachingPlan.findOneAndUpdate(
-      { userId: decoded.userId },
+      { userId: req.user._id },
       {
         $push: {
-          chatHistory: [
-            { role: 'user', content: message },
-            { role: 'assistant', content: aiResponse }
-          ]
+          chatHistory: {
+            $each: [
+              { role: 'user',      content: message },
+              { role: 'assistant', content: aiResponse }
+            ]
+          }
         },
         updatedAt: new Date()
       },
