@@ -30,13 +30,13 @@
 </template>
 
 <script setup>
-defineProps({
-  question: { type: Object, required: true },
-  questionNumber: { type: Number, required: true },
-  selectedAnswer: { type: Number, default: null }
-})
+    defineProps({
+      question: { type: Object, required: true },
+      questionNumber: { type: Number, required: true },
+      selectedAnswer: { type: Number, default: null }  // ← índice 0-3 o null
+    })
 
-defineEmits(['answer'])
+    defineEmits(['answer'])  // ← emite el índice 0-3
 </script>
 
 <style scoped>

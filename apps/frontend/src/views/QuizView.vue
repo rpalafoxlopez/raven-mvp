@@ -31,10 +31,9 @@
 
       <!-- Question Card -->
       <QuestionCard
-        v-if="quizStore.questions.length && !quizStore.isComplete && !quizStore.loading"
         :question="quizStore.questions[quizStore.currentQuestion]"
         :questionNumber="quizStore.currentQuestion + 1"
-        :selectedAnswer="quizStore.answers[quizStore.currentQuestion]"
+        :selectedAnswer="quizStore.currentAnswer"  <!-- ← esto ya es el índice -->
         @answer="handleAnswer"
       />
 
@@ -93,8 +92,8 @@ onUnmounted(() => {
   detachButtonListeners()
 })
 
-const handleAnswer = (answer) => {
-  quizStore.answerQuestion(answer)
+const handleAnswer = (answerIndex) => {
+  quizStore.answerQuestion(answerIndex)
   quizStore.saveToStorage()
 }
 

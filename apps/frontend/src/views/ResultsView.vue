@@ -1,4 +1,4 @@
-<template>
+<<template>
   <div class="min-h-screen overflow-x-hidden bg-folsom text-loriga">
     <!-- Nav -->
     <nav class="fixed top-0 z-50 w-full border-b bg-folsom/90 backdrop-blur-md border-outline-variant/20">
@@ -269,7 +269,7 @@
 <script setup>
 import { ref, computed, onMounted, onUnmounted } from 'vue'
 import { useRouter } from 'vue-router'
-import { useAuthStore } from '@/stores/auth'
+import { useAuthStore } from '../stores/auth.js'
 
 const router = useRouter()
 const authStore = useAuthStore()
@@ -279,13 +279,9 @@ const error = ref(null)
 const email = ref('')
 const emailCapturing = ref(false)
 
-// ===== DATA SOURCE =====
-// Priority: 1) Router state (just completed quiz), 2) localStorage, 3) API fetch
-
 const diagnostico = ref(null)
 
 onMounted(async () => {
-  // 1. Try router state first (fresh from quiz)
   if (history.state?.diagnostico) {
     diagnostico.value = history.state.diagnostico
     loading.value = false
@@ -294,7 +290,6 @@ onMounted(async () => {
     return
   }
 
-  // 2. Try localStorage
   const stored = localStorage.getItem('raven_diagnostico')
   if (stored) {
     try {
@@ -308,7 +303,6 @@ onMounted(async () => {
     }
   }
 
-  // 3. No data found
   error.value = 'No encontramos un diagnóstico previo. Haz el quiz primero.'
   loading.value = false
 })
@@ -317,23 +311,19 @@ onUnmounted(() => {
   detachButtonListeners()
 })
 
-// ===== COMPUTED =====
-
 const perfil = computed(() => {
   if (!diagnostico.value) return null
   return calcularPerfil(diagnostico.value)
 })
 
 const metricas = computed(() => diagnostico.value?.metricas || [])
-
 const elasticidadPct = computed(() => diagnostico.value?.indice_elasticidad_pct || 0)
-
 const alertaBurnout = computed(() => diagnostico.value?.alerta_burnout || false)
 
 const antidoto = computed(() => {
   const bloqueado = diagnostico.value?.recurso_bloqueado
   if (!bloqueado) return null
-  return ANTIDOTOS[bloqueado] || null
+  return getAntidoto(bloqueado)
 })
 
 const moduloInercia = computed(() => {
@@ -370,14 +360,57 @@ const moduloElasticidad = computed(() => {
 
 // ===== METHODS =====
 
+// BUG 3 FIX: Función que busca en PILARES_INFO con fallback
+function getPilarInfo(id) {
+  // Intentar match exacto
+  if (PILARES_INFO[id]) return PILARES_INFO[id]
+  
+  // Intentar match por nombre (case insensitive)
+  const lowerId = id.toLowerCase()
+  for (const [key, value] of Object.entries(PILARES_INFO)) {
+    if (key.toLowerCase() === lowerId || 
+        value.nombre.toLowerCase() === lowerId ||
+        value.rockstars.some(r => r.toLowerCase() === lowerId)) {
+      return value
+    }
+  }
+  
+  // Fallback: no dejar undefined
+  return {
+    nombre: id.charAt(0).toUpperCase() + id.slice(1),
+    rockstars: [id],
+    color: '#D4AF37',
+    descripcion: `Pilar ${id}: tu recurso operativo principal.`
+  }
+}
+
+function getAntidoto(id) {
+  // Intentar match exacto
+  if (ANTIDOTOS[id]) return ANTIDOTOS[id]
+  
+  // Buscar por pilar info
+  const info = getPilarInfo(id)
+  if (info && ANTIDOTOS[info.nombre.toLowerCase()]) {
+    return ANTIDOTOS[info.nombre.toLowerCase()]
+  }
+  
+  // Fallback genérico
+  return {
+    titulo: 'Intervención Personalizada',
+    diagnostico: `Tu recurso ${id} necesita atención. El algoritmo detecta un patrón de uso que requiere ajuste.`,
+    accion: 'Dedica 30 minutos hoy a reflexionar sobre qué te bloquea y escribe un plan de acción concreto.'
+  }
+}
+
 function calcularPerfil(d) {
   const sorted = [...d.metricas].sort((a, b) => b.uso_total - a.uso_total)
-  const dominante = PILARES_INFO[sorted[0].id]
-  const secundario = PILARES_INFO[sorted[1].id]
-  const terciario = sorted[2] ? PILARES_INFO[sorted[2].id] : null
+  
+  const dominante = getPilarInfo(sorted[0].id)
+  const secundario = getPilarInfo(sorted[1].id)
+  const terciario = sorted[2] ? getPilarInfo(sorted[2].id) : null
   
   const bloqueadoId = d.recurso_bloqueado
-  const bloqueado = bloqueadoId ? PILARES_INFO[bloqueadoId] : null
+  const bloqueado = bloqueadoId ? getPilarInfo(bloqueadoId) : null
 
   return {
     dominante: {
@@ -408,12 +441,12 @@ function calcularPerfil(d) {
 }
 
 function getPilarLabel(id) {
-  const info = PILARES_INFO[id]
+  const info = getPilarInfo(id)
   return info ? info.rockstars[0] : id
 }
 
 function getPilarColor(id) {
-  const info = PILARES_INFO[id]
+  const info = getPilarInfo(id)
   return info ? info.color : '#D4AF37'
 }
 
@@ -486,9 +519,10 @@ const initRevealObserver = () => {
   document.querySelectorAll('.reveal').forEach(el => observer.observe(el))
 }
 
-// ===== DATA CONSTANTS (inline — no external deps) =====
+// ===== DATA CONSTANTS =====
+// IDs en español (frontend) — el backend puede enviar en inglés o español
 
-const PILARES_INFO = {
+const PILARES_INFO1 = {
   disciplina: { nombre: 'Disciplina', rockstars: ['Cash', 'Hetfield'], color: '#D4AF37', descripcion: 'Tu fuerza está en la constancia y la ética de trabajo. No necesitas motivación, necesitas un riff que seguir.' },
   vision: { nombre: 'Visión', rockstars: ['Larregui', 'Bowie'], color: '#F0F5F9', descripcion: 'Ves patrones donde otros ven caos. Tu mente opera en frecuencias que la mayoría no sintoniza.' },
   arquitectura: { nombre: 'Arquitectura', rockstars: ['Cerati', 'Fripp'], color: '#C0C0C0', descripcion: 'Construyes sistemas impecables y hermosos. Tu obsesión por la perfección es tu superpoder y tu trampa.' },
@@ -499,7 +533,7 @@ const PILARES_INFO = {
   innovacion: { nombre: 'Innovación', rockstars: ['Cerati', 'Eno'], color: '#00d4ff', descripcion: 'Creas lo que no existe todavía. Tu mente es un laboratorio donde la lógica y la locura coexisten.' }
 }
 
-const ANTIDOTOS = {
+const ANTIDOTOS1 = {
   disciplina: {
     titulo: 'El Ritual del Caos Controlado',
     diagnostico: 'Tu exceso de disciplina te ha convertido en una máquina. Necesitas aprender a soltar sin caer en el desorden.',
@@ -539,6 +573,60 @@ const ANTIDOTOS = {
     titulo: 'Perfección de lo Existente',
     diagnostico: 'Siempre creas nuevo, nunca terminas. Necesitas completar algo viejo antes de que la novedad te devore.',
     accion: 'Termina un proyecto abandonado antes de empezar uno nuevo. La innovación sin ejecución es fantasía con PowerPoint.'
+  }
+}
+
+const PILARES_INFO = {
+  presence: { nombre: 'Presencia', rockstars: ['Cash', 'Hetfield'], color: '#D4AF37', descripcion: 'Tu fuerza está en la constancia y la ética de trabajo. No necesitas motivación, necesitas un riff que seguir.' },
+  creativity: { nombre: 'Creatividad', rockstars: ['Cerati', 'Eno'], color: '#00d4ff', descripcion: 'Creas lo que no existe todavía. Tu mente es un laboratorio donde la lógica y la locura coexisten.' },
+  resilience: { nombre: 'Resiliencia', rockstars: ['Cash', 'Dylan'], color: '#C0C0C0', descripcion: 'Te levantas una y otra vez. Tu resistencia es tu mayor arma.' },
+  charisma: { nombre: 'Carisma', rockstars: ['Jagger', 'Halford'], color: '#e9c349', descripcion: 'Naces para estar al frente. No pides permiso; el escenario te pertenece.' },
+  discipline: { nombre: 'Disciplina', rockstars: ['Hetfield', 'Fripp'], color: '#D4AF37', descripcion: 'Tu fuerza está en la constancia y la ética de trabajo.' },
+  intuition: { nombre: 'Intuición', rockstars: ['Larregui', 'Bowie'], color: '#F0F5F9', descripcion: 'Ves patrones donde otros ven caos. Tu mente opera en frecuencias que la mayoría no sintoniza.' },
+  rebellion: { nombre: 'Rebeldía', rockstars: ['Bunbury', 'Dylan'], color: '#ff0000', descripcion: 'Rompes reglas que otros ni siquiera cuestionan. Eres el incómodo necesario.' },
+  vision: { nombre: 'Visión', rockstars: ['Larregui', 'Bowie'], color: '#F0F5F9', descripcion: 'Ves patrones donde otros ven caos. Tu mente opera en frecuencias que la mayoría no sintoniza.' }
+}
+
+const ANTIDOTOS = {
+  presence: {
+    titulo: 'El Ritual del Caos Controlado',
+    diagnostico: 'Tu exceso de disciplina te ha convertido en una máquina. Necesitas aprender a soltar.',
+    accion: 'Hoy, durante 30 minutos, haz algo que no tenga ningún objetivo productivo. Solo por el placer.'
+  },
+  creativity: {
+    titulo: 'Perfección de lo Existente',
+    diagnostico: 'Siempre creas nuevo, nunca terminas. Necesitas completar algo viejo.',
+    accion: 'Termina un proyecto abandonado antes de empezar uno nuevo.'
+  },
+  resilience: {
+    titulo: 'La Vulnerabilidad como Fuerza',
+    diagnostico: 'Tu resistencia te ha hecho creer que no necesitas ayuda. Eso te aísla.',
+    accion: 'Pide ayuda genuinamente a alguien hoy. Sin justificaciones.'
+  },
+  charisma: {
+    titulo: 'Servicio Humilde',
+    diagnostico: 'Tu trono está vacío porque nadie quiere estar cerca de un dictador.',
+    accion: 'Escucha sin interrumpir durante 30 minutos. Agradece sin condescendencia.'
+  },
+  discipline: {
+    titulo: 'El Ritual del Caos Controlado',
+    diagnostico: 'Tu exceso de disciplina te ha convertido en una máquina.',
+    accion: 'Haz algo sin objetivo productivo durante 30 minutos.'
+  },
+  intuition: {
+    titulo: 'Anclaje en lo Terrenal',
+    diagnostico: 'Vives tanto en el futuro que olvidas el presente.',
+    accion: 'Camina 20 minutos sin música, sin podcast. Solo observa.'
+  },
+  rebellion: {
+    titulo: 'Canalización Estratégica',
+    diagnostico: 'Tu rebeldía sin dirección te está aislando.',
+    accion: 'Identifica una regla injusta y propón una alternativa constructiva.'
+  },
+  vision: {
+    titulo: 'Anclaje en lo Terrenal',
+    diagnostico: 'Vives tanto en el futuro que olvidas el presente.',
+    accion: 'Camina 20 minutos sin música. Solo observa lo físico.'
   }
 }
 </script>

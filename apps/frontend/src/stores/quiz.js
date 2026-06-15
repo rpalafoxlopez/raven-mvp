@@ -4,16 +4,14 @@ import { ref, computed } from 'vue'
 const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:3000'
 
 export const useQuizStore = defineStore('quiz', () => {
-  // ===== STATE =====
   const questions = ref([])
   const currentQuestion = ref(0)
-  const answers = ref([])        // { questionId, answer, pillar, score }
-  const diagnostico = ref(null)  // resultado del backend
-  const loading = ref(false)     // carga inicial de preguntas
-  const submitting = ref(false)  // envío del quiz
+  const answers = ref([])
+  const diagnostico = ref(null)
+  const loading = ref(false)
+  const submitting = ref(false)
   const error = ref(null)
 
-  // ===== COMPUTED =====
   const progress = computed(() => {
     if (!questions.value.length) return 0
     return Math.round((currentQuestion.value / questions.value.length) * 100)
@@ -27,7 +25,6 @@ export const useQuizStore = defineStore('quiz', () => {
     return answers.value[currentQuestion.value]?.answer ?? null
   })
 
-  // ===== PERSISTENCE =====
   const STORAGE_KEY = 'raven_quiz_progress'
   const DIAGNOSTICO_KEY = 'raven_diagnostico'
 
@@ -46,7 +43,6 @@ export const useQuizStore = defineStore('quiz', () => {
       if (!stored) return false
 
       const parsed = JSON.parse(stored)
-      // Solo restaurar si es de las últimas 24h
       if (Date.now() - parsed.timestamp > 24 * 60 * 60 * 1000) {
         clearStorage()
         return false
@@ -71,44 +67,23 @@ export const useQuizStore = defineStore('quiz', () => {
     localStorage.setItem(DIAGNOSTICO_KEY, JSON.stringify(data))
   }
 
-  function loadDiagnostico() {
-    try {
-      const stored = localStorage.getItem(DIAGNOSTICO_KEY)
-      if (stored) {
-        diagnostico.value = JSON.parse(stored)
-        return true
-      }
-      return false
-    } catch (e) {
-      localStorage.removeItem(DIAGNOSTICO_KEY)
-      return false
-    }
-  }
-
-  // ===== ACTIONS =====
-
   async function fetchQuestions() {
     loading.value = true
     error.value = null
 
     try {
-      // Público: no requiere auth
       const response = await fetch(`${API_URL}/api/quiz/questions`)
       if (!response.ok) throw new Error('Error cargando preguntas')
 
       const data = await response.json()
       questions.value = data
 
-      // Si había progreso guardado, preguntar si restaurar (o restaurar auto)
       const hadProgress = loadFromStorage()
       if (hadProgress && answers.value.length > 0) {
-        // Validar que las preguntas coincidan
         const valid = answers.value.every(a => 
           questions.value.some(q => q.id === a.questionId)
         )
-        if (!valid) {
-          reset()
-        }
+        if (!valid) reset()
       }
 
       return data
@@ -129,13 +104,15 @@ export const useQuizStore = defineStore('quiz', () => {
       questionId: question.id,
       answer: answerIndex,
       pillar: question.pillar,
-      score: question.scores?.[answerIndex] ?? 0  // score para ese pilar
+      score: question.scores?.[answerIndex] ?? 0
     }
 
-    // Si ya había respuesta en esta posición (usuario fue atrás y re-respondió)
-    if (answers.value[currentQuestion.value]) {
+    if (answers.value[currentQuestion.value] !== undefined) {
       answers.value[currentQuestion.value] = answerData
     } else {
+      while (answers.value.length < currentQuestion.value) {
+        answers.value.push(null)
+      }
       answers.value.push(answerData)
     }
 
@@ -149,8 +126,6 @@ export const useQuizStore = defineStore('quiz', () => {
   function goBack() {
     if (currentQuestion.value > 0) {
       currentQuestion.value--
-      // No hacemos pop — dejamos la respuesta para que se muestre pre-seleccionada
-      // El usuario puede cambiarla con answerQuestion()
       saveToStorage()
     }
   }
@@ -165,11 +140,23 @@ export const useQuizStore = defineStore('quiz', () => {
     error.value = null
 
     try {
-      // Enviar al backend (puede ser público o requerir auth después)
+      const payload = answers.value.map(a => ({
+        questionId: a.questionId,
+        pillar: a.pillar,
+        score: a.score
+      }))
+
+      const headers = { 'Content-Type': 'application/json' }
+      const token = localStorage.getItem('raven_token')  // ← UNA SOLA VEZ
+      
+      if (token) {
+        headers['Authorization'] = `Bearer ${token}`
+      }
+
       const response = await fetch(`${API_URL}/api/quiz/submit`, {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ answers: answers.value })
+        headers,
+        body: JSON.stringify({ answers: payload })
       })
 
       if (!response.ok) {
@@ -180,8 +167,6 @@ export const useQuizStore = defineStore('quiz', () => {
       const data = await response.json()
       diagnostico.value = data
       saveDiagnostico(data)
-
-      // Limpiar progreso del quiz (ya terminó)
       localStorage.removeItem(STORAGE_KEY)
 
       return data
@@ -189,7 +174,6 @@ export const useQuizStore = defineStore('quiz', () => {
       error.value = err.message || 'Error enviando el quiz. Intenta de nuevo.'
       console.error('submitQuiz error:', err)
 
-      // Fallback: calcular diagnóstico local si el backend falla
       const localDiagnostico = calcularDiagnosticoLocal()
       diagnostico.value = localDiagnostico
       saveDiagnostico(localDiagnostico)
@@ -199,19 +183,17 @@ export const useQuizStore = defineStore('quiz', () => {
     }
   }
 
-  // ===== LOCAL FALLBACK (si el backend no responde) =====
   function calcularDiagnosticoLocal() {
     const pillarScores = {}
     const pillarShadows = {}
 
     answers.value.forEach(a => {
+      if (!a) return
       if (!pillarScores[a.pillar]) {
         pillarScores[a.pillar] = 0
         pillarShadows[a.pillar] = 0
       }
       pillarScores[a.pillar] += a.score || 1
-
-      // Sombra: respuestas de evitación (score bajo = sombra alta)
       if ((a.score || 0) <= 1) {
         pillarShadows[a.pillar] += 1
       }
@@ -236,9 +218,9 @@ export const useQuizStore = defineStore('quiz', () => {
       recurso_bloqueado: bloqueado,
       alerta_burnout: dominante.costo >= 3,
       impacto_desgaste: dominante.costo * 25,
-      multiplicador_tiempo: 1.5, // default
+      multiplicador_tiempo: 1.5,
       indice_elasticidad_pct: elasticidad,
-      _local: true // flag para saber que es fallback
+      _local: true
     }
   }
 
@@ -255,7 +237,6 @@ export const useQuizStore = defineStore('quiz', () => {
   }
 
   return {
-    // State
     questions,
     currentQuestion,
     answers,
@@ -263,11 +244,9 @@ export const useQuizStore = defineStore('quiz', () => {
     loading,
     submitting,
     error,
-    // Computed
     progress,
     isComplete,
     currentAnswer,
-    // Actions
     fetchQuestions,
     answerQuestion,
     goBack,
@@ -276,7 +255,6 @@ export const useQuizStore = defineStore('quiz', () => {
     saveToStorage,
     loadFromStorage,
     saveDiagnostico,
-    loadDiagnostico,
     clearStorage,
     clearError
   }
