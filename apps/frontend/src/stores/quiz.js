@@ -1,4 +1,3 @@
-// stores/quizStore.js
 import { defineStore } from 'pinia'
 import { ref, computed } from 'vue'
 
@@ -9,10 +8,8 @@ const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:3000'
 // ─────────────────────────────────────────────────────────────
 
 export const ARQUETIPOS = {
-  architect: {
-    id: 'architect',
-    backendKey: 'discipline',
-    codigo: 'P1',
+  P1: {
+    id: 'P1',
     nombre: 'El Arquitecto Sónico',
     icono: '🏗️',
     mecanismo: 'Planificación, ordenamiento micro y macro, diseño de sistemas, optimización de datos y predictibilidad.',
@@ -24,10 +21,8 @@ export const ARQUETIPOS = {
     rockstarPrincipal: 'Bruce Springsteen',
     rockstarSecundario: 'James Hetfield'
   },
-  chameleon: {
-    id: 'chameleon',
-    backendKey: 'intuition',
-    codigo: 'P2',
+  P2: {
+    id: 'P2',
     nombre: 'El Alienígena Camaleón',
     icono: '👽',
     mecanismo: 'Flexibilidad radical, cambio de código, adaptabilidad, reinvención y corte de lazos.',
@@ -39,10 +34,8 @@ export const ARQUETIPOS = {
     rockstarPrincipal: 'David Bowie',
     rockstarSecundario: 'Lady Gaga'
   },
-  shaman: {
-    id: 'shaman',
-    backendKey: 'charisma',
-    codigo: 'P3',
+  P3: {
+    id: 'P3',
     nombre: 'El Chamán de la Tribu',
     icono: '🔥',
     mecanismo: 'Cohesión, reciprocidad, soporte colectivo, empatía operativa y lealtad de red.',
@@ -54,10 +47,8 @@ export const ARQUETIPOS = {
     rockstarPrincipal: 'Bono',
     rockstarSecundario: 'Freddie Mercury'
   },
-  wanderer: {
-    id: 'wanderer',
-    backendKey: 'vision',
-    codigo: 'P4',
+  P4: {
+    id: 'P4',
     nombre: 'El Nobel Errante',
     icono: '🌑',
     mecanismo: 'Pausa, introspección, abstracción conceptual, aislamiento estratégico y distancia analítica.',
@@ -69,10 +60,8 @@ export const ARQUETIPOS = {
     rockstarPrincipal: 'Bob Dylan',
     rockstarSecundario: 'Thom Yorke'
   },
-  outlaw: {
-    id: 'outlaw',
-    backendKey: 'rebellion',
-    codigo: 'P5',
+  P5: {
+    id: 'P5',
     nombre: 'El Forajido del Duelo',
     icono: '⚱️',
     mecanismo: 'Procesamiento del dolor, catarsis, aceptación de la pérdida y habitar la crisis sin filtros.',
@@ -84,10 +73,8 @@ export const ARQUETIPOS = {
     rockstarPrincipal: 'Kurt Cobain',
     rockstarSecundario: 'Ian Curtis'
   },
-  iconoclast: {
-    id: 'iconoclast',
-    backendKey: 'creativity',
-    codigo: 'P6',
+  P6: {
+    id: 'P6',
     nombre: 'El Iconoclasta Satírico',
     icono: '🎭',
     mecanismo: 'Desmitificación, ironía defensiva, relativización del drama y cinismo táctico.',
@@ -99,10 +86,8 @@ export const ARQUETIPOS = {
     rockstarPrincipal: 'Frank Zappa',
     rockstarSecundario: 'Liam Gallagher'
   },
-  worker: {
-    id: 'worker',
-    backendKey: 'resilience',
-    codigo: 'P7',
+  P7: {
+    id: 'P7',
     nombre: 'La Resistencia Obrera',
     icono: '⚒️',
     mecanismo: 'Persistencia a largo plazo, contención del daño, soporte de la carga, disciplina dura y estoicismo.',
@@ -114,10 +99,8 @@ export const ARQUETIPOS = {
     rockstarPrincipal: 'Johnny Cash',
     rockstarSecundario: 'Bruce Dickinson'
   },
-  dionysian: {
-    id: 'dionysian',
-    backendKey: 'presence',
-    codigo: 'P8',
+  P8: {
+    id: 'P8',
     nombre: 'El Canalla Dionisíaco',
     icono: '🍷',
     mecanismo: 'Impulso corporal, juego, instinto animal, velocidad, riesgo calculado y acción visceral.',
@@ -131,89 +114,13 @@ export const ARQUETIPOS = {
   }
 }
 
-// Helper: mapeo inverso backendKey → arquetipoId
-const BACKEND_TO_ARQUETIPO = {}
-Object.values(ARQUETIPOS).forEach(a => {
-  if (a.backendKey) BACKEND_TO_ARQUETIPO[a.backendKey] = a.id
-})
-
-// ─────────────────────────────────────────────────────────────
-// PREGUNTAS (32 total: 4 por arquetipo, 2 funcional + 2 sombra)
-// ─────────────────────────────────────────────────────────────
-
-// P1: Arquitecto
-const P1 = [
-  { id: 1,  arquetipoId: 'architect', backendPillar: 'discipline', tipo: 'funcional', peso: 2, texto: 'Cuando todo se descontrola, mi instinto es sentarme y reorganizar el caos en pasos concretos.' },
-  { id: 2,  arquetipoId: 'architect', backendPillar: 'discipline', tipo: 'funcional', peso: 1, texto: 'Me siento en paz cuando tengo un plan claro y métricas que medir.' },
-  { id: 3,  arquetipoId: 'architect', backendPillar: 'discipline', tipo: 'sombra',    peso: 3, texto: 'Cuando estoy agotado, hago más listas y planifico más duro, como si organizar fuera a curar el cansancio.' },
-  { id: 4,  arquetipoId: 'architect', backendPillar: 'discipline', tipo: 'sombra',    peso: 2, texto: 'Me paralizo si no tengo certeza del resultado antes de empezar.' },
-]
-
-// P2: Camaleón
-const P2 = [
-  { id: 5,  arquetipoId: 'chameleon', backendPillar: 'intuition', tipo: 'funcional', peso: 2, texto: 'Sé cuándo un proyecto, relación o trabajo ya no tiene vida y me despido sin mirar atrás.' },
-  { id: 6,  arquetipoId: 'chameleon', backendPillar: 'intuition', tipo: 'funcional', peso: 1, texto: 'Me reinvencio fácilmente. No me aferro a versiones viejas de mí mismo.' },
-  { id: 7,  arquetipoId: 'chameleon', backendPillar: 'intuition', tipo: 'sombra',    peso: 3, texto: 'He abandonado proyectos prometedores solo porque me aburrí o sentí fricción.' },
-  { id: 8,  arquetipoId: 'chameleon', backendPillar: 'intuition', tipo: 'sombra',    peso: 2, texto: 'A veces confundo "evolucionar" con "huir". Cambio de ciudad/trabajo/pareja para no enfrentar lo difícil.' },
-]
-
-// P3: Chamán
-const P3 = [
-  { id: 9,  arquetipoId: 'shaman', backendPillar: 'charisma', tipo: 'funcional', peso: 2, texto: 'Soy la persona a la que todos acuden en crisis. Sé contener el caos ajeno.' },
-  { id: 10, arquetipoId: 'shaman', backendPillar: 'charisma', tipo: 'funcional', peso: 1, texto: 'Prefiero avanzar en equipo, aunque sea más lento, antes que solo y rápido.' },
-  { id: 11, arquetipoId: 'shaman', backendPillar: 'charisma', tipo: 'sombra',    peso: 3, texto: 'Me siento culpable si avanzo mientras alguien de mi círculo está atrás o sufriendo.' },
-  { id: 12, arquetipoId: 'shaman', backendPillar: 'charisma', tipo: 'sombra',    peso: 2, texto: 'Necesito que otros validen mis decisiones. Sin respaldo externo, dudo de mi propio juicio.' },
-]
-
-// P4: Errante
-const P4 = [
-  { id: 13, arquetipoId: 'wanderer', backendPillar: 'vision', tipo: 'funcional', peso: 2, texto: 'Cuando el mundo exige reacción inmediata, sé detenerme y no responder. Observo primero.' },
-  { id: 14, arquetipoId: 'wanderer', backendPillar: 'vision', tipo: 'funcional', peso: 1, texto: 'Necesito períodos de soledad para pensar. Sin ellos, me siento sobrecargado.' },
-  { id: 15, arquetipoId: 'wanderer', backendPillar: 'vision', tipo: 'sombra',    peso: 3, texto: 'He pasado meses "analizando" mi situación sin dar un solo paso concreto.' },
-  { id: 16, arquetipoId: 'wanderer', backendPillar: 'vision', tipo: 'sombra',    peso: 2, texto: 'Uso la introspección como refugio. Prefiero teorizar sobre mi vida a vivirla.' },
-]
-
-// P5: Forajido
-const P5 = [
-  { id: 17, arquetipoId: 'outlaw', backendPillar: 'rebellion', tipo: 'funcional', peso: 2, texto: 'No evito el dolor. Cuando algo se rompe, me quedo ahí hasta entender qué pasó y qué significa.' },
-  { id: 18, arquetipoId: 'outlaw', backendPillar: 'rebellion', tipo: 'funcional', peso: 1, texto: 'He transformado experiencias dolorosas en arte, música o alguna forma de expresión.' },
-  { id: 19, arquetipoId: 'outlaw', backendPillar: 'rebellion', tipo: 'sombra',    peso: 3, texto: 'Hay días en los que mi sufrimiento se siente más real que cualquier otra parte de mí.' },
-  { id: 20, arquetipoId: 'outlaw', backendPillar: 'rebellion', tipo: 'sombra',    peso: 2, texto: 'Me cuesta dejar atrás el pasado. No porque no quiera, sino porque se siente traición.' },
-]
-
-// P6: Iconoclasta
-const P6 = [
-  { id: 21, arquetipoId: 'iconoclast', backendPillar: 'creativity', tipo: 'funcional', peso: 2, texto: 'Sé usar el humor para desarmar situaciones que a otros les aplastarían.' },
-  { id: 22, arquetipoId: 'iconoclast', backendPillar: 'creativity', tipo: 'funcional', peso: 1, texto: 'No me tomo en serio los roles que la sociedad impone. Me río de la autoridad.' },
-  { id: 23, arquetipoId: 'iconoclast', backendPillar: 'creativity', tipo: 'sombra',    peso: 3, texto: 'Cuando algo duele de verdad, hago un chiste. Es mi forma de no sentirlo.' },
-  { id: 24, arquetipoId: 'iconoclast', backendPillar: 'creativity', tipo: 'sombra',    peso: 2, texto: 'La gente me dice que nunca me ve "vulnerable" o "real". Siempre estoy "performeando".' },
-]
-
-// P7: Resistencia
-const P7 = [
-  { id: 25, arquetipoId: 'worker', backendPillar: 'resilience', tipo: 'funcional', peso: 2, texto: 'He aguantado temporadas duras que otros habrían abandonado. No me quiebro fácil.' },
-  { id: 26, arquetipoId: 'worker', backendPillar: 'resilience', tipo: 'funcional', peso: 1, texto: 'Creo en el esfuerzo constante más que en el talento natural.' },
-  { id: 27, arquetipoId: 'worker', backendPillar: 'resilience', tipo: 'sombra',    peso: 3, texto: 'Sigo cargando con responsabilidades que ya no son mías porque "aguantar" es mi identidad.' },
-  { id: 28, arquetipoId: 'worker', backendPillar: 'resilience', tipo: 'sombra',    peso: 2, texto: 'Glorifico el sacrificio. Decir "estoy exhausto" me hace sentir más válido que decir "necesito ayuda".' },
-]
-
-// P8: Dionisíaco
-const P8 = [
-  { id: 29, arquetipoId: 'dionysian', backendPillar: 'presence', tipo: 'funcional', peso: 2, texto: 'Cuando estoy atascado mentalmente, muevo el cuerpo: bailo, corro, manejo. La física rompe la parálisis.' },
-  { id: 30, arquetipoId: 'dionysian', backendPillar: 'presence', tipo: 'funcional', peso: 1, texto: 'Tomo decisiones importantes con las tripas, no con hojas de cálculo. Y usualmente funcionan.' },
-  { id: 31, arquetipoId: 'dionysian', backendPillar: 'presence', tipo: 'sombra',    peso: 3, texto: 'He quemado recursos, relaciones o salud por no poder tolerar la quietud o el aburrimiento.' },
-  { id: 32, arquetipoId: 'dionysian', backendPillar: 'presence', tipo: 'sombra',    peso: 2, texto: 'Mi impulso de "hacer algo" me ha metido en problemas mayores que los que intentaba resolver.' },
-]
-
-export const TODAS_LAS_PREGUNTAS = [...P1, ...P2, ...P3, ...P4, ...P5, ...P6, ...P7, ...P8]
-
 // ─────────────────────────────────────────────────────────────
 // STORE
 // ─────────────────────────────────────────────────────────────
 
 export const useQuizStore = defineStore('quiz', () => {
   // ── State ──
-  const questions = ref(TODAS_LAS_PREGUNTAS)
+  const questions = ref([])
   const currentQuestion = ref(0)
   const answers = ref([])
   const diagnostico = ref(null)
@@ -228,122 +135,42 @@ export const useQuizStore = defineStore('quiz', () => {
   })
 
   const isComplete = computed(() =>
+    questions.value.length > 0 &&
     answers.value.filter(a => a !== null && a !== undefined).length === questions.value.length
   )
 
+  const currentQuestionData = computed(() =>
+    questions.value[currentQuestion.value] || null
+  )
+
   const currentAnswer = computed(() => {
-    const q = questions.value[currentQuestion.value]
+    const q = currentQuestionData.value
     if (!q) return null
-    const found = answers.value.find(a => a.preguntaId === q.id)
-    return found?.valor ?? null
+    const found = answers.value.find(a => a.questionId === q.id)
+    return found ?? null
   })
 
-  const preguntaActual = computed(() => questions.value[currentQuestion.value] || null)
+  const faseActual = computed(() => {
+    const q = currentQuestionData.value
+    return q?.fase || null
+  })
 
-  // ── Cálculo de resultados (dual: funcional vs sombra) ──
-  const resultadosCalculados = computed(() => {
-    const arquetipoIds = Object.keys(ARQUETIPOS)
-    
-    const resultados = arquetipoIds.map(id => {
-      const arquetipo = ARQUETIPOS[id]
-      const preguntasArquetipo = TODAS_LAS_PREGUNTAS.filter(p => p.arquetipoId === id)
-      const respuestasArquetipo = answers.value.filter(r => 
-        preguntasArquetipo.some(p => p.id === r.preguntaId)
-      )
-
-      // Separar funcional vs sombra
-      const funcional = respuestasArquetipo.filter(r => {
-        const p = preguntasArquetipo.find(pp => pp.id === r.preguntaId)
-        return p.tipo === 'funcional'
-      })
-      const sombra = respuestasArquetipo.filter(r => {
-        const p = preguntasArquetipo.find(pp => pp.id === r.preguntaId)
-        return p.tipo === 'sombra'
-      })
-
-      // Calcular puntajes (0-10 por pregunta, max 20 por tipo)
-      const puntajeFuncional = funcional.reduce((acc, r) => acc + r.valor, 0)
-      const maxFuncional = funcional.length * 5
-      const porcentajeFuncional = maxFuncional > 0 ? (puntajeFuncional / maxFuncional) * 100 : 0
-
-      const puntajeSombra = sombra.reduce((acc, r) => acc + r.valor, 0)
-      const maxSombra = sombra.length * 5
-      const porcentajeSombra = maxSombra > 0 ? (puntajeSombra / maxSombra) * 100 : 0
-
-      const puntajeTotal = puntajeFuncional + puntajeSombra
-
-      // Determinar estado
-      let estado
-      const diff = porcentajeFuncional - porcentajeSombra
-      
-      if (puntajeTotal < 8) {
-        estado = 'dormido'
-      } else if (porcentajeSombra > 60 && porcentajeFuncional < 40) {
-        estado = 'en-sombra'
-      } else if (porcentajeFuncional > 60 && porcentajeSombra < 40) {
-        estado = 'saludable'
-      } else if (Math.abs(diff) < 15) {
-        estado = 'equilibrado'
-      } else {
-        estado = 'dominante'
-      }
-
-      return {
-        arquetipoId: id,
-        puntajeFuncional,
-        puntajeSombra,
-        puntajeTotal,
-        porcentajeFuncional: Math.round(porcentajeFuncional),
-        porcentajeSombra: Math.round(porcentajeSombra),
-        estado
-      }
-    }).sort((a, b) => b.puntajeTotal - a.puntajeTotal)
-
-    const dominante = resultados[0]
-    const secundario = resultados[1]
-    const enSombra = resultados.find(r => r.estado === 'en-sombra') || null
-    const dormidos = resultados.filter(r => r.estado === 'dormido')
-
-    // Generar código de perfil (top 3)
-    const top3 = resultados.slice(0, 3)
-    const codigo = top3.map(r => ARQUETIPOS[r.arquetipoId].codigo).join('-')
-    const nombre = top3.map(r => ARQUETIPOS[r.arquetipoId].nombre).join(' + ')
-
-    // Alertas
-    const alertas = {
-      burnout: resultados.some(r => 
-        (r.arquetipoId === 'architect' || r.arquetipoId === 'worker' || r.arquetipoId === 'shaman') && 
-        r.estado === 'en-sombra'
-      ),
-      fuga: resultados.some(r => 
-        r.arquetipoId === 'chameleon' && r.estado === 'en-sombra'
-      ),
-      paralisis: resultados.some(r => 
-        r.arquetipoId === 'wanderer' && r.estado === 'en-sombra'
-      ),
-      codependencia: resultados.some(r => 
-        r.arquetipoId === 'shaman' && r.estado === 'en-sombra'
-      )
+  const faseLabel = computed(() => {
+    const labels = {
+      cronologia: 'FASE 0 — Cronología',
+      activacion: 'FASE I — Activación Automática',
+      costo: 'FASE II — Costo Energético',
+      flexibilidad: 'FASE III — Flexibilidad',
+      sombra: 'FASE IV — Sombra y Bloqueo',
+      espejo: 'FASE V — Reactivos Espejo',
+      validacion: 'Validación Final'
     }
-
-    return {
-      resultados,
-      dominante,
-      secundario,
-      enSombra,
-      dormidos,
-      perfil: {
-        codigo,
-        nombre,
-        descripcion: generarDescripcionPerfil(dominante, secundario, enSombra),
-        alertas
-      }
-    }
+    return labels[faseActual.value] || ''
   })
 
   // ── Storage ──
-  const STORAGE_KEY = 'raven_quiz_v2'
-  const DIAGNOSTICO_KEY = 'raven_diagnostico_v2'
+  const STORAGE_KEY = 'raven_quiz_v3'
+  const DIAGNOSTICO_KEY = 'raven_diagnostico_v3'
 
   function saveToStorage() {
     localStorage.setItem(STORAGE_KEY, JSON.stringify({
@@ -381,72 +208,22 @@ export const useQuizStore = defineStore('quiz', () => {
     localStorage.setItem(DIAGNOSTICO_KEY, JSON.stringify(data))
   }
 
-  // ── API (compatibilidad con backend viejo) ──
+  // ── API ──
   async function fetchQuestions() {
     loading.value = true
-    await new Promise(r => setTimeout(r, 300))
-    loadFromStorage()
-    loading.value = false
-    return questions.value
-  }
-
-  async function submitQuiz() {
-    if (!isComplete.value) {
-      error.value = 'Responde todas las preguntas primero.'
-      return null
-    }
-
-    submitting.value = true
     error.value = null
-
     try {
-      const localResult = resultadosCalculados.value
-
-      const payload = {
-        answers: answers.value.map(a => {
-          const q = TODAS_LAS_PREGUNTAS.find(p => p.id === a.preguntaId)
-          return {
-            questionId: a.preguntaId,
-            pillar: q.backendPillar,
-            score: a.valor,
-            arquetipoId: q.arquetipoId,
-            tipo: q.tipo
-          }
-        }),
-        perfil: localResult.perfil
-      }
-
-      const headers = { 'Content-Type': 'application/json' }
-      const token = localStorage.getItem('raven_token')
-      if (token) headers['Authorization'] = `Bearer ${token}`
-
-      const response = await fetch(`${API_URL}/api/quiz/submit`, {
-        method: 'POST',
-        headers,
-        body: JSON.stringify(payload)
-      })
-
-      if (!response.ok) throw new Error('Backend error')
-
-      const serverData = await response.json()
-      
-      const resultado = {
-        ...localResult,
-        resultId: serverData.resultId,
-        serverScores: serverData.scores
-      }
-
-      saveDiagnostico(resultado)
-      localStorage.removeItem(STORAGE_KEY)
-      return resultado
-
+      const response = await fetch(`${API_URL}/api/quiz/questions`)
+      if (!response.ok) throw new Error('Error cargando preguntas')
+      const data = await response.json()
+      questions.value = data
+      loadFromStorage()
+      return data
     } catch (err) {
-      console.error('submitQuiz error:', err)
-      const localResult = resultadosCalculados.value
-      saveDiagnostico(localResult)
-      return localResult
+      error.value = err.message || 'No pudimos cargar el cuestionario.'
+      return null
     } finally {
-      submitting.value = false
+      loading.value = false
     }
   }
 
@@ -455,8 +232,8 @@ export const useQuizStore = defineStore('quiz', () => {
     const q = questions.value[currentQuestion.value]
     if (!q) return
 
-    const idx = answers.value.findIndex(a => a.preguntaId === q.id)
-    const respuesta = { preguntaId: q.id, valor }
+    const idx = answers.value.findIndex(a => a.questionId === q.id)
+    const respuesta = { questionId: q.id, valor }
 
     if (idx >= 0) {
       answers.value[idx] = respuesta
@@ -484,6 +261,49 @@ export const useQuizStore = defineStore('quiz', () => {
     }
   }
 
+  async function submitQuiz() {
+    if (!isComplete.value) {
+      error.value = 'Responde todas las preguntas primero.'
+      return null
+    }
+
+    submitting.value = true
+    error.value = null
+
+    try {
+      const payload = answers.value
+        .filter(a => a !== null && a !== undefined)
+        .map(a => ({ questionId: a.questionId, valor: a.valor }))
+
+      const headers = { 'Content-Type': 'application/json' }
+      const token = localStorage.getItem('raven_token')
+      if (token) headers['Authorization'] = `Bearer ${token}`
+
+      const response = await fetch(`${API_URL}/api/quiz/submit`, {
+        method: 'POST',
+        headers,
+        body: JSON.stringify({ answers: payload })
+      })
+
+      if (!response.ok) {
+        const errData = await response.json().catch(() => ({}))
+        throw new Error(errData.error || errData.message || 'Error procesando respuestas')
+      }
+
+      const data = await response.json()
+      saveDiagnostico(data)
+      localStorage.removeItem(STORAGE_KEY)
+      return data
+
+    } catch (err) {
+      console.error('submitQuiz error:', err)
+      error.value = err.message || 'Error de conexión. Intenta de nuevo.'
+      return null
+    } finally {
+      submitting.value = false
+    }
+  }
+
   function reset() {
     currentQuestion.value = 0
     answers.value = []
@@ -496,20 +316,31 @@ export const useQuizStore = defineStore('quiz', () => {
     error.value = null
   }
 
-  // ── Helpers ──
-  function generarDescripcionPerfil(dom, sec, sombra) {
-    const d = ARQUETIPOS[dom.arquetipoId]
-    const s = ARQUETIPOS[sec.arquetipoId]
-    
-    let desc = `Tu mecanismo principal es **${d.nombre}** (${d.codigo}): ${d.mecanismo.toLowerCase().slice(0, 60)}... `
-    desc += `Tu segundo motor es **${s.nombre}** (${s.codigo}). `
-    
-    if (sombra) {
-      const sh = ARQUETIPOS[sombra.arquetipoId]
-      desc += `⚠️ Atención: tu **${sh.nombre}** está en sombra (${sh.sombraLabel}). `
+  // ── Helpers de render ──
+  function getArquetipoInfo(arquetipoId) {
+    return ARQUETIPOS[arquetipoId] || null
+  }
+
+  function getEstadoLabel(estado) {
+    const labels = {
+      'saludable': '✅ Saludable',
+      'en-sombra': '⚠️ En Sombra',
+      'equilibrado': '⚖️ Equilibrado',
+      'dominante': '🔥 Dominante',
+      'dormido': '💤 Dormido'
     }
-    
-    return desc
+    return labels[estado] || estado
+  }
+
+  function getEstadoColor(estado) {
+    const colors = {
+      'saludable': '#2ecc71',
+      'en-sombra': '#e74c3c',
+      'equilibrado': '#f39c12',
+      'dominante': '#D4AF37',
+      'dormido': '#95a5a6'
+    }
+    return colors[estado] || '#bdc3c7'
   }
 
   return {
@@ -521,11 +352,14 @@ export const useQuizStore = defineStore('quiz', () => {
     loading,
     submitting,
     error,
+    // Getters
     progress,
     isComplete,
+    currentQuestionData,
     currentAnswer,
-    preguntaActual,
-    resultadosCalculados,
+    faseActual,
+    faseLabel,
+    // Actions
     fetchQuestions,
     answerQuestion,
     goBack,
@@ -534,6 +368,10 @@ export const useQuizStore = defineStore('quiz', () => {
     reset,
     clearError,
     saveDiagnostico,
-    loadFromStorage
+    loadFromStorage,
+    // Helpers
+    getArquetipoInfo,
+    getEstadoLabel,
+    getEstadoColor
   }
 })
