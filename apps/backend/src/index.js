@@ -29,6 +29,13 @@ const io     = new Server(server, {
   }
 });
 
+const allowedOrigins = [
+  'https://rockyourself.org',
+  'https://www.rockyourself.org',
+  'http://localhost:5173',
+  'http://localhost:4173'
+];
+
 const PORT = process.env.PORT || 3000;
 
 app.use(cors({
