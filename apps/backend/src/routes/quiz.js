@@ -40,7 +40,7 @@ const QUESTIONS = [
   { id: 31, pillar: 'vision',     text: 'Tu capacidad de ver lo invisible es...', options: ['Inexistente', 'Sobrenatural', 'Limitada', 'Entrenable'] },
   { id: 32, pillar: 'vision',     text: 'El futuro que quieres crear es...', options: ['Igual al presente', 'Radicalmente diferente', 'Ligeramente mejor', 'Una versión elevada de ahora'] }
 ];
- GET /api/quiz/questions — público, sin auth
+// GET /api/quiz/questions — público, sin auth
 router.get('/questions', (req, res) => {
   res.json(QUESTIONS);
 });
