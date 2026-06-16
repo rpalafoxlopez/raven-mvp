@@ -11,13 +11,11 @@ const routes = [
     path: '/quiz',
     name: 'Quiz',
     component: () => import('../views/QuizView.vue')
-    // ← SIN meta.requiresAuth — el quiz debe ser público
   },
   {
     path: '/results',
     name: 'Results',
-    component: () => import('../views/ResultsView.vue'),
-    meta: { requiresAuth: true }
+    component: () => import('../views/ResultsView.vue')
   },
   {
     path: '/dashboard',

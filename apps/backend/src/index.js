@@ -19,6 +19,7 @@ import { setupCoachingSocket } from './socket/coachingSocket.js';
 if (!process.env.MONGODB_URI) { console.error('❌ MONGODB_URI no definida'); process.exit(1); }
 if (!process.env.JWT_SECRET)  { console.error('❌ JWT_SECRET no definida');  process.exit(1); }
 
+
 const app    = express();
 const server = createServer(app);
 const io     = new Server(server, {
@@ -28,7 +29,7 @@ const io     = new Server(server, {
   }
 });
 
-const PORT = process.env.PORT || 10000;
+const PORT = process.env.PORT || 3000;
 
 app.use(cors({
   origin: process.env.FRONTEND_URL || 'http://localhost:5173',
