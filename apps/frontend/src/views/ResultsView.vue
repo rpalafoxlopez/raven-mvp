@@ -386,7 +386,7 @@
 import { ref, computed, onMounted, onUnmounted } from 'vue'
 import { useRouter } from 'vue-router'
 import { useAuthStore } from '../stores/auth.js'
-import { ARQUETIPOS } from '../stores/quizStore.js'
+import { ARQUETIPOS } from '../stores/quiz.js'
 
 const router = useRouter()
 const authStore = useAuthStore()

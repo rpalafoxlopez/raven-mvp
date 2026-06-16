@@ -100,7 +100,7 @@
 <script setup>
 import { ref, onMounted, computed } from 'vue'
 import { useRouter } from 'vue-router'
-import { useQuizStore } from '@/stores/quizStore'
+import { useQuizStore } from '@/stores/quiz'
 import QuestionCard from '@/components/quiz/QuestionCard.vue'
 
 const router = useRouter()

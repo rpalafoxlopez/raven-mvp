@@ -107,7 +107,7 @@
 
 <script setup>
 import { computed } from 'vue'
-import { ARQUETIPOS } from '@/stores/quizStore'
+import { ARQUETIPOS } from '@/stores/quiz'
 
 const props = defineProps({
   question: { type: Object, required: true },
