@@ -1,5 +1,5 @@
-const QUESTIONS = require('../data/questions');
-const ARQUETIPOS = require('../data/arquetipos');
+import QUESTIONS from '../data/questions.js';
+import ARQUETIPOS from '../data/arquetipos.js';
 
 const PILAR_IDS = ['P1', 'P2', 'P3', 'P4', 'P5', 'P6', 'P7', 'P8'];
 
@@ -164,4 +164,4 @@ function calcularDiagnostico(answers) {
   };
 }
 
-module.exports = { calcularDiagnostico, ARQUETIPOS, QUESTIONS };
+export { calcularDiagnostico, ARQUETIPOS, QUESTIONS };

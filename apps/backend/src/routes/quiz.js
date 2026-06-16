@@ -1,7 +1,9 @@
-const express = require('express');
-const jwt = require('jsonwebtoken');
-const QUESTIONS = require('../data/questions');
-const { calcularDiagnostico } = require('../services/quizScoring');
+import express from 'express';
+import jwt from 'jsonwebtoken';
+import QUESTIONS from '../data/questions.js';
+import { calcularDiagnostico } from '../services/quizScoring.js';
+import QuizResult from '../models/QuizResult.js';
+import User from '../models/User.js';
 
 const router = express.Router();
 
@@ -18,7 +20,6 @@ router.post('/submit', async function (req, res) {
 
     const resultado = calcularDiagnostico(answers);
 
-    // Auth opcional: si hay token valido, intentamos guardar el resultado
     let userId = null;
     const authHeader = req.headers.authorization;
     if (authHeader && authHeader.indexOf('Bearer ') === 0) {
@@ -32,15 +33,12 @@ router.post('/submit', async function (req, res) {
 
     if (userId) {
       try {
-        const QuizResult = require('../models/QuizResult');
-        const User = require('../models/User');
         await QuizResult.create({ userId, answers, resultado });
         await User.findByIdAndUpdate(userId, {
           archetype: resultado.perfil.dominante ? resultado.perfil.dominante.codigo : null
         });
       } catch (dbErr) {
         console.error('No se pudo guardar el resultado:', dbErr.message);
-        // No bloqueamos la respuesta al usuario por un fallo de guardado
       }
     }
 
@@ -51,4 +49,4 @@ router.post('/submit', async function (req, res) {
   }
 });
 
-module.exports = router;
+export default router;

@@ -325,4 +325,4 @@ const QUESTIONS = [
   }
 ];
 
-module.exports = QUESTIONS;
+export default QUESTIONS;

@@ -76,4 +76,4 @@ const ARQUETIPOS = {
   }
 };
 
-module.exports = ARQUETIPOS;
+export default ARQUETIPOS;
