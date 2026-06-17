@@ -5,6 +5,7 @@ import { calcularDiagnostico } from '../services/quizScoring.js';
 import QuizResult from '../models/QuizResult.js';
 import User from '../models/User.js';
 
+
 const router = express.Router();
 
 router.get('/questions', function (req, res) {
