@@ -27,7 +27,9 @@ const allowedOrigins = [
   'https://rockyourself.org',
   'https://www.rockyourself.org',
   'http://localhost:5173',
-  'http://localhost:3000'
+  'http://localhost:3000',
+  'https://rockyourself-eu5ejgxo4-rpalafoxlopezs-projects.vercel.app/',
+   /^https:\/\/raven-mvp-.*-rpalafoxlopez\.vercel\.app$/
 ];
 
 // Si FRONTEND_URL esta definida y no esta ya en la lista, la agregamos
