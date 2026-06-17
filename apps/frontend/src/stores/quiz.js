@@ -209,45 +209,26 @@ export const useQuizStore = defineStore('quiz', () => {
   }
 
   // ── API ──
-   async function fetchQuestions() {
+  async function fetchQuestions() {
     loading.value = true
     error.value = null
-    console.log('🚀 fetchQuestions iniciando... URL:', `${API_URL}/api/quiz/questions`) // DEBUG
-    
+
     try {
       const response = await fetch(`${API_URL}/api/quiz/questions`, {
         method: 'GET',
-        headers: {
-          'Accept': 'application/json',
-        }
+        headers: { 'Accept': 'application/json' }
       })
-      
-      console.log('📡 Response status:', response.status) // DEBUG
-      console.log('📡 Response headers:', [...response.headers.entries()]) // DEBUG
-      
+
       if (!response.ok) {
         throw new Error(`HTTP ${response.status}: ${response.statusText}`)
       }
-      
-      const text = await response.text() // Leer como texto primero
-      console.log('📄 Raw response (primeros 200 chars):', text.substring(0, 200)) // DEBUG
-      
-      let data
-      try {
-        data = JSON.parse(text)
-      } catch (parseErr) {
-        console.error('❌ JSON parse error:', parseErr)
-        console.error('❌ Raw text:', text.substring(0, 500))
-        throw new Error('La respuesta del servidor no es JSON válido')
-      }
-      
-      console.log('✅ Preguntas cargadas:', data.length) // DEBUG
+
+      const data = await response.json()
       questions.value = data
       loadFromStorage()
       return data
-      
+
     } catch (err) {
-      console.error('❌ fetchQuestions error:', err.name, err.message) // DEBUG
       error.value = err.message || 'No pudimos cargar el cuestionario.'
       return null
     } finally {

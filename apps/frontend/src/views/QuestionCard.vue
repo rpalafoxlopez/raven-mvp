@@ -1,169 +1,164 @@
 <template>
-  <div class="relative p-6 border border-halford/20 bg-bocanada/40 backdrop-blur-sm">
-    <!-- Número de pregunta -->
-    <div class="absolute -top-3 left-6">
-      <span class="px-3 py-1 font-mono text-xs tracking-wider uppercase bg-solstis text-folsom">
-        {{ questionNumber }}
-      </span>
-    </div>
+  <div class="card-question">
+    <p class="mb-6 font-body text-lg leading-relaxed text-loriga">{{ question.texto }}</p>
 
-    <!-- Texto de la pregunta -->
-    <div class="mt-4 mb-6">
-      <p class="text-lg leading-relaxed font-body text-loriga">
-        {{ question.texto }}
-      </p>
-      <p v-if="question.tipo === 'escala' && question.fase === 'costo'" 
-         class="mt-2 font-mono text-xs text-halford/70">
-        [1] Me energiza → [2] Natural → [3] Me cuesta → [4] Me agota profundamente
-      </p>
-      <p v-else-if="question.tipo === 'escala' && question.fase === 'espejo'" 
-         class="mt-2 font-mono text-xs text-halford/70">
-        1. Total desacuerdo → 5. Total acuerdo
-      </p>
-      <p v-else-if="question.tipo === 'escala' && question.fase === 'cronologia'" 
-         class="mt-2 font-mono text-xs text-halford/70">
-        Selecciona el rango de tiempo
-      </p>
-    </div>
-
-    <!-- TIPO: ELECCIÓN MÚLTIPLE -->
-    <div v-if="question.tipo === 'eleccion' && question.opciones" class="space-y-3">
+    <!-- Tipo: eleccion (A, B, C, D...) -->
+    <div v-if="question.tipo === 'eleccion'" class="space-y-3">
       <button
         v-for="(opcion, index) in question.opciones"
         :key="index"
-        @click="selectOption(index)"
-        :class="[
-          'w-full p-4 text-left transition-all duration-200 border font-body text-sm leading-relaxed',
-          selectedAnswer === index
-            ? 'border-solstis bg-solstis/10 text-loriga'
-            : 'border-halford/20 text-halford hover:border-halford/50 hover:text-loriga hover:bg-halford/5'
-        ]"
+        @click="$emit('answer', index)"
+        class="option-btn"
+        :class="{ 'option-btn--selected': selectedAnswer === index }"
       >
         <div class="flex items-start gap-3">
-          <!-- Letra indicadora -->
-          <span class="flex-shrink-0 w-6 h-6 mt-0.5 flex items-center justify-center font-mono text-xs border"
-            :class="selectedAnswer === index
-              ? 'border-solstis text-solstis'
-              : 'border-halford/30 text-halford/50'"
-          >
-            {{ ['A','B','C','D','E','F','G','H'][index] || index + 1 }}
+          <span class="option-letter">
+            {{ ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H'][index] }}
           </span>
-          <!-- Texto de la opción -->
-          <span>{{ opcion.label }}</span>
+          <span class="flex-1 text-left font-body text-sm leading-relaxed">{{ opcion.label }}</span>
         </div>
       </button>
     </div>
 
-    <!-- TIPO: ESCALA (1-4 o 1-5) -->
-    <div v-else-if="question.tipo === 'escala'" class="space-y-6">
-      <!-- Slider visual -->
-      <div class="relative px-2">
-        <div class="flex justify-between mb-3">
-          <span v-for="n in escalaMax" :key="n"
-            class="font-mono text-xs"
-            :class="selectedAnswer === n ? 'text-solstis' : 'text-halford/40'"
-          >
-            {{ n }}
-          </span>
-        </div>
-
-        <div class="flex gap-2">
-          <button
-            v-for="n in escalaMax"
-            :key="n"
-            @click="selectOption(n)"
-            :class="[
-              'flex-1 py-3 text-center transition-all duration-200 border font-mono text-sm',
-              selectedAnswer === n
-                ? 'border-solstis bg-solstis text-folsom'
-                : 'border-halford/20 text-halford hover:border-halford/50 hover:text-loriga'
-            ]"
-          >
-            {{ n }}
-          </button>
-        </div>
-
-        <!-- Labels de los extremos -->
-        <div class="flex justify-between mt-3 font-mono text-xs text-halford/50">
-          <span>{{ escalaLabelMin }}</span>
-          <span>{{ escalaLabelMax }}</span>
-        </div>
-      </div>
-    </div>
-
-    <!-- Tipo desconocido -->
-    <div v-else class="p-4 font-mono text-sm text-center text-red-400 border border-red-500/30">
-      Error: tipo de pregunta no reconocido
-    </div>
-
-    <!-- Indicador de arquetipo (solo en fases relevantes) -->
-    <div v-if="arquetipoHint" class="pt-4 mt-4 border-t border-halford/10">
-      <p class="font-mono text-xs text-halford/50">
-        {{ arquetipoHint }}
+    <!-- Tipo: escala (1-4 o 1-5) -->
+    <div v-else-if="question.tipo === 'escala'" class="space-y-3">
+      <p class="mb-4 font-mono text-xs tracking-wider uppercase text-halford">
+        {{ escalaHint }}
       </p>
+      <div class="flex justify-between gap-2">
+        <button
+          v-for="n in escalaRange"
+          :key="n"
+          @click="$emit('answer', n)"
+          class="escala-btn"
+          :class="{ 'escala-btn--selected': selectedAnswer === n }"
+        >
+          {{ n }}
+        </button>
+      </div>
+      <div class="flex justify-between mt-2 font-mono text-xs text-halford/60">
+        <span>{{ escalaLabelMin }}</span>
+        <span>{{ escalaLabelMax }}</span>
+      </div>
     </div>
   </div>
 </template>
 
 <script setup>
 import { computed } from 'vue'
-import { ARQUETIPOS } from '@/stores/quiz'
 
 const props = defineProps({
   question: { type: Object, required: true },
   questionNumber: { type: Number, required: true },
-  selectedAnswer: { type: Number, default: null }
+  selectedAnswer: { type: [Number, String], default: null }
 })
 
-const emit = defineEmits(['answer'])
+defineEmits(['answer'])
 
-// Determinar el máximo de la escala según la fase
-const escalaMax = computed(() => {
-  if (props.question.fase === 'costo') return 4
-  if (props.question.fase === 'espejo') return 5
-  if (props.question.fase === 'cronologia') return 5
-  return 5
+// Fase cronologia usa escala 1-5 con labels de tiempo; costo y espejo usan 1-4 o 1-5 genericos
+const escalaRange = computed(() => {
+  if (props.question.fase === 'cronologia') return [1, 2, 3, 4, 5]
+  if (props.question.fase === 'costo') return [1, 2, 3, 4]
+  if (props.question.fase === 'espejo') return [1, 2, 3, 4, 5]
+  return [1, 2, 3, 4]
 })
 
-// Labels para escalas
+const escalaHint = computed(() => {
+  if (props.question.fase === 'cronologia') return 'Selecciona el rango de tiempo'
+  if (props.question.fase === 'costo') return 'Que tanto te cuesta esta accion'
+  if (props.question.fase === 'espejo') return 'Que tan de acuerdo estas'
+  return ''
+})
+
 const escalaLabelMin = computed(() => {
-  const labels = {
-    costo: 'Me energiza',
-    espejo: 'Total desacuerdo',
-    cronologia: 'Menos de una semana'
-  }
-  return labels[props.question.fase] || 'Mínimo'
+  if (props.question.fase === 'cronologia') return 'Menos de 1 semana'
+  if (props.question.fase === 'costo') return 'Me energiza'
+  if (props.question.fase === 'espejo') return 'Total desacuerdo'
+  return ''
 })
 
 const escalaLabelMax = computed(() => {
-  const labels = {
-    costo: 'Me agota profundamente',
-    espejo: 'Total acuerdo',
-    cronologia: 'Más de un año'
-  }
-  return labels[props.question.fase] || 'Máximo'
+  if (props.question.fase === 'cronologia') return 'Mas de 1 año'
+  if (props.question.fase === 'costo') return 'Me agota'
+  if (props.question.fase === 'espejo') return 'Total acuerdo'
+  return ''
 })
-
-// Hint de arquetipo (solo para debugging o contexto sutil)
-const arquetipoHint = computed(() => {
-  // Solo mostrar en fase de costo para dar contexto
-  if (props.question.fase === 'costo' && props.question.arquetipoId) {
-    const arq = ARQUETIPOS[props.question.arquetipoId]
-    if (arq) return `Evaluando: ${arq.nombre}`
-  }
-  return null
-})
-
-function selectOption(index) {
-  emit('answer', index)
-}
 </script>
 
 <style scoped>
-.bg-bocanada { background-color: #0A192F; }
-.text-loriga { color: #F0F5F9; }
-.text-halford { color: #708090; }
-.bg-solstis { background-color: #D4AF37; }
-.text-solstis { color: #D4AF37; }
-.text-folsom { color: #050505; }
+.card-question {
+  background-color: #0A192F;
+  border: 1px solid rgba(212, 175, 55, 0.15);
+  border-radius: 12px;
+  padding: 2rem;
+}
+
+.option-btn {
+  width: 100%;
+  text-align: left;
+  padding: 1rem 1.25rem;
+  border-radius: 8px;
+  border: 1px solid rgba(192, 192, 192, 0.2);
+  background-color: rgba(240, 245, 249, 0.03);
+  color: #F0F5F9;
+  transition: all 0.2s ease;
+  cursor: pointer;
+}
+
+.option-btn:hover {
+  border-color: #D4AF37;
+  background-color: rgba(212, 175, 55, 0.08);
+}
+
+.option-btn--selected {
+  border-color: #D4AF37;
+  background-color: rgba(212, 175, 55, 0.15);
+}
+
+.option-letter {
+  flex-shrink: 0;
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  background-color: rgba(192, 192, 192, 0.15);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.75rem;
+  font-weight: 700;
+  font-family: monospace;
+  color: #C0C0C0;
+  transition: all 0.2s ease;
+}
+
+.option-btn:hover .option-letter,
+.option-btn--selected .option-letter {
+  background-color: #D4AF37;
+  color: #050505;
+}
+
+.escala-btn {
+  flex: 1;
+  padding: 1rem 0;
+  border-radius: 8px;
+  border: 1px solid rgba(192, 192, 192, 0.2);
+  background-color: rgba(240, 245, 249, 0.03);
+  color: #F0F5F9;
+  font-family: monospace;
+  font-size: 1.1rem;
+  font-weight: 700;
+  transition: all 0.2s ease;
+  cursor: pointer;
+}
+
+.escala-btn:hover {
+  border-color: #D4AF37;
+  background-color: rgba(212, 175, 55, 0.08);
+}
+
+.escala-btn--selected {
+  border-color: #D4AF37;
+  background-color: #D4AF37;
+  color: #050505;
+}
 </style>

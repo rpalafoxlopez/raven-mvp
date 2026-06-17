@@ -27,9 +27,7 @@ const allowedOrigins = [
   'https://rockyourself.org',
   'https://www.rockyourself.org',
   'http://localhost:5173',
-  'http://localhost:3000',
-  'https://rockyourself-eu5ejgxo4-rpalafoxlopezs-projects.vercel.app/',
-   /^https:\/\/raven-mvp-.*-rpalafoxlopez\.vercel\.app$/
+  'http://localhost:3000'
 ];
 
 // Si FRONTEND_URL esta definida y no esta ya en la lista, la agregamos
@@ -37,13 +35,16 @@ if (process.env.FRONTEND_URL && allowedOrigins.indexOf(process.env.FRONTEND_URL)
   allowedOrigins.push(process.env.FRONTEND_URL);
 }
 
+// Permite tambien cualquier preview/deploy de Vercel del proyecto (*.vercel.app)
+// Esto cubre el caso comun de que el dominio final aun no este conectado
+const vercelPreviewPattern = /^https:\/\/[a-z0-9-]+\.vercel\.app$/;
+
 const corsOptionsDelegate = function (origin, callback) {
   // Permite requests sin origin (apps moviles, curl, Postman, health checks)
   if (!origin) return callback(null, true);
-  if (allowedOrigins.indexOf(origin) === -1) {
-    return callback(new Error('CORS policy: Origin not allowed'), false);
-  }
-  return callback(null, true);
+  if (allowedOrigins.indexOf(origin) !== -1) return callback(null, true);
+  if (vercelPreviewPattern.test(origin)) return callback(null, true);
+  return callback(new Error('CORS policy: Origin not allowed'), false);
 };
 
 const io = new Server(server, {
