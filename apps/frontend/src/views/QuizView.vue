@@ -38,6 +38,7 @@
           </div>
         </div>
 
+       
         <!-- Question Card -->
         <QuestionCard
           v-if="quizStore.currentQuestionData"
