@@ -1,113 +1,127 @@
 <template>
-  <div class="min-h-screen bg-neutral-950">
+  <div class="min-h-screen" style="background:#080808; color:#F8F6F1;">
+
     <!-- Header -->
-    <header class="border-b border-neutral-800 bg-neutral-900/50 backdrop-blur">
-      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4 flex items-center justify-between">
-        <div class="flex items-center gap-3">
-          <span class="text-2xl">🎸</span>
-          <span class="font-bold text-xl">Raven</span>
-        </div>
+    <header style="border-bottom:1px solid #2a2a2a; background:rgba(8,8,8,0.9);" class="sticky top-0 z-50 backdrop-blur-md">
+      <div class="flex items-center justify-between px-5 py-4 mx-auto max-w-7xl md:px-16">
         <div class="flex items-center gap-4">
-          <span class="text-neutral-400">{{ authStore.user?.name }}</span>
-          <button @click="authStore.logout" class="text-sm text-neutral-500 hover:text-white transition-colors">
+          <router-link to="/">
+            <img src="/logo_rus.webp" alt="RockYourself" class="object-contain w-auto h-9">
+          </router-link>
+          <span style="color:#2a2a2a;">|</span>
+          <span class="font-mono text-xs tracking-widest uppercase" style="color:#888880;">Backstage</span>
+        </div>
+        <div class="flex items-center gap-6">
+          <span class="font-mono text-xs" style="color:#888880;">{{ authStore.user?.name }}</span>
+          <button @click="authStore.logout"
+            class="font-mono text-xs tracking-wider uppercase transition-colors"
+            style="color:#888880;" onmouseenter="this.style.color='#D4AF37'" onmouseleave="this.style.color='#888880'">
             Salir
           </button>
         </div>
       </div>
     </header>
 
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-      <div class="grid lg:grid-cols-3 gap-8">
-        <!-- Profile Card -->
-        <div class="lg:col-span-1">
-          <div class="card">
-            <div class="text-center">
-              <div class="w-20 h-20 rounded-full bg-rock-500/20 flex items-center justify-center mx-auto mb-4">
-                <span class="text-3xl">{{ archetypeEmoji }}</span>
+    <div class="px-5 py-10 mx-auto max-w-7xl md:px-16">
+      <div class="grid gap-8 lg:grid-cols-3">
+
+        <!-- Columna izquierda: Perfil -->
+        <div class="space-y-6 lg:col-span-1">
+
+          <!-- Card Arquetipo -->
+          <div style="background:#111111; border:1px solid #2a2a2a; padding:2rem;">
+            <div class="mb-6 text-center">
+              <div class="flex items-center justify-center w-20 h-20 mx-auto mb-4 text-3xl" style="background:rgba(212,175,55,0.1); border:1px solid rgba(212,175,55,0.2);">
+                {{ archetypeEmoji }}
               </div>
-              <h2 class="text-xl font-bold">{{ authStore.user?.name }}</h2>
-              <p class="text-rock-400 font-semibold mt-1">{{ archetypeName }}</p>
-              <p class="text-sm text-neutral-500 mt-2 capitalize">Plan: {{ authStore.user?.plan }}</p>
+              <h2 class="text-xl font-display" style="color:#F8F6F1;">{{ authStore.user?.name }}</h2>
+              <p class="mt-1 font-mono text-sm font-semibold" style="color:#D4AF37;">{{ archetypeName }}</p>
+              <p class="mt-1 font-mono text-xs capitalize" style="color:#888880;">Plan: {{ authStore.user?.plan || 'free' }}</p>
             </div>
 
-            <div class="mt-6">
-              <h4 class="text-sm font-semibold text-neutral-400 mb-3">Tus Pilares</h4>
-              <div class="space-y-2">
-                <div v-for="(score, pillar) in authStore.user?.pillars" :key="pillar" class="flex items-center gap-2">
-                  <span class="text-xs text-neutral-500 w-20 capitalize">{{ pillar }}</span>
-                  <div class="flex-1 bg-neutral-800 rounded-full h-2">
-                    <div 
-                      class="h-2 rounded-full bg-rock-500 transition-all duration-500"
-                      :style="{ width: `${score}%` }"
-                    ></div>
+            <!-- Pilares -->
+            <div v-if="authStore.user?.pillars">
+              <h4 class="mb-4 font-mono text-xs tracking-widest uppercase" style="color:#888880;">Tus Pilares</h4>
+              <div class="space-y-3">
+                <div v-for="(score, pillar) in authStore.user?.pillars" :key="pillar">
+                  <div class="flex justify-between mb-1">
+                    <span class="font-mono text-xs capitalize" style="color:#888880;">{{ pillar }}</span>
+                    <span class="font-mono text-xs" style="color:#D4AF37;">{{ score }}%</span>
                   </div>
-                  <span class="text-xs text-neutral-400 w-8">{{ score }}</span>
+                  <div style="height:2px; background:#2a2a2a;">
+                    <div :style="`width:${score}%; height:100%; background:#D4AF37; transition:width 0.8s ease;`"></div>
+                  </div>
                 </div>
               </div>
             </div>
 
-            <div class="mt-6 space-y-2">
-              <router-link to="/quiz" class="btn-primary w-full text-center block">
-                🔄 Rehacer Quiz
+            <!-- Acciones -->
+            <div class="mt-8 space-y-3">
+              <router-link to="/quiz"
+                class="block w-full py-3 text-center font-mono text-xs tracking-wider uppercase transition-all"
+                style="background:#D4AF37; color:#080808;">
+                Rehacer Quiz
               </router-link>
-              <router-link to="/coaching" class="btn-secondary w-full text-center block">
-                💬 Coach IA
+              <router-link to="/coaching"
+                class="block w-full py-3 text-center font-mono text-xs tracking-wider uppercase transition-all"
+                style="border:1px solid rgba(212,175,55,0.3); color:#F5E6A3;">
+                Coach IA
               </router-link>
             </div>
           </div>
         </div>
 
-        <!-- Main Content -->
-        <div class="lg:col-span-2 space-y-6">
+        <!-- Columna derecha: Contenido principal -->
+        <div class="space-y-8 lg:col-span-2">
+
           <!-- Stats -->
-          <div class="grid sm:grid-cols-3 gap-4">
-            <div class="card text-center">
-              <div class="text-3xl font-black text-rock-400">{{ actionItems.length }}</div>
-              <div class="text-sm text-neutral-500 mt-1">Acciones Totales</div>
+          <div class="grid gap-px sm:grid-cols-3" style="background:#2a2a2a;">
+            <div class="p-6 text-center" style="background:#111111;">
+              <div class="text-4xl font-display" style="color:#D4AF37;">{{ actionItems.length }}</div>
+              <div class="mt-1 font-mono text-xs tracking-wider uppercase" style="color:#888880;">Acciones Totales</div>
             </div>
-            <div class="card text-center">
-              <div class="text-3xl font-black text-emerald-400">{{ completedActions }}</div>
-              <div class="text-sm text-neutral-500 mt-1">Completadas</div>
+            <div class="p-6 text-center" style="background:#111111;">
+              <div class="text-4xl font-display" style="color:#D4AF37;">{{ completedActions }}</div>
+              <div class="mt-1 font-mono text-xs tracking-wider uppercase" style="color:#888880;">Completadas</div>
             </div>
-            <div class="card text-center">
-              <div class="text-3xl font-black text-amber-400">{{ completionRate }}%</div>
-              <div class="text-sm text-neutral-500 mt-1">Progreso</div>
+            <div class="p-6 text-center" style="background:#111111;">
+              <div class="text-4xl font-display" style="color:#D4AF37;">{{ completionRate }}%</div>
+              <div class="mt-1 font-mono text-xs tracking-wider uppercase" style="color:#888880;">Progreso</div>
             </div>
           </div>
 
-          <!-- Action Items -->
-          <div class="card">
-            <div class="flex items-center justify-between mb-6">
-              <h3 class="text-xl font-bold">Plan de Acción</h3>
-              <button @click="showAddAction = true" class="text-rock-400 hover:text-rock-300 text-sm">
-                + Nueva acción
-              </button>
+          <!-- Plan de Acción -->
+          <div style="background:#111111; border:1px solid #2a2a2a;">
+            <div class="flex items-center justify-between px-8 py-6" style="border-bottom:1px solid #2a2a2a;">
+              <h3 class="text-xl font-display" style="color:#F8F6F1;">Plan de Acción</h3>
+              <button @click="showAddAction = true"
+                class="font-mono text-xs tracking-wider uppercase transition-colors"
+                style="color:#D4AF37;">+ Nueva acción</button>
             </div>
 
-            <div v-if="actionItems.length === 0" class="text-center py-8 text-neutral-500">
-              <p>No tienes acciones pendientes.</p>
-              <p class="text-sm mt-1">Ve al Coach IA para generar tu plan.</p>
+            <div v-if="actionItems.length === 0" class="px-8 py-12 text-center">
+              <p class="font-body" style="color:#888880;">No tienes acciones pendientes.</p>
+              <p class="mt-1 font-mono text-xs" style="color:#888880;">Ve al Coach IA para generar tu plan.</p>
             </div>
 
-            <div v-else class="space-y-3">
-              <div 
-                v-for="action in actionItems" 
-                :key="action._id"
-                class="flex items-center gap-4 p-4 bg-neutral-800/50 rounded-lg group"
-              >
-                <button 
-                  @click="toggleAction(action._id, !action.completed)"
-                  class="w-6 h-6 rounded border-2 flex items-center justify-center transition-colors"
-                  :class="action.completed ? 'bg-emerald-500 border-emerald-500' : 'border-neutral-600 hover:border-rock-500'"
-                >
-                  <span v-if="action.completed">✓</span>
+            <div v-else class="p-4 space-y-2">
+              <div v-for="action in actionItems" :key="action._id"
+                class="flex items-center gap-4 p-4 transition-colors group"
+                style="background:#0e0e0e; border:1px solid #2a2a2a;">
+                <button @click="toggleAction(action._id, !action.completed)"
+                  class="flex items-center justify-center flex-shrink-0 w-5 h-5 transition-all"
+                  :style="action.completed ? 'background:#D4AF37; border:1px solid #D4AF37;' : 'border:1px solid #2a2a2a;'">
+                  <span v-if="action.completed" style="color:#080808; font-size:10px; font-weight:bold;">✓</span>
                 </button>
                 <div class="flex-1">
-                  <p :class="action.completed ? 'line-through text-neutral-500' : 'text-white'" class="font-medium">
+                  <p class="font-body text-sm" :style="action.completed ? 'text-decoration:line-through; color:#888880;' : 'color:#F8F6F1;'">
                     {{ action.title }}
                   </p>
-                  <p class="text-sm text-neutral-500">{{ action.description }}</p>
+                  <p class="mt-0.5 font-mono text-xs" style="color:#888880;">{{ action.description }}</p>
                 </div>
+                <span v-if="action.dueDate" class="font-mono text-xs flex-shrink-0" style="color:#888880;">
+                  {{ formatDate(action.dueDate) }}
+                </span>
               </div>
             </div>
           </div>
@@ -115,16 +129,22 @@
       </div>
     </div>
 
-    <!-- Add Action Modal -->
-    <div v-if="showAddAction" class="fixed inset-0 bg-black/80 flex items-center justify-center p-4 z-50">
-      <div class="card max-w-md w-full">
-        <h3 class="text-xl font-bold mb-4">Nueva Acción</h3>
-        <input v-model="newAction.title" placeholder="Título" class="input mb-3" />
-        <textarea v-model="newAction.description" placeholder="Descripción" class="input mb-3 h-24 resize-none"></textarea>
-        <input v-model="newAction.dueDate" type="date" class="input mb-4" />
+    <!-- Modal: Nueva Acción -->
+    <div v-if="showAddAction" class="fixed inset-0 z-50 flex items-center justify-center p-4"
+      style="background:rgba(0,0,0,0.85);">
+      <div style="background:#111111; border:1px solid #2a2a2a; padding:2rem; width:100%; max-width:440px;">
+        <h3 class="mb-6 text-xl font-display" style="color:#F8F6F1;">Nueva Acción</h3>
+        <input v-model="newAction.title" placeholder="Título de la acción" class="w-full px-4 py-3 mb-3 font-body text-sm outline-none"
+          style="background:#1a1a1a; border:1px solid #2a2a2a; color:#F8F6F1;" />
+        <textarea v-model="newAction.description" placeholder="Descripción (opcional)" rows="3" class="w-full px-4 py-3 mb-3 font-body text-sm outline-none resize-none"
+          style="background:#1a1a1a; border:1px solid #2a2a2a; color:#F8F6F1;"></textarea>
+        <input v-model="newAction.dueDate" type="date" class="w-full px-4 py-3 mb-6 font-mono text-sm outline-none"
+          style="background:#1a1a1a; border:1px solid #2a2a2a; color:#888880; color-scheme:dark;" />
         <div class="flex gap-3">
-          <button @click="addAction" class="btn-primary flex-1">Guardar</button>
-          <button @click="showAddAction = false" class="btn-secondary flex-1">Cancelar</button>
+          <button @click="addAction" class="flex-1 py-3 font-mono text-xs tracking-wider uppercase"
+            style="background:#D4AF37; color:#080808;">Guardar</button>
+          <button @click="showAddAction = false" class="flex-1 py-3 font-mono text-xs tracking-wider uppercase"
+            style="border:1px solid #2a2a2a; color:#888880;">Cancelar</button>
         </div>
       </div>
     </div>
@@ -136,48 +156,50 @@ import { ref, computed, onMounted } from 'vue'
 import { useAuthStore } from '../stores/auth'
 import { useCoachingStore } from '../stores/coaching'
 
-const authStore = useAuthStore()
+const authStore    = useAuthStore()
 const coachingStore = useCoachingStore()
 
 const showAddAction = ref(false)
-const newAction = ref({ title: '', description: '', dueDate: '' })
+const newAction     = ref({ title: '', description: '', dueDate: '' })
 
-const archetypeEmojis = {
-  presence: '🎤', creativity: '🎸', resilience: '🔥', charisma: '🤝',
-  discipline: '🎛️', intuition: '👁️', rebellion: '⚡', vision: '🌟'
+const ARCHETYPE_MAP = {
+  P1: { emoji: '🏗️', nombre: 'El Arquitecto Sónico' },
+  P2: { emoji: '👽', nombre: 'El Alienígena Camaleón' },
+  P3: { emoji: '🔥', nombre: 'El Chamán de la Tribu' },
+  P4: { emoji: '🌑', nombre: 'El Nobel Errante' },
+  P5: { emoji: '⚱️', nombre: 'El Forajido del Duelo' },
+  P6: { emoji: '🎭', nombre: 'El Iconoclasta Satírico' },
+  P7: { emoji: '⚒️', nombre: 'La Resistencia Obrera' },
+  P8: { emoji: '🍷', nombre: 'El Canalla Dionisíaco' },
+  // Legacy
+  presence:   { emoji: '🎤', nombre: 'El Frontman' },
+  creativity: { emoji: '🎸', nombre: 'El Guitar Hero' },
+  resilience: { emoji: '🔥', nombre: 'El Survivor' },
+  charisma:   { emoji: '🤝', nombre: 'El Conector' },
+  discipline: { emoji: '🎛️', nombre: 'El Productor' },
+  intuition:  { emoji: '👁️', nombre: 'El Visionario' },
+  rebellion:  { emoji: '⚡', nombre: 'El Rebelde' },
+  vision:     { emoji: '🌟', nombre: 'El Dreamer' }
 }
 
-const archetypeNames = {
-  presence: 'El Frontman', creativity: 'El Guitar Hero', resilience: 'El Survivor',
-  charisma: 'El Conector', discipline: 'El Productor', intuition: 'El Visionario',
-  rebellion: 'El Rebelde', vision: 'El Dreamer'
-}
-
-const archetypeEmoji = computed(() => archetypeEmojis[authStore.user?.archetype] || '🎸')
-const archetypeName = computed(() => archetypeNames[authStore.user?.archetype] || 'Rockstar')
-
-const actionItems = computed(() => coachingStore.plan?.actionItems || [])
+const archetypeEmoji = computed(() => ARCHETYPE_MAP[authStore.user?.archetype]?.emoji || '🎸')
+const archetypeName  = computed(() => ARCHETYPE_MAP[authStore.user?.archetype]?.nombre || 'Rockstar')
+const actionItems    = computed(() => coachingStore.plan?.actionItems || [])
 const completedActions = computed(() => actionItems.value.filter(a => a.completed).length)
-const completionRate = computed(() => {
+const completionRate   = computed(() => {
   if (!actionItems.value.length) return 0
   return Math.round((completedActions.value / actionItems.value.length) * 100)
 })
 
-onMounted(() => {
-  coachingStore.fetchPlan()
-})
+const formatDate = (d) => d ? new Date(d).toLocaleDateString('es-MX', { month: 'short', day: 'numeric' }) : ''
 
-async function toggleAction(actionId, completed) {
-  await coachingStore.toggleAction(actionId, completed)
-}
+onMounted(() => { coachingStore.fetchPlan() })
+
+async function toggleAction(id, completed) { await coachingStore.toggleAction(id, completed) }
 
 async function addAction() {
   if (!newAction.value.title) return
-  await coachingStore.addAction(
-    newAction.value.title,
-    newAction.value.description,
-    newAction.value.dueDate
-  )
+  await coachingStore.addAction(newAction.value.title, newAction.value.description, newAction.value.dueDate)
   newAction.value = { title: '', description: '', dueDate: '' }
   showAddAction.value = false
 }

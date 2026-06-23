@@ -282,18 +282,18 @@
   </div>
 </template>
 
-<script setup lang="ts">
+<script setup>
 import { ref, onMounted } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
-import { useAuthStore } from '@/stores/authStore'
-import axios from 'axios'
+import { useAuthStore } from '../stores/auth'
+
 
 const route = useRoute()
 const router = useRouter()
 const authStore = useAuthStore()
 
-const billing = ref<'monthly' | 'yearly'>('monthly')
-const loadingPlan = ref<'premium' | 'pro' | null>(null)
+const billing = ref('monthly')
+const loadingPlan = ref(null)
 const error = ref('')
 const paymentSuccess = ref(false)
 const paymentCanceled = ref(false)
@@ -341,43 +341,42 @@ onMounted(() => {
   if (q.plan === 'pro') billing.value = 'monthly'
 })
 
-// Sincronizar plan actualizado por webhook
 const syncUserPlan = async () => {
   try {
-    const response = await axios.get(`${import.meta.env.VITE_API_URL}/api/user/profile`)
-    if (response.data.success && response.data.data.plan) {
-      authStore.updatePlan(response.data.data.plan)
-    }
-  } catch (e) {
-    // silencioso — no es crítico
-  }
+    const res = await fetch(`${import.meta.env.VITE_API_URL}/api/user/profile`, {
+      headers: { 'Authorization': `Bearer ${localStorage.getItem('raven_token')}` }
+    })
+    const data = await res.json()
+    if (res.ok && data.plan) authStore.updatePlan(data.plan)
+  } catch (e) { /* silencioso */ }
 }
 
-const checkout = async (planId: 'premium' | 'pro') => {
+const checkout = async (planId) => {
   if (!authStore.isAuthenticated) return
   loadingPlan.value = planId
   error.value = ''
-
   try {
-    const offerCode = route.query.code as string | undefined
-    const response = await axios.post(
-      `${import.meta.env.VITE_API_URL}/api/stripe/checkout`,
-      { planId, billing: billing.value, offerCode }
-    )
-
-    if (response.data.success && response.data.data.url) {
-      window.location.href = response.data.data.url
+    const offerCode = route.query.code
+    const res = await fetch(`${import.meta.env.VITE_API_URL}/api/stripe/checkout`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${localStorage.getItem('raven_token')}`
+      },
+      body: JSON.stringify({ planId, billing: billing.value, offerCode })
+    })
+    const data = await res.json()
+    if (res.ok && data.url) {
+      window.location.href = data.url
     } else {
-      error.value = response.data.error || 'Error creando sesión de pago'
+      error.value = data.error || 'Error creando sesion de pago'
     }
-  } catch (err: any) {
-    error.value = err.response?.data?.error || 'Error de conexión. Intenta de nuevo.'
+  } catch (err) {
+    error.value = 'Error de conexion. Intenta de nuevo.'
   } finally {
     loadingPlan.value = null
   }
 }
 
-const goToDashboard = () => {
-  router.push('/dashboard')
-}
+const goToDashboard = () => { router.push('/dashboard') }
 </script>
