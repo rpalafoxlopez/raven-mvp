@@ -18,7 +18,7 @@ const ARQUETIPOS = {
     sombra: 'Evasion cronica. Huyes y destruyes proyectos al primer sintoma de aburrimiento o friccion, confundiendo el escape con la evolucion.',
     sombraLabel: 'Fuga / Evasion',
     color: '#9b59b6', colorSombra: '#c0392b',
-    rockstarPrincipal: 'David Bowie', rockstarSecundario: 'Lady Gaga'
+    rockstarPrincipal: 'David Bowie', rockstarSecundario: 'Bunbury'
   },
   P3: {
     id: 'P3', codigo: 'P3', nombre: 'El Chaman de la Tribu', icono: 'flame',

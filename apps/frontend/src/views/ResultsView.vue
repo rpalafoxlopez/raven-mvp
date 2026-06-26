@@ -54,11 +54,11 @@
           <template v-if="dominanteImagen">
             <div class="relative w-full h-full">
               <!-- Imagen con máscara de silueta -->
-              <img
+             <img
                 :src="dominanteImagen"
                 :alt="dominante.rockstarPrincipal"
                 class="absolute bottom-0 right-0 object-cover object-top w-full h-full"
-                style="mask-image: linear-gradient(to left, rgba(0,0,0,0.9) 30%, rgba(0,0,0,0) 100%), linear-gradient(to top, rgba(0,0,0,1) 60%, rgba(0,0,0,0.3) 85%, rgba(0,0,0,0) 100%); -webkit-mask-image: linear-gradient(to left, rgba(0,0,0,0.9) 30%, rgba(0,0,0,0) 100%), linear-gradient(to top, rgba(0,0,0,1) 60%, rgba(0,0,0,0.3) 85%, rgba(0,0,0,0) 100%); -webkit-mask-composite: source-in; mask-composite: intersect;"
+                style="mask-image: linear-gradient(to left, black 0%, white 100%), linear-gradient(to top, black 0%, white 100%); -webkit-mask-image: linear-gradient(to left, black 0%, white 100%), linear-gradient(to top, black 0%, white 100%); -webkit-mask-composite: source-in; mask-composite: intersect;"
               />
               <!-- Overlay de color del arquetipo sobre la imagen -->
               <div class="absolute inset-0"
@@ -155,8 +155,8 @@
                 <span>{{ estadoSecundario.icon }}</span> {{ estadoSecundario.label }}
               </div>
             </div>
-            <div v-if="IMAGENES_ROCKSTAR[secundario.id]" class="relative w-full mb-4 overflow-hidden rounded h-28">
-              <img :src="IMAGENES_ROCKSTAR[secundario.id]" :alt="secundario.rockstarPrincipal"
+            <div v-if="IMAGENES_ROCKSTAR[secundario.codigo]" class="relative w-full mb-4 overflow-hidden rounded h-28">
+              <img :src="IMAGENES_ROCKSTAR[secundario.codigo]" :alt="secundario.rockstarPrincipal"
                 class="object-cover object-top w-full h-full"
                 :style="`filter: saturate(0.5) contrast(1.1); border-bottom: 2px solid ${secundario.color}`" />
               <div class="absolute inset-0" :style="`background: linear-gradient(to top, ${secundario.color}40 0%, transparent 60%)`"></div>
@@ -175,8 +175,8 @@
                 <span>{{ estadoTerciario.icon }}</span> {{ estadoTerciario.label }}
               </div>
             </div>
-            <div v-if="IMAGENES_ROCKSTAR[terciario.id]" class="relative w-full mb-4 overflow-hidden rounded h-28">
-              <img :src="IMAGENES_ROCKSTAR[terciario.id]" :alt="terciario.rockstarPrincipal"
+            <div v-if="IMAGENES_ROCKSTAR[terciario.codigo]" class="relative w-full mb-4 overflow-hidden rounded h-28">
+              <img :src="IMAGENES_ROCKSTAR[terciario.codigo]" :alt="terciario.rockstarPrincipal"
                 class="object-cover object-top w-full h-full"
                 :style="`filter: saturate(0.5) contrast(1.1); border-bottom: 2px solid ${terciario.color}`" />
               <div class="absolute inset-0" :style="`background: linear-gradient(to top, ${terciario.color}40 0%, transparent 60%)`"></div>
@@ -398,14 +398,14 @@ const resultado = ref(null)
 // Agrega más fotos en /public/ y referencia aquí.
 // Formato: '/nombre.jpg' o '/nombre.webp'
 const IMAGENES_ROCKSTAR = {
-  P1: '/bruce.png',      // El Arquitecto Sonico — Bruce Springsteen / referencia Cerati
-  P2: '/bowie.png',     // El Alienigena Camaleon — Bunbury
-  P3: '/mercury.png',        // El Forajido del Duelo — Johnny Cash
-  P4: '/dylan.png', 
-  P5: '/kurt.png',
-  P6: '/liam.png',
-  P7: '/cash.png',
-  P8: '/hendrix.png', 
+  P1: '/bruce.webp',      // El Arquitecto Sonico — Bruce Springsteen / referencia Cerati
+  P2: '/bowie.webp',     // El Alienigena Camaleon — Bunbury
+  P3: '/mercury.webp',        // El Forajido del Duelo — Johnny Cash
+  P4: '/dylan.webp', 
+  P5: '/kurt.webp',
+  P6: '/liam.webp',
+  P7: '/cash.webp',
+  P8: '/hendrix.webp', 
 }
 
 onMounted(() => {
@@ -457,9 +457,12 @@ const dormidos   = computed(() => resultado.value?.perfil?.dormidos   || [])
 const todosResultados = computed(() => resultado.value?.resultados    || [])
 const alertas    = computed(() => resultado.value?.alertas            || {})
 
+console.log( dominante , secundario , terciario)
+
 const dominanteImagen = computed(() => {
+  //console.log( dominante.value );
   if (!dominante.value) return null
-  return IMAGENES_ROCKSTAR[dominante.value.id] || null
+  return IMAGENES_ROCKSTAR[dominante.value.arquetipoId] || null
 })
 
 const estadoDominante  = computed(() => getEstadoInfo(dominante.value?.estado))
@@ -490,7 +493,7 @@ const narrativaInercia = computed(() => {
   const d = dominante.value
   const tiempos = { 1: 'menos de una semana', 2: 'entre 1 y 4 semanas', 3: 'entre 1 y 3 meses', 4: 'entre 3 y 12 meses', 5: 'más de un año' }
   const tiempo = tiempos[resultado.value?.cronologiaScore] || 'un tiempo prolongado'
-  return `Tu primera línea de defensa frente al caos es ${d.nombre} (${d.id}). Llevas ${tiempo} operando desde este pilar. ${d.usoFuncional}`
+  return `Tu primera línea de defensa frente al caos es ${d.nombre} (${d.codigo}). Llevas ${tiempo} operando desde este pilar. ${d.usoFuncional}`
 })
 
 const narrativaFriccion = computed(() => {
@@ -512,7 +515,7 @@ const narrativaElasticidad = computed(() => {
 })
 
 const antidoto = computed(() => {
-  const key = enSombra.value?.id || dominante.value?.id || 'generico'
+  const key = enSombra.value?.codigo || dominante.value?.codigo || 'generico'
   return INTERVENCIONES[key] || INTERVENCIONES.generico
 })
 
