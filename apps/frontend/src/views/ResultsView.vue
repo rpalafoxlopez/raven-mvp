@@ -54,12 +54,12 @@
           <template v-if="dominanteImagen">
             <div class="relative w-full h-full">
               <!-- Imagen con máscara de silueta -->
-             <img
-                :src="dominanteImagen"
-                :alt="dominante.rockstarPrincipal"
-                class="absolute bottom-0 right-0 object-cover object-top w-full h-full"
-                style="mask-image: linear-gradient(to left, black 0%, white 100%), linear-gradient(to top, black 0%, white 100%); -webkit-mask-image: linear-gradient(to left, black 0%, white 100%), linear-gradient(to top, black 0%, white 100%); -webkit-mask-composite: source-in; mask-composite: intersect;"
-              />
+            <img
+                  :src="dominanteImagen"
+                  :alt="dominante.rockstarPrincipal"
+                  class="absolute bottom-0 right-0 object-contain object-bottom w-full h-full"
+                  style="background: white;"
+                />
               <!-- Overlay de color del arquetipo sobre la imagen -->
               <div class="absolute inset-0"
                 :style="`background: linear-gradient(to right, ${dominante.color}22 0%, transparent 60%); mix-blend-mode: color`">
@@ -121,10 +121,10 @@
             </div>
             <!-- Foto del rockstar en la card si existe -->
             <div v-if="dominanteImagen" class="relative w-full mb-4 overflow-hidden rounded h-28">
-              <img :src="dominanteImagen" :alt="dominante.rockstarPrincipal"
+              <img :src="IMAGENES_ROCKSTARPNG[dominante.codigo]" :alt="dominante.rockstarPrincipal"
                 class="object-cover object-top w-full h-full"
                 :style="`filter: saturate(0.6) contrast(1.1); border-bottom: 2px solid ${dominante.color}`" />
-              <div class="absolute inset-0" :style="`background: linear-gradient(to top, ${dominante.color}40 0%, transparent 60%)`"></div>
+              <div class="absolute inset-0" :style="`background: linear-gradient(to top, ${dominante.color}40 0%, transparent 20%)`"></div>
             </div>
             <h3 class="mb-2 text-xl font-display" :style="`color: ${dominante.color}`">{{ dominante.nombre }}</h3>
             <p class="mb-4 text-sm leading-relaxed font-body text-halford">{{ dominante.usoFuncional }}</p>
@@ -155,11 +155,11 @@
                 <span>{{ estadoSecundario.icon }}</span> {{ estadoSecundario.label }}
               </div>
             </div>
-            <div v-if="IMAGENES_ROCKSTAR[secundario.codigo]" class="relative w-full mb-4 overflow-hidden rounded h-28">
-              <img :src="IMAGENES_ROCKSTAR[secundario.codigo]" :alt="secundario.rockstarPrincipal"
+            <div v-if="IMAGENES_ROCKSTARPNG[secundario.codigo]" class="relative w-full mb-4 overflow-hidden rounded h-28">
+              <img :src="IMAGENES_ROCKSTARPNG[secundario.codigo]" :alt="secundario.rockstarPrincipal"
                 class="object-cover object-top w-full h-full"
                 :style="`filter: saturate(0.5) contrast(1.1); border-bottom: 2px solid ${secundario.color}`" />
-              <div class="absolute inset-0" :style="`background: linear-gradient(to top, ${secundario.color}40 0%, transparent 60%)`"></div>
+              <div class="absolute inset-0" :style="`background: linear-gradient(to top, ${secundario.color}40 0%, transparent 20%)`"></div>
             </div>
             <h3 class="mb-2 text-xl font-display" :style="`color: ${secundario.color}`">{{ secundario.nombre }}</h3>
             <p class="mb-4 text-sm leading-relaxed font-body text-halford">{{ secundario.usoFuncional }}</p>
@@ -175,11 +175,11 @@
                 <span>{{ estadoTerciario.icon }}</span> {{ estadoTerciario.label }}
               </div>
             </div>
-            <div v-if="IMAGENES_ROCKSTAR[terciario.codigo]" class="relative w-full mb-4 overflow-hidden rounded h-28">
-              <img :src="IMAGENES_ROCKSTAR[terciario.codigo]" :alt="terciario.rockstarPrincipal"
+            <div v-if="IMAGENES_ROCKSTARPNG[terciario.codigo]" class="relative w-full mb-4 overflow-hidden rounded h-28">
+              <img :src="IMAGENES_ROCKSTARPNG[terciario.codigo]" :alt="terciario.rockstarPrincipal"
                 class="object-cover object-top w-full h-full"
                 :style="`filter: saturate(0.5) contrast(1.1); border-bottom: 2px solid ${terciario.color}`" />
-              <div class="absolute inset-0" :style="`background: linear-gradient(to top, ${terciario.color}40 0%, transparent 60%)`"></div>
+              <div class="absolute inset-0" :style="`background: linear-gradient(to top, ${terciario.color}40 0%, transparent 20%)`"></div>
             </div>
             <h3 class="mb-2 text-xl font-display" :style="`color: ${terciario.color}`">{{ terciario.nombre }}</h3>
             <p class="mb-4 text-sm leading-relaxed font-body text-halford">{{ terciario.usoFuncional }}</p>
@@ -406,6 +406,17 @@ const IMAGENES_ROCKSTAR = {
   P6: '/liam.webp',
   P7: '/cash.webp',
   P8: '/hendrix.webp', 
+}
+
+const IMAGENES_ROCKSTARPNG = {
+  P1: '/bruce.png',      // El Arquitecto Sonico — Bruce Springsteen / referencia Cerati
+  P2: '/bowie.png',     // El Alienigena Camaleon — Bunbury
+  P3: '/mercury.png',        // El Forajido del Duelo — Johnny Cash
+  P4: '/dylan.png', 
+  P5: '/kurt.png',
+  P6: '/liam.png',
+  P7: '/cash.png',
+  P8: '/hendrix.png', 
 }
 
 onMounted(() => {
