@@ -52,7 +52,7 @@
         <div class="absolute inset-y-0 right-0 flex items-end justify-end w-1/2 pointer-events-none md:w-5/12">
           <!-- Con foto -->
           <template v-if="dominanteImagen">
-            <div class="relative h-full w-full">
+            <div class="relative w-full h-full">
               <!-- Imagen con máscara de silueta -->
               <img
                 :src="dominanteImagen"
@@ -91,7 +91,7 @@
               :style="`color: ${dominante.color}`">
               {{ dominante.nombre }}
             </h1>
-            <p class="mb-6 text-lg font-body text-halford/80 leading-relaxed reveal" style="transition-delay: 0.2s">
+            <p class="mb-6 text-lg leading-relaxed font-body text-halford/80 reveal" style="transition-delay: 0.2s">
               {{ dominante.mecanismo }}
             </p>
             <div class="flex items-center gap-4 reveal" style="transition-delay: 0.25s">
@@ -275,11 +275,11 @@
             <div class="font-mono text-xs tracking-[0.25em] uppercase text-solstis">DIAGNÓSTICO NARRATIVO</div>
             <h3 class="mt-2 text-2xl font-display text-loriga">Tu Reporte de Crisis</h3>
           </div>
-          <div class="p-6 border-l-4 border-transparent bg-surface-container hover:border-solstis/30 transition-colors">
+          <div class="p-6 transition-colors border-l-4 border-transparent bg-surface-container hover:border-solstis/30">
             <div class="font-mono text-xs tracking-[0.15em] uppercase text-halford mb-3">[MÓDULO INERCIA] Motor Principal</div>
             <p class="text-base leading-relaxed font-body text-loriga">{{ narrativaInercia }}</p>
           </div>
-          <div class="p-6 border-l-4 bg-surface-container transition-colors"
+          <div class="p-6 transition-colors border-l-4 bg-surface-container"
             :class="alertasActivas.some(a => a.severo) ? 'border-red-400' : 'border-transparent hover:border-solstis/30'">
             <div class="font-mono text-xs tracking-[0.15em] uppercase mb-3"
               :class="alertasActivas.some(a => a.severo) ? 'text-red-400' : 'text-halford'">
@@ -287,7 +287,7 @@
             </div>
             <p class="text-base leading-relaxed font-body text-loriga">{{ narrativaFriccion }}</p>
           </div>
-          <div class="p-6 border-l-4 border-transparent bg-surface-container hover:border-solstis/30 transition-colors">
+          <div class="p-6 transition-colors border-l-4 border-transparent bg-surface-container hover:border-solstis/30">
             <div class="font-mono text-xs tracking-[0.15em] uppercase text-halford mb-3">[MÓDULO ELASTICIDAD] Capacidad de Migración</div>
             <p class="text-base leading-relaxed font-body text-loriga">{{ narrativaElasticidad }}</p>
           </div>
@@ -306,7 +306,7 @@
         <div class="p-10 mb-8 text-center border bg-folsom border-solstis/20 reveal">
 
           <!-- Silueta decorativa del rockstar dominante en el CTA -->
-          <div v-if="dominanteImagen" class="relative flex justify-center mb-8 overflow-hidden h-40">
+          <div v-if="dominanteImagen" class="relative flex justify-center h-40 mb-8 overflow-hidden">
             <img :src="dominanteImagen" :alt="dominante.rockstarPrincipal"
               class="object-cover object-top h-full opacity-30"
               style="mask-image: linear-gradient(to top, rgba(0,0,0,0) 0%, rgba(0,0,0,0.8) 40%, rgba(0,0,0,0.8) 60%, rgba(0,0,0,0) 100%); -webkit-mask-image: linear-gradient(to top, rgba(0,0,0,0) 0%, rgba(0,0,0,0.8) 40%, rgba(0,0,0,0.8) 60%, rgba(0,0,0,0) 100%);"
@@ -315,7 +315,7 @@
 
           <div class="font-mono text-xs tracking-[0.3em] uppercase text-solstis mb-4">TU SIGUIENTE ACTO</div>
           <h2 class="mb-4 text-4xl font-display text-loriga">Tu Setlist de 12 Semanas</h2>
-          <p class="max-w-xl mx-auto mb-10 font-body text-halford leading-relaxed">
+          <p class="max-w-xl mx-auto mb-10 leading-relaxed font-body text-halford">
             El Agente Raven diseñará un plan personalizado basado en tu perfil
             <span class="text-solstis">{{ resultado.perfil.codigo }}</span>
             con sprints económicos, espirituales y mentales.
@@ -344,13 +344,13 @@
               <span class="relative z-20">🎸 Escenario Principal — $9.99/mes</span>
             </button>
             <button @click="goToCheckout('pro')"
-              class="px-10 py-5 text-lg transition-all border border-solstis/40 text-solstis font-body hover:bg-solstis/10 uppercase tracking-wider">
+              class="px-10 py-5 text-lg tracking-wider uppercase transition-all border border-solstis/40 text-solstis font-body hover:bg-solstis/10">
               Productor Ejecutivo — $29.99/mes
             </button>
           </div>
 
           <!-- Email capture -->
-          <div class="max-w-md mx-auto mt-12 pt-10 border-t border-white/5">
+          <div class="max-w-md pt-10 mx-auto mt-12 border-t border-white/5">
             <p class="mb-2 font-mono text-xs tracking-[0.15em] uppercase text-halford">¿No listo para pagar?</p>
             <p class="mb-5 text-sm font-body text-halford/60">Guarda tu resultado y recibe una oferta especial en 48h.</p>
             <div class="flex gap-2">
@@ -398,15 +398,14 @@ const resultado = ref(null)
 // Agrega más fotos en /public/ y referencia aquí.
 // Formato: '/nombre.jpg' o '/nombre.webp'
 const IMAGENES_ROCKSTAR = {
-  P1: '/cerati.jpg',      // El Arquitecto Sonico — Bruce Springsteen / referencia Cerati
-  P2: '/bunbury.jpg',     // El Alienigena Camaleon — Bunbury
-  P5: '/cash.jpg',        // El Forajido del Duelo — Johnny Cash
-  // Agrega cuando tengas las fotos:
-  // P3: '/bono.jpg',
-  // P4: '/dylan.jpg',
-  // P6: '/zappa.jpg',
-  // P7: '/springsteen.jpg',
-  // P8: '/jimi.jpg',
+  P1: '/bruce.png',      // El Arquitecto Sonico — Bruce Springsteen / referencia Cerati
+  P2: '/bowie.png',     // El Alienigena Camaleon — Bunbury
+  P3: '/mercury.png',        // El Forajido del Duelo — Johnny Cash
+  P4: '/dylan.png', 
+  P5: '/kurt.png',
+  P6: '/liam.png',
+  P7: '/cash.png',
+  P8: '/hendrix.png', 
 }
 
 onMounted(() => {
