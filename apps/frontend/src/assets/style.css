@@ -6,15 +6,16 @@
 
 /* ── TOKENS ────────────────────────────────────────────────── */
 :root {
-  --folsom:        #080808;
-  --carbon:        #111111;
-  --graphite:      #1a1a1a;
-  --iron:          #2a2a2a;
-  --solstis:       #D4AF37;
-  --solstis-deep:  #B8962E;
-  --solstis-pale:  #F5E6A3;
-  --loriga:        #F8F6F1;
-  --halford:       #888880;
+  --folsom:        #0A0A0A;
+  --carbon:        #1A1A1A;
+  --graphite:      #2A2A2A;
+  --iron:          #E8E4D8;   /* antes gris oscuro -> ahora borde claro sobre blanco */
+  --solstis:       #C9A227;
+  --solstis-deep:  #A6841C;
+  --solstis-pale:  #E8D690;
+  --loriga:        #FFFFFF;
+  --loriga-soft:   #FAF8F3;
+  --halford:       #6B6B63;
 }
 
 /* ── BASE ──────────────────────────────────────────────────── */
@@ -24,8 +25,8 @@
   html { scroll-behavior: smooth; }
 
   body {
-    background-color: #080808;
-    color: #F8F6F1;
+    background-color: #FFFFFF;
+    color: #0A0A0A;
     font-family: 'Inter', system-ui, sans-serif;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
@@ -35,28 +36,28 @@
     font-family: 'Playfair Display', Georgia, serif;
     font-weight: 700;
     letter-spacing: -0.01em;
-    color: #F8F6F1;
+    color: #0A0A0A;
   }
 
-  ::selection { background: #D4AF37; color: #080808; }
+  ::selection { background: #C9A227; color: #FFFFFF; }
 
   ::-webkit-scrollbar { width: 3px; }
-  ::-webkit-scrollbar-track { background: #080808; }
-  ::-webkit-scrollbar-thumb { background: #2a2a2a; }
-  ::-webkit-scrollbar-thumb:hover { background: #D4AF37; }
+  ::-webkit-scrollbar-track { background: #FAF8F3; }
+  ::-webkit-scrollbar-thumb { background: #E8E4D8; }
+  ::-webkit-scrollbar-thumb:hover { background: #C9A227; }
 }
 
 /* ── COMPONENTS ────────────────────────────────────────────── */
 @layer components {
 
-  /* Botón dorado principal */
+  /* Botón dorado principal — se mantiene como acento sólido, funciona sobre blanco */
   .btn-primary {
     display: inline-flex;
     align-items: center;
     justify-content: center;
     padding: 0.75rem 1.75rem;
-    background-color: #D4AF37;
-    color: #080808;
+    background-color: #C9A227;
+    color: #FFFFFF;
     font-family: 'JetBrains Mono', monospace;
     font-size: 0.75rem;
     font-weight: 600;
@@ -68,42 +69,42 @@
     position: relative;
     overflow: hidden;
   }
-  .btn-primary:hover { filter: brightness(1.1); transform: translateY(-1px); }
+  .btn-primary:hover { filter: brightness(1.08); transform: translateY(-1px); }
   .btn-primary:active { transform: translateY(0); }
 
-  /* Botón fantasma con borde dorado */
+  /* Botón fantasma con borde dorado — texto negro para legibilidad sobre blanco */
   .btn-secondary {
     display: inline-flex;
     align-items: center;
     justify-content: center;
     padding: 0.75rem 1.75rem;
     background-color: transparent;
-    color: #F5E6A3;
+    color: #0A0A0A;
     font-family: 'JetBrains Mono', monospace;
     font-size: 0.75rem;
     font-weight: 500;
     letter-spacing: 0.12em;
     text-transform: uppercase;
-    border: 1px solid rgba(212, 175, 55, 0.35);
+    border: 1px solid #C9A227;
     cursor: pointer;
     transition: all 0.2s ease;
   }
   .btn-secondary:hover {
-    border-color: #D4AF37;
-    background-color: rgba(212, 175, 55, 0.08);
+    background-color: #C9A227;
+    color: #FFFFFF;
   }
 
-  /* Card base */
+  /* Card base — superficie blanca cálida con borde sutil */
   .card {
-    background-color: #111111;
-    border: 1px solid #2a2a2a;
+    background-color: #FAF8F3;
+    border: 1px solid #E8E4D8;
     padding: 1.5rem;
   }
 
   /* Card con acento dorado izquierdo */
   .card-gold {
-    background-color: #111111;
-    border-left: 2px solid #D4AF37;
+    background-color: #FAF8F3;
+    border-left: 2px solid #C9A227;
     padding: 1.5rem;
   }
 
@@ -111,16 +112,16 @@
   .input {
     width: 100%;
     padding: 0.75rem 1rem;
-    background-color: #1a1a1a;
-    border: 1px solid #2a2a2a;
-    color: #F8F6F1;
+    background-color: #FFFFFF;
+    border: 1px solid #E8E4D8;
+    color: #0A0A0A;
     font-family: 'Inter', sans-serif;
     font-size: 0.875rem;
     outline: none;
     transition: border-color 0.2s;
   }
-  .input::placeholder { color: rgba(136, 136, 128, 0.5); }
-  .input:focus { border-color: #D4AF37; }
+  .input::placeholder { color: rgba(107, 107, 99, 0.5); }
+  .input:focus { border-color: #C9A227; }
 
   /* Etiqueta de estado */
   .badge {
@@ -168,31 +169,31 @@
   .font-mono    { font-family: 'JetBrains Mono', Menlo, monospace !important; }
 
   /* Colores del sistema — siempre disponibles como clases */
-  .bg-folsom   { background-color: #080808; }
-  .bg-carbon   { background-color: #111111; }
-  .bg-graphite { background-color: #1a1a1a; }
-  .bg-iron     { background-color: #2a2a2a; }
-  .bg-solstis  { background-color: #D4AF37; }
-  .bg-surface-container     { background-color: #111111; }
-  .bg-surface-container-low { background-color: #0e0e0e; }
-  .bg-bocanada { background-color: #080808; }
+  .bg-folsom   { background-color: #0A0A0A; }
+  .bg-carbon   { background-color: #1A1A1A; }
+  .bg-graphite { background-color: #FAF8F3; }
+  .bg-iron     { background-color: #E8E4D8; }
+  .bg-solstis  { background-color: #C9A227; }
+  .bg-surface-container     { background-color: #FAF8F3; }
+  .bg-surface-container-low { background-color: #FFFFFF; }
+  .bg-bocanada { background-color: #0A0A0A; }
 
-  .text-folsom   { color: #080808; }
-  .text-loriga   { color: #F8F6F1; }
-  .text-halford  { color: #888880; }
-  .text-solstis  { color: #D4AF37; }
-  .text-solstis-pale { color: #F5E6A3; }
-  .text-vegas    { color: #888880; }
+  .text-folsom   { color: #0A0A0A; }
+  .text-loriga   { color: #0A0A0A; }
+  .text-halford  { color: #6B6B63; }
+  .text-solstis  { color: #C9A227; }
+  .text-solstis-pale { color: #A6841C; }
+  .text-vegas    { color: #6B6B63; }
 
-  .border-solstis { border-color: #D4AF37; }
+  .border-solstis { border-color: #C9A227; }
 
   .text-gradient-gold {
-    background: linear-gradient(135deg, #D4AF37 0%, #F5E6A3 50%, #B8962E 100%);
+    background: linear-gradient(135deg, #C9A227 0%, #E8D690 50%, #A6841C 100%);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;
   }
 
   /* Línea decorativa dorada */
-  .gold-line { display: block; width: 40px; height: 1px; background: #D4AF37; }
+  .gold-line { display: block; width: 40px; height: 1px; background: #C9A227; }
 }

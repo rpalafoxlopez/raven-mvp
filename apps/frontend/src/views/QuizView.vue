@@ -143,11 +143,11 @@ async function submitQuiz() {
 </script>
 
 <style scoped>
-.bg-folsom { background-color: #050505; }
-.bg-surface-container { background-color: #201f1f; }
-.text-loriga { color: #F0F5F9; }
-.text-halford { color: #708090; }
-.bg-solstis { background-color: #D4AF37; }
-.text-solstis { color: #D4AF37; }
-.text-folsom { color: #050505; }
+.bg-folsom { background-color: #FFFFFF; }
+.bg-surface-container { background-color: #F0EBDA; }
+.text-loriga { color: #0A0A0A; }
+.text-halford { color: #6B6B63; }
+.bg-solstis { background-color: #C9A227; }
+.text-solstis { color: #C9A227; }
+.text-folsom { color: #FFFFFF; }
 </style>

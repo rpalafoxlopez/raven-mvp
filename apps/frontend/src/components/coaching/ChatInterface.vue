@@ -1,12 +1,12 @@
 <template>
   <div class="card flex flex-col h-[600px]">
-    <div class="flex items-center gap-3 mb-4 pb-4 border-b border-neutral-800">
-      <div class="w-10 h-10 rounded-full bg-rock-500/20 flex items-center justify-center">
+    <div class="flex items-center gap-3 mb-4 pb-4 border-b border-iron">
+      <div class="w-10 h-10 rounded-full bg-rock-500/15 flex items-center justify-center">
         <span class="text-xl">🎸</span>
       </div>
       <div>
-        <h3 class="font-bold">Raven</h3>
-        <p class="text-xs text-emerald-400">● En línea</p>
+        <h3 class="font-bold text-folsom">Raven</h3>
+        <p class="text-xs text-emerald-600">● En línea</p>
       </div>
     </div>
 
@@ -20,7 +20,7 @@
         <div 
           :class="msg.role === 'user' 
             ? 'bg-rock-500 text-white max-w-[80%]' 
-            : 'bg-neutral-800 text-neutral-300 max-w-[90%]'"
+            : 'bg-neutral-100 text-neutral-700 max-w-[90%]'"
           class="rounded-2xl px-4 py-3 text-sm leading-relaxed"
         >
           <p v-if="msg.role === 'assistant'" class="whitespace-pre-wrap">{{ msg.content }}</p>
@@ -30,11 +30,11 @@
 
       <!-- Typing indicator -->
       <div v-if="coachingStore.sending" class="flex justify-start">
-        <div class="bg-neutral-800 rounded-2xl px-4 py-3">
+        <div class="bg-neutral-100 rounded-2xl px-4 py-3">
           <div class="flex gap-1">
-            <span class="w-2 h-2 bg-neutral-500 rounded-full animate-bounce"></span>
-            <span class="w-2 h-2 bg-neutral-500 rounded-full animate-bounce" style="animation-delay: 0.1s"></span>
-            <span class="w-2 h-2 bg-neutral-500 rounded-full animate-bounce" style="animation-delay: 0.2s"></span>
+            <span class="w-2 h-2 bg-neutral-400 rounded-full animate-bounce"></span>
+            <span class="w-2 h-2 bg-neutral-400 rounded-full animate-bounce" style="animation-delay: 0.1s"></span>
+            <span class="w-2 h-2 bg-neutral-400 rounded-full animate-bounce" style="animation-delay: 0.2s"></span>
           </div>
         </div>
       </div>

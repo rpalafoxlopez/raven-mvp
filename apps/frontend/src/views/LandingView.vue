@@ -263,16 +263,16 @@ const viajeCards = [
 ]
 
 const pilaresPlan = [
-  { color: '#D4AF37', title: 'La Disciplina de Cash', subtitle: '"The Man in Black"', desc: 'Ingresos, metas, blindaje de tus proyectos. Tu rockstar no vive del aire; camina la línea con una ética de hierro y cobra el valor de su autoría.' },
-  { color: '#F0F5F9', title: 'La Frecuencia de Larregui', subtitle: '"El Visionario Etéreo"', desc: 'Propósito, valores, paz. Encontrar el patrón invisible y sintonizar el riff que realmente te mueve, fuera del ruido corporativo.' },
-  { color: '#C0C0C0', title: 'La Arquitectura de Cerati', subtitle: '"La Arquitectura del Pop"', desc: 'Hábitos, foco, claridad. Diseñar un estado de flow tan impecable y obsesivo que tu ejecución diaria se convierta en una pieza de arte ejecutable.' }
+  { color: '#C9A227', title: 'La Disciplina de Cash', subtitle: '"The Man in Black"', desc: 'Ingresos, metas, blindaje de tus proyectos. Tu rockstar no vive del aire; camina la línea con una ética de hierro y cobra el valor de su autoría.' },
+  { color: '#0A0A0A', title: 'La Frecuencia de Larregui', subtitle: '"El Visionario Etéreo"', desc: 'Propósito, valores, paz. Encontrar el patrón invisible y sintonizar el riff que realmente te mueve, fuera del ruido corporativo.' },
+  { color: '#5C5C54', title: 'La Arquitectura de Cerati', subtitle: '"La Arquitectura del Pop"', desc: 'Hábitos, foco, claridad. Diseñar un estado de flow tan impecable y obsesivo que tu ejecución diaria se convierta en una pieza de arte ejecutable.' }
 ]
 
 const arquetipos = [
-  { color: '#00d4ff', question: '¿Eres un Cerati?', desc: 'Sofisticado, perfeccionista, con una obsesión técnica implacable. Creas universos enteros donde otros solo ven bits.' },
-  { color: '#ffffff', question: '¿Eres un Cash?', desc: 'Resiliente, auténtico, el que hace el trabajo sucio que otros evitan. Tu fuerza está en tu honestidad brutal.' },
-  { color: '#ff0000', question: '¿Eres un Bunbury?', desc: 'El mutante maduro. Camuflas tu ego en la perfección, eres odiado por los pulcros que buscan la regla cuadrada y amado por los melodiosos que entienden tu complejidad.' },
-  { color: '#e9c349', question: '¿Eres un Halford?', desc: 'El Metal God. No pides permiso para entrar a la oficina; reclamas el trono porque sabes que eres el nuevo Dios de tu área.' }
+  { color: '#0A0A0A', question: '¿Eres un Cerati?', desc: 'Sofisticado, perfeccionista, con una obsesión técnica implacable. Creas universos enteros donde otros solo ven bits.' },
+  { color: '#C9A227', question: '¿Eres un Cash?', desc: 'Resiliente, auténtico, el que hace el trabajo sucio que otros evitan. Tu fuerza está en tu honestidad brutal.' },
+  { color: '#5C5C54', question: '¿Eres un Bunbury?', desc: 'El mutante maduro. Camuflas tu ego en la perfección, eres odiado por los pulcros que buscan la regla cuadrada y amado por los melodiosos que entienden tu complejidad.' },
+  { color: '#E8D690', question: '¿Eres un Halford?', desc: 'El Metal God. No pides permiso para entrar a la oficina; reclamas el trono porque sabes que eres el nuevo Dios de tu área.' }
 ]
 
 const testimonios = [
@@ -341,32 +341,32 @@ onUnmounted(() => {
 .font-body { font-family: 'Inter', sans-serif; }
 .font-mono { font-family: 'JetBrains Mono', monospace; }
 
-.bg-folsom { background-color: #050505; }
-.bg-bocanada { background-color: #0A192F; }
-.bg-surface { background-color: #141313; }
-.bg-surface-container { background-color: #201f1f; }
-.bg-surface-container-low { background-color: #1c1b1b; }
-.bg-surface-container-lowest { background-color: #0e0e0e; }
+.bg-folsom { background-color: #FFFFFF; }
+.bg-bocanada { background-color: #0A0A0A; }
+.bg-surface { background-color: #FFFFFF; }
+.bg-surface-container { background-color: #FAF8F3; }
+.bg-surface-container-low { background-color: #F5F1E6; }
+.bg-surface-container-lowest { background-color: #FFFFFF; }
 
-.text-loriga { color: #F0F5F9; }
-.text-solstis { color: #D4AF37; }
-.text-halford { color: #C0C0C0; }
-.text-vegas { color: #708090; }
-.text-folsom { color: #050505; }
+.text-loriga { color: #0A0A0A; }
+.text-solstis { color: #C9A227; }
+.text-halford { color: #5C5C54; }
+.text-vegas { color: #7A7A70; }
+.text-folsom { color: #FFFFFF; }
 
-.border-outline-variant\/10 { border-color: rgba(68, 71, 72, 0.1); }
-.border-outline-variant\/20 { border-color: rgba(68, 71, 72, 0.2); }
-.border-outline-variant\/30 { border-color: rgba(68, 71, 72, 0.3); }
+.border-outline-variant\/10 { border-color: rgba(10, 10, 10, 0.08); }
+.border-outline-variant\/20 { border-color: rgba(10, 10, 10, 0.12); }
+.border-outline-variant\/30 { border-color: rgba(10, 10, 10, 0.15); }
 
-.selection\:bg-solstis::selection { background-color: #D4AF37; }
-.selection\:text-folsom::selection { color: #050505; }
+.selection\:bg-solstis::selection { background-color: #C9A227; }
+.selection\:text-folsom::selection { color: #FFFFFF; }
 
 .gold-glow:hover {
-  box-shadow: 0 0 30px rgba(212, 175, 55, 0.4);
+  box-shadow: 0 0 30px rgba(201, 162, 39, 0.35);
 }
 
 .light-leak {
-  background: linear-gradient(135deg, transparent 40%, rgba(212,175,55,0.1) 50%, transparent 60%);
+  background: linear-gradient(135deg, transparent 40%, rgba(201,162,39,0.12) 50%, transparent 60%);
   background-size: 300% 300%;
   transition: background-position 0.8s ease;
 }

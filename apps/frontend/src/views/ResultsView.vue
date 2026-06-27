@@ -2,7 +2,7 @@
   <div class="min-h-screen overflow-x-hidden bg-bocanada text-loriga">
 
     <!-- Nav -->
-    <nav class="fixed top-0 z-50 w-full border-b bg-folsom/90 backdrop-blur-md border-white/5">
+    <nav class="fixed top-0 z-50 w-full border-b bg-folsom/90 backdrop-blur-md border-folsom/10">
       <div class="flex items-center justify-between px-5 md:px-16 py-4 max-w-[1280px] mx-auto">
         <router-link to="/">
           <img src="/logo_rus.webp" alt="RockYourself" class="object-contain w-auto h-10 md:h-12">
@@ -66,7 +66,7 @@
               </div>
               <!-- Gradiente de fade hacia el contenido izquierdo -->
               <div class="absolute inset-0"
-                style="background: linear-gradient(to right, #050505 0%, transparent 40%)">
+                style="background: linear-gradient(to right, #0A0A0A 0%, transparent 40%)">
               </div>
             </div>
           </template>
@@ -108,7 +108,7 @@
       <div class="px-5 md:px-16 max-w-[1100px] mx-auto mt-16">
 
         <!-- ══ Top 3 Arquetipos ══ -->
-        <div class="grid grid-cols-1 gap-px mb-16 md:grid-cols-3 bg-white/5">
+        <div class="grid grid-cols-1 gap-px mb-16 md:grid-cols-3 bg-folsom/5">
 
           <!-- Dominante -->
           <div class="p-8 border-t-2 bg-surface-container reveal" :style="`border-color: ${dominante.color}`">
@@ -133,14 +133,14 @@
                 <span class="text-halford/50">Funcional</span>
                 <span :style="`color: ${dominante.color}`">{{ dominante.scores.funcional }}%</span>
               </div>
-              <div class="h-1 overflow-hidden bg-white/5">
+              <div class="h-1 overflow-hidden bg-folsom/5">
                 <div class="h-full transition-all duration-1000" :style="`width: ${dominante.scores.funcional}%; background: ${dominante.color}`"></div>
               </div>
               <div class="flex justify-between font-mono text-[11px]">
                 <span class="text-halford/50">Sombra</span>
                 <span :style="`color: ${dominante.colorSombra}`">{{ dominante.scores.sombra }}%</span>
               </div>
-              <div class="h-1 overflow-hidden bg-white/5">
+              <div class="h-1 overflow-hidden bg-folsom/5">
                 <div class="h-full transition-all duration-1000" :style="`width: ${dominante.scores.sombra}%; background: ${dominante.colorSombra}`"></div>
               </div>
             </div>
@@ -207,7 +207,7 @@
           </div>
           <h3 class="mb-4 text-2xl font-display" :style="`color: ${enSombra.colorSombra}`">{{ enSombra.nombre }}</h3>
           <p class="mb-4 text-base leading-relaxed font-body text-loriga">{{ enSombra.sombra }}</p>
-          <div class="pt-6 mt-6 border-t border-white/5">
+          <div class="pt-6 mt-6 border-t border-folsom/10">
             <div class="font-mono text-xs tracking-[0.15em] uppercase text-solstis mb-2">INTERVENCIÓN</div>
             <p class="text-base leading-relaxed font-body text-halford">{{ getIntervencionSombra(enSombra.id) }}</p>
           </div>
@@ -219,7 +219,7 @@
             <div class="font-mono text-xs tracking-[0.3em] uppercase text-halford mb-2">EL SUPERGRUPO</div>
             <h3 class="text-3xl font-display text-loriga">Mapa de 8 Mecanismos</h3>
           </div>
-          <div class="grid grid-cols-2 gap-px md:grid-cols-4 bg-white/5">
+          <div class="grid grid-cols-2 gap-px md:grid-cols-4 bg-folsom/5">
             <div v-for="r in todosResultados" :key="r.arquetipoId"
               class="relative overflow-hidden transition-all cursor-default group bg-surface-container"
               :class="r.estado === 'dormido' ? 'opacity-40' : ''"
@@ -250,13 +250,13 @@
                   <div class="flex justify-between font-mono text-[9px] text-halford/40">
                     <span>F</span><span :style="`color: ${r.color}`">{{ r.scores.funcional }}%</span>
                   </div>
-                  <div class="h-0.5 overflow-hidden bg-white/5">
+                  <div class="h-0.5 overflow-hidden bg-folsom/5">
                     <div :style="`width: ${r.scores.funcional}%; background: ${r.color}`"></div>
                   </div>
                   <div class="flex justify-between font-mono text-[9px] text-halford/40">
                     <span>S</span><span :style="`color: ${r.colorSombra}`">{{ r.scores.sombra }}%</span>
                   </div>
-                  <div class="h-0.5 overflow-hidden bg-white/5">
+                  <div class="h-0.5 overflow-hidden bg-folsom/5">
                     <div :style="`width: ${r.scores.sombra}%; background: ${r.colorSombra}`"></div>
                   </div>
                 </div>
@@ -295,7 +295,7 @@
             <div class="font-mono text-xs tracking-[0.15em] uppercase text-solstis mb-4">[MÓDULO ANTÍDOTO] Tu Intervención</div>
             <h4 class="mb-4 text-xl font-display text-loriga">{{ antidoto.titulo }}</h4>
             <p class="mb-6 text-base leading-relaxed font-body text-halford">{{ antidoto.diagnostico }}</p>
-            <div class="pt-6 border-t border-white/5">
+            <div class="pt-6 border-t border-folsom/10">
               <div class="font-mono text-xs tracking-[0.15em] uppercase text-solstis mb-3">Tu acción para mañana a las 8:00 AM</div>
               <p class="text-base font-medium leading-relaxed font-body text-loriga">{{ antidoto.accion }}</p>
             </div>
@@ -326,11 +326,11 @@
             <p class="mb-4 font-mono text-xs text-halford">Inicia sesión para activar tu plan</p>
             <div class="flex justify-center gap-4">
               <button @click="login('google')"
-                class="px-6 py-3 text-sm transition-all border bg-surface-container border-white/10 text-loriga hover:border-solstis font-body">
+                class="px-6 py-3 text-sm transition-all border bg-surface-container border-folsom/10 text-loriga hover:border-solstis font-body">
                 Continuar con Google
               </button>
               <button @click="login('github')"
-                class="px-6 py-3 text-sm transition-all border bg-surface-container border-white/10 text-loriga hover:border-solstis font-body">
+                class="px-6 py-3 text-sm transition-all border bg-surface-container border-folsom/10 text-loriga hover:border-solstis font-body">
                 Continuar con GitHub
               </button>
             </div>
@@ -350,7 +350,7 @@
           </div>
 
           <!-- Email capture -->
-          <div class="max-w-md pt-10 mx-auto mt-12 border-t border-white/5">
+          <div class="max-w-md pt-10 mx-auto mt-12 border-t border-folsom/10">
             <p class="mb-2 font-mono text-xs tracking-[0.15em] uppercase text-halford">¿No listo para pagar?</p>
             <p class="mb-5 text-sm font-body text-halford/60">Guarda tu resultado y recibe una oferta especial en 48h.</p>
             <div class="flex gap-2">
@@ -358,7 +358,7 @@
                 v-model="email"
                 type="email"
                 placeholder="tu@email.com"
-                class="flex-1 px-4 py-3 text-sm border outline-none bg-surface-container border-white/10 text-loriga focus:border-solstis font-body"
+                class="flex-1 px-4 py-3 text-sm border outline-none bg-surface-container border-folsom/10 text-loriga focus:border-solstis font-body"
               />
               <button
                 @click="captureEmail"
@@ -537,7 +537,7 @@ function getEstadoInfo(estado) {
     'saludable':  { label: 'Saludable',  icon: '✅', color: '#2ecc71' },
     'en-sombra':  { label: 'En Sombra',  icon: '⚠️', color: '#e74c3c' },
     'equilibrado':{ label: 'Equilibrado',icon: '⚖️', color: '#f39c12' },
-    'dominante':  { label: 'Dominante',  icon: '🔥', color: '#D4AF37' },
+    'dominante':  { label: 'Dominante',  icon: '🔥', color: '#C9A227' },
     'dormido':    { label: 'Dormido',    icon: '💤', color: '#95a5a6' }
   }
   return mapa[estado] || { label: estado || '—', icon: '•', color: '#bdc3c7' }
@@ -614,20 +614,20 @@ const INTERVENCIONES = {
 </script>
 
 <style scoped>
-.bg-folsom { background-color: #050505; }
-.bg-bocanada { background-color: #0A192F; }
-.bg-surface-container { background-color: #0f1e30; }
+.bg-folsom { background-color: #FFFFFF; }
+.bg-bocanada { background-color: #0A0A0A; }
+.bg-surface-container { background-color: #FAF8F3; }
 
-.text-loriga { color: #F0F5F9; }
-.text-halford { color: #C0C0C0; }
-.text-solstis { color: #D4AF37; }
-.text-folsom { color: #050505; }
-.bg-solstis { background-color: #D4AF37; }
+.text-loriga { color: #0A0A0A; }
+.text-halford { color: #6B6B63; }
+.text-solstis { color: #C9A227; }
+.text-folsom { color: #FFFFFF; }
+.bg-solstis { background-color: #C9A227; }
 
 .reveal { opacity: 0; transform: translateY(24px); transition: opacity 0.9s cubic-bezier(0.22,1,0.36,1), transform 0.9s cubic-bezier(0.22,1,0.36,1); }
 .reveal.active { opacity: 1; transform: translateY(0); }
 
 .interactive-button { position: relative; overflow: hidden; }
-.button-glow { position: absolute; width: 160px; height: 160px; background: radial-gradient(circle, rgba(212,175,55,0.35) 0%, transparent 70%); border-radius: 50%; pointer-events: none; transform: translate(-50%,-50%); transition: opacity 0.3s; opacity: 0; z-index: 10; }
+.button-glow { position: absolute; width: 160px; height: 160px; background: radial-gradient(circle, rgba(201,162,39,0.35) 0%, transparent 70%); border-radius: 50%; pointer-events: none; transform: translate(-50%,-50%); transition: opacity 0.3s; opacity: 0; z-index: 10; }
 .interactive-button:hover .button-glow { opacity: 1; }
 </style>

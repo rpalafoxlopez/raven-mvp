@@ -1,10 +1,10 @@
 <template>
   <div class="w-full">
-    <div class="flex justify-between text-xs text-neutral-500 mb-2">
+    <div class="flex justify-between text-xs text-halford mb-2">
       <span>Progreso</span>
       <span>{{ progress }}%</span>
     </div>
-    <div class="w-full bg-neutral-800 rounded-full h-2">
+    <div class="w-full bg-neutral-200 rounded-full h-2">
       <div 
         class="h-2 rounded-full bg-gradient-to-r from-rock-500 to-amber-500 transition-all duration-500"
         :style="{ width: `${progress}%` }"

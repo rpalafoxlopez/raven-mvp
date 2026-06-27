@@ -14,6 +14,6 @@ onMounted(() => { authStore.initAuth() })
 </script>
 
 <style>
-.bg-folsom { background-color: #080808; }
-.text-loriga { color: #F8F6F1; }
+.bg-folsom { background-color: #FFFFFF; }
+.text-loriga { color: #0A0A0A; }
 </style>

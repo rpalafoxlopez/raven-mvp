@@ -87,8 +87,8 @@ const escalaLabelMax = computed(() => {
 
 <style scoped>
 .card-question {
-  background-color: #0A192F;
-  border: 1px solid rgba(212, 175, 55, 0.15);
+  background-color: #FAF8F3;
+  border: 1px solid rgba(201, 162, 39, 0.25);
   border-radius: 12px;
   padding: 2rem;
 }
@@ -98,21 +98,21 @@ const escalaLabelMax = computed(() => {
   text-align: left;
   padding: 1rem 1.25rem;
   border-radius: 8px;
-  border: 1px solid rgba(192, 192, 192, 0.2);
-  background-color: rgba(240, 245, 249, 0.03);
-  color: #F0F5F9;
+  border: 1px solid rgba(10, 10, 10, 0.12);
+  background-color: #FFFFFF;
+  color: #0A0A0A;
   transition: all 0.2s ease;
   cursor: pointer;
 }
 
 .option-btn:hover {
-  border-color: #D4AF37;
-  background-color: rgba(212, 175, 55, 0.08);
+  border-color: #C9A227;
+  background-color: rgba(201, 162, 39, 0.08);
 }
 
 .option-btn--selected {
-  border-color: #D4AF37;
-  background-color: rgba(212, 175, 55, 0.15);
+  border-color: #C9A227;
+  background-color: rgba(201, 162, 39, 0.12);
 }
 
 .option-letter {
@@ -120,30 +120,30 @@ const escalaLabelMax = computed(() => {
   width: 28px;
   height: 28px;
   border-radius: 50%;
-  background-color: rgba(192, 192, 192, 0.15);
+  background-color: rgba(10, 10, 10, 0.08);
   display: flex;
   align-items: center;
   justify-content: center;
   font-size: 0.75rem;
   font-weight: 700;
   font-family: monospace;
-  color: #C0C0C0;
+  color: #0A0A0A;
   transition: all 0.2s ease;
 }
 
 .option-btn:hover .option-letter,
 .option-btn--selected .option-letter {
-  background-color: #D4AF37;
-  color: #050505;
+  background-color: #C9A227;
+  color: #FFFFFF;
 }
 
 .escala-btn {
   flex: 1;
   padding: 1rem 0;
   border-radius: 8px;
-  border: 1px solid rgba(192, 192, 192, 0.2);
-  background-color: rgba(240, 245, 249, 0.03);
-  color: #F0F5F9;
+  border: 1px solid rgba(10, 10, 10, 0.12);
+  background-color: #FFFFFF;
+  color: #0A0A0A;
   font-family: monospace;
   font-size: 1.1rem;
   font-weight: 700;
@@ -152,13 +152,13 @@ const escalaLabelMax = computed(() => {
 }
 
 .escala-btn:hover {
-  border-color: #D4AF37;
-  background-color: rgba(212, 175, 55, 0.08);
+  border-color: #C9A227;
+  background-color: rgba(201, 162, 39, 0.08);
 }
 
 .escala-btn--selected {
-  border-color: #D4AF37;
-  background-color: #D4AF37;
-  color: #050505;
+  border-color: #C9A227;
+  background-color: #C9A227;
+  color: #FFFFFF;
 }
 </style>

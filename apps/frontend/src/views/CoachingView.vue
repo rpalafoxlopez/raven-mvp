@@ -1,16 +1,15 @@
 <template>
-  <div class="min-h-screen" style="background:#080808; color:#F8F6F1;">
+  <div class="min-h-screen bg-loriga text-folsom">
 
     <!-- Header -->
-    <header class="sticky top-0 z-50 backdrop-blur-md" style="border-bottom:1px solid #2a2a2a; background:rgba(8,8,8,0.9);">
+    <header class="sticky top-0 z-50 border-b border-iron bg-loriga/90 backdrop-blur-md">
       <div class="flex items-center justify-between px-5 py-4 mx-auto max-w-7xl md:px-16">
         <div class="flex items-center gap-4">
-          <router-link to="/dashboard" class="font-mono text-xs tracking-wider transition-colors" style="color:#888880;"
-            onmouseenter="this.style.color='#D4AF37'" onmouseleave="this.style.color='#888880'">
+          <router-link to="/dashboard" class="font-mono text-xs tracking-wider transition-colors text-halford hover:text-solstis">
             ← Dashboard
           </router-link>
-          <span style="color:#2a2a2a;">|</span>
-          <span class="font-mono text-xs tracking-widest uppercase" style="color:#D4AF37;">Agente Raven</span>
+          <span class="text-iron">|</span>
+          <span class="font-mono text-xs tracking-widest uppercase text-solstis">Agente Raven</span>
         </div>
       </div>
     </header>
@@ -28,15 +27,15 @@
           <ActionPlan />
 
           <!-- Metas -->
-          <div style="background:#111111; border:1px solid #2a2a2a; padding:1.5rem;">
-            <h4 class="mb-4 font-mono text-xs tracking-widest uppercase" style="color:#888880;">Metas</h4>
+          <div class="p-6 border border-iron bg-loriga-soft">
+            <h4 class="mb-4 font-mono text-xs tracking-widest uppercase text-halford">Metas</h4>
             <div v-if="coachingStore.plan?.goals?.length" class="space-y-2">
               <div v-for="(goal, i) in coachingStore.plan.goals" :key="i" class="flex items-start gap-2">
-                <span style="color:#D4AF37; font-size:10px; margin-top:4px;">›</span>
-                <span class="font-body text-sm" style="color:#F8F6F1;">{{ goal }}</span>
+                <span class="mt-1 text-[10px] text-solstis">›</span>
+                <span class="font-body text-sm text-folsom">{{ goal }}</span>
               </div>
             </div>
-            <div v-else class="font-mono text-xs" style="color:#888880;">
+            <div v-else class="font-mono text-xs text-halford">
               No tienes metas definidas.<br>Chatea con Raven para establecerlas.
             </div>
           </div>

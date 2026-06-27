@@ -7,24 +7,31 @@ export default {
   theme: {
     extend: {
       colors: {
-        solstis: '#D4AF37',
-        folsom: '#050505',
-        loriga: '#F0F5F9',
-        halford: '#C0C0C0',
-        vegas: '#708090',
-        bocanada: '#0A192F',
+        // Dorado — acento primario (CTAs, énfasis, líneas decorativas)
+        solstis: '#C9A227',
+        'solstis-deep': '#A6841C',
+        'solstis-pale': '#E8D690',
+        // Negro — texto y acentos estructurales (ya no es el fondo base)
+        folsom: '#0A0A0A',
+        carbon: '#1A1A1A',
+        // Blanco/superficie — ahora es el color dominante de fondo
+        loriga: '#FFFFFF',
+        'loriga-soft': '#FAF8F3',   // blanco cálido para separar secciones
+        halford: '#6B6B63',         // texto secundario sobre blanco
+        vegas: '#9A9A8E',
+        bocanada: '#0A0A0A',        // alias retrocompatible -> negro
         rock: {
-          50: '#fdf2f4',
-          100: '#fce7eb',
-          200: '#f9d0d9',
-          300: '#f4a9ba',
-          400: '#ec7894',
-          500: '#e11d48',
-          600: '#cf1642',
-          700: '#ae1037',
-          800: '#921132',
-          900: '#7d1430',
-          950: '#450617'
+          50: '#FAF8F3',
+          100: '#F5EFD8',
+          200: '#EBDDA8',
+          300: '#DCC571',
+          400: '#D2B348',
+          500: '#C9A227',
+          600: '#A6841C',
+          700: '#856815',
+          800: '#5E4A0F',
+          900: '#3D300A',
+          950: '#1F1805'
         }
       },
       fontFamily: {

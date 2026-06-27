@@ -4,34 +4,34 @@
       <span class="text-6xl">{{ emoji }}</span>
     </div>
 
-    <p class="text-rock-400 font-semibold text-lg mb-2">Tu arquetipo es</p>
-    <h1 class="text-5xl sm:text-6xl font-black mb-4">{{ archetypeData.name }}</h1>
-    <p class="text-xl text-neutral-400 italic mb-8">"{{ archetypeData.tagline }}"</p>
+    <p class="text-rock-600 font-semibold text-lg mb-2">Tu arquetipo es</p>
+    <h1 class="text-5xl sm:text-6xl font-black mb-4 text-folsom">{{ archetypeData.name }}</h1>
+    <p class="text-xl text-halford italic mb-8">"{{ archetypeData.tagline }}"</p>
 
     <div class="card max-w-2xl mx-auto text-left">
-      <p class="text-lg text-neutral-300 mb-6">{{ archetypeData.description }}</p>
+      <p class="text-lg text-neutral-700 mb-6">{{ archetypeData.description }}</p>
 
       <div class="grid sm:grid-cols-2 gap-6">
         <div>
-          <h4 class="font-bold text-emerald-400 mb-2">Fortalezas</h4>
+          <h4 class="font-bold text-emerald-600 mb-2">Fortalezas</h4>
           <ul class="space-y-1">
-            <li v-for="strength in archetypeData.strengths" :key="strength" class="text-sm text-neutral-400">
+            <li v-for="strength in archetypeData.strengths" :key="strength" class="text-sm text-halford">
               ✦ {{ strength }}
             </li>
           </ul>
         </div>
         <div>
-          <h4 class="font-bold text-amber-400 mb-2">Áreas de crecimiento</h4>
+          <h4 class="font-bold text-amber-600 mb-2">Áreas de crecimiento</h4>
           <ul class="space-y-1">
-            <li v-for="weakness in archetypeData.weaknesses" :key="weakness" class="text-sm text-neutral-400">
+            <li v-for="weakness in archetypeData.weaknesses" :key="weakness" class="text-sm text-halford">
               ◈ {{ weakness }}
             </li>
           </ul>
         </div>
       </div>
 
-      <div class="mt-6 pt-6 border-t border-neutral-800">
-        <p class="text-sm text-neutral-500">
+      <div class="mt-6 pt-6 border-t border-iron">
+        <p class="text-sm text-halford">
           Iconos de referencia: {{ archetypeData.rockIcons.join(', ') }}
         </p>
       </div>
