@@ -1,5 +1,5 @@
 <template>
-  <div class="min-h-screen overflow-x-hidden bg-bocanada text-loriga">
+  <div class="min-h-screen overflow-x-hidden bg-loriga text-loriga">
 
     <!-- Nav -->
     <nav class="fixed top-0 z-50 w-full border-b bg-folsom/90 backdrop-blur-md border-folsom/10">
@@ -66,7 +66,7 @@
               </div>
               <!-- Gradiente de fade hacia el contenido izquierdo -->
               <div class="absolute inset-0"
-                style="background: linear-gradient(to right, #0A0A0A 0%, transparent 40%)">
+                style="background: linear-gradient(to right, #FFFFFF 0%, transparent 40%)">
               </div>
             </div>
           </template>
@@ -108,7 +108,7 @@
       <div class="px-5 md:px-16 max-w-[1100px] mx-auto mt-16">
 
         <!-- ══ Top 3 Arquetipos ══ -->
-        <div class="grid grid-cols-1 gap-px mb-16 md:grid-cols-3 bg-folsom/5">
+        <div class="grid grid-cols-1 gap-px mb-16 md:grid-cols-3 bg-folsom/[0.08]">
 
           <!-- Dominante -->
           <div class="p-8 border-t-2 bg-surface-container reveal" :style="`border-color: ${dominante.color}`">
@@ -133,14 +133,14 @@
                 <span class="text-halford/50">Funcional</span>
                 <span :style="`color: ${dominante.color}`">{{ dominante.scores.funcional }}%</span>
               </div>
-              <div class="h-1 overflow-hidden bg-folsom/5">
+              <div class="h-1 overflow-hidden bg-folsom/[0.08]">
                 <div class="h-full transition-all duration-1000" :style="`width: ${dominante.scores.funcional}%; background: ${dominante.color}`"></div>
               </div>
               <div class="flex justify-between font-mono text-[11px]">
                 <span class="text-halford/50">Sombra</span>
                 <span :style="`color: ${dominante.colorSombra}`">{{ dominante.scores.sombra }}%</span>
               </div>
-              <div class="h-1 overflow-hidden bg-folsom/5">
+              <div class="h-1 overflow-hidden bg-folsom/[0.08]">
                 <div class="h-full transition-all duration-1000" :style="`width: ${dominante.scores.sombra}%; background: ${dominante.colorSombra}`"></div>
               </div>
             </div>
@@ -219,7 +219,7 @@
             <div class="font-mono text-xs tracking-[0.3em] uppercase text-halford mb-2">EL SUPERGRUPO</div>
             <h3 class="text-3xl font-display text-loriga">Mapa de 8 Mecanismos</h3>
           </div>
-          <div class="grid grid-cols-2 gap-px md:grid-cols-4 bg-folsom/5">
+          <div class="grid grid-cols-2 gap-px md:grid-cols-4 bg-folsom/[0.08]">
             <div v-for="r in todosResultados" :key="r.arquetipoId"
               class="relative overflow-hidden transition-all cursor-default group bg-surface-container"
               :class="r.estado === 'dormido' ? 'opacity-40' : ''"
@@ -240,7 +240,7 @@
               <div class="relative z-10 p-4">
                 <!-- Barra de estado arriba -->
                 <div class="h-0.5 w-full mb-3 transition-all duration-500"
-                  :style="`background: ${r.estado === 'dormido' ? 'rgba(255,255,255,0.1)' : r.color}; opacity: ${r.scores.funcional / 100}`"></div>
+                  :style="`background: ${r.estado === 'dormido' ? 'rgba(10,10,10,0.1)' : r.color}; opacity: ${r.scores.funcional / 100}`"></div>
 
                 <div class="mb-1 font-mono text-xs" :style="`color: ${r.color}`">{{ r.codigo }}</div>
                 <div class="mb-3 text-sm leading-tight font-display text-loriga">{{ r.nombre }}</div>
@@ -250,13 +250,13 @@
                   <div class="flex justify-between font-mono text-[9px] text-halford/40">
                     <span>F</span><span :style="`color: ${r.color}`">{{ r.scores.funcional }}%</span>
                   </div>
-                  <div class="h-0.5 overflow-hidden bg-folsom/5">
+                  <div class="h-0.5 overflow-hidden bg-folsom/[0.08]">
                     <div :style="`width: ${r.scores.funcional}%; background: ${r.color}`"></div>
                   </div>
                   <div class="flex justify-between font-mono text-[9px] text-halford/40">
                     <span>S</span><span :style="`color: ${r.colorSombra}`">{{ r.scores.sombra }}%</span>
                   </div>
-                  <div class="h-0.5 overflow-hidden bg-folsom/5">
+                  <div class="h-0.5 overflow-hidden bg-folsom/[0.08]">
                     <div :style="`width: ${r.scores.sombra}%; background: ${r.colorSombra}`"></div>
                   </div>
                 </div>
@@ -339,7 +339,7 @@
           <!-- Con auth: checkout -->
           <div v-else class="flex flex-col justify-center gap-4 md:flex-row">
             <button @click="goToCheckout('premium')"
-              class="relative overflow-hidden bg-solstis text-folsom px-10 py-5 font-body text-lg uppercase tracking-wider hover:scale-105 transition-all shadow-[0_0_20px_rgba(212,175,55,0.3)] interactive-button">
+              class="relative overflow-hidden btn-gold px-10 py-5 font-body text-lg uppercase tracking-wider hover:scale-105 transition-all shadow-[0_0_20px_rgba(212,175,55,0.3)] interactive-button">
               <span class="button-glow"></span>
               <span class="relative z-20">🎸 Escenario Principal — $9.99/mes</span>
             </button>

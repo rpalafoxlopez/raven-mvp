@@ -50,14 +50,14 @@
 /* ── COMPONENTS ────────────────────────────────────────────── */
 @layer components {
 
-  /* Botón dorado principal — se mantiene como acento sólido, funciona sobre blanco */
+  /* Botón dorado principal — gradiente radial, texto negro por contraste */
   .btn-primary {
     display: inline-flex;
     align-items: center;
     justify-content: center;
     padding: 0.75rem 1.75rem;
-    background-color: #C9A227;
-    color: #FFFFFF;
+    background: radial-gradient(ellipse at center, #f9e052 0%, #dfae2e 40%, #b27d15 100%);
+    color: #0A0A0A;
     font-family: 'JetBrains Mono', monospace;
     font-size: 0.75rem;
     font-weight: 600;
@@ -71,6 +71,15 @@
   }
   .btn-primary:hover { filter: brightness(1.08); transform: translateY(-1px); }
   .btn-primary:active { transform: translateY(0); }
+
+  /* Gradiente dorado reutilizable para CTAs marcados con clases Tailwind directas
+     (bg-solstis text-folsom). No reemplaza bg-solstis porque ese token también
+     se usa con opacidad (/5, /10, /30) y en ::selection, donde un gradiente no aplica. */
+  .btn-gold {
+    background: radial-gradient(ellipse at center, #f9e052 0%, #dfae2e 40%, #b27d15 100%) !important;
+    color: #0A0A0A !important;
+  }
+  .btn-gold:hover { filter: brightness(1.06); }
 
   /* Botón fantasma con borde dorado — texto negro para legibilidad sobre blanco */
   .btn-secondary {

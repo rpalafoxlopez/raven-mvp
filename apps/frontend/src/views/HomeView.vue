@@ -24,7 +24,7 @@
         <!-- CTA Button -->
         <button 
           @click="startQuiz"
-          class="bg-solstis text-folsom px-6 py-2 font-body text-xs tracking-[0.1em] uppercase hover:scale-105 transition-all duration-300 interactive-button"
+          class="btn-gold px-6 py-2 font-body text-xs tracking-[0.1em] uppercase hover:scale-105 transition-all duration-300 interactive-button"
         >
           <span class="button-glow"></span>
           <span class="relative z-20">{{ isAuthenticated ? 'Dashboard' : 'Comencemos' }}</span>
@@ -62,7 +62,7 @@
         <div class="flex flex-col items-center justify-center gap-6 hero-entrance md:flex-row" style="animation-delay: 0.6s">
           <button 
             @click="startQuiz"
-            class="w-full md:w-auto bg-solstis text-folsom px-10 py-5 font-body text-lg hover:scale-105 transition-all duration-300 gold-glow interactive-button shadow-[0_0_15px_rgba(212,175,55,0.3)]"
+            class="w-full md:w-auto btn-gold px-10 py-5 font-body text-lg hover:scale-105 transition-all duration-300 gold-glow interactive-button shadow-[0_0_15px_rgba(212,175,55,0.3)]"
           >
             <span class="button-glow"></span>
             <span class="relative z-20">🎸 Descubre tu arquetipo</span>
@@ -100,7 +100,7 @@
     </section>
 
     <!-- El Plan Section -->
-    <section class="px-5 py-20 overflow-hidden md:py-40 md:px-16 bg-bocanada" id="plan">
+    <section class="px-5 py-20 overflow-hidden md:py-40 md:px-16 bg-loriga-soft" id="plan">
       <div class="max-w-[1280px] mx-auto relative">
         <div class="mb-24 text-center reveal">
           <h2 class="relative z-10 text-3xl font-display md:text-5xl">No es terapia. <span class="italic text-solstis">Es un setlist.</span></h2>
@@ -114,13 +114,13 @@
             <p class="text-base font-body text-loriga">{{ pilar.desc }}</p>
           </div>
         </div>
-        <div class="max-w-4xl p-12 mx-auto mt-24 border-l-4 reveal bg-surface-container border-solstis">
+        <div class="max-w-4xl p-12 mx-auto mt-24 border-l-4 reveal bg-loriga border-solstis">
           <div class="font-mono text-solstis text-xs tracking-[0.1em] uppercase mb-4">METODOLOGÍA</div>
           <p class="text-2xl italic font-display md:text-3xl text-loriga">Semanas · Sprints · Celebraciones</p>
           <p class="mt-2 text-base font-body text-halford">Porque los estadios se llenan canción por canción.</p>
         </div>
         <div class="mt-12 text-center reveal">
-          <button @click="startQuiz" class="bg-solstis text-folsom px-10 py-5 font-body text-lg hover:scale-105 transition-all duration-300 gold-glow interactive-button shadow-[0_0_15px_rgba(212,175,55,0.3)]">
+          <button @click="startQuiz" class="btn-gold px-10 py-5 font-body text-lg hover:scale-105 transition-all duration-300 gold-glow interactive-button shadow-[0_0_15px_rgba(212,175,55,0.3)]">
             <span class="button-glow"></span>
             <span class="relative z-20">Arma tu setlist</span>
           </button>
@@ -186,12 +186,12 @@
     </section>
 
     <!-- Final CTA -->
-    <section class="relative px-5 py-40 overflow-hidden text-center bg-bocanada">
+    <section class="relative px-5 py-40 overflow-hidden text-center bg-loriga-soft">
       <div class="absolute inset-0 bg-solstis/5 -z-10"></div>
       <div class="max-w-4xl mx-auto reveal">
         <h2 class="mb-12 text-4xl font-display md:text-7xl">El micrófono está <span class="italic underline text-solstis decoration-1 underline-offset-8">abierto.</span></h2>
         <p class="mb-12 text-lg font-body text-halford">Sé el frontman de tu vida. No hay teloneros aquí.</p>
-        <button @click="startQuiz" class="bg-solstis text-folsom px-16 py-8 font-body text-2xl hover:scale-110 transition-all duration-500 gold-glow shadow-[0_0_50px_rgba(212,175,55,0.4)] interactive-button">
+        <button @click="startQuiz" class="btn-gold px-16 py-8 font-body text-2xl hover:scale-110 transition-all duration-500 gold-glow shadow-[0_0_50px_rgba(212,175,55,0.4)] interactive-button">
           <span class="button-glow"></span>
           <span class="relative z-20">🎸 DESCUBRE TU ARQUETIPO</span>
         </button>

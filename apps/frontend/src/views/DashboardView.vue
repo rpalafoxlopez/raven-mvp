@@ -57,7 +57,7 @@
             <!-- Acciones -->
             <div class="mt-8 space-y-3">
               <router-link to="/quiz"
-                class="block w-full py-3 text-center font-mono text-xs tracking-wider uppercase transition-all bg-solstis text-loriga hover:brightness-110">
+                class="block w-full py-3 text-center font-mono text-xs tracking-wider uppercase transition-all btn-gold hover:brightness-110">
                 Rehacer Quiz
               </router-link>
               <router-link to="/coaching"
@@ -132,7 +132,7 @@
         <textarea v-model="newAction.description" placeholder="Descripción (opcional)" rows="3" class="w-full px-4 py-3 mb-3 font-body text-sm outline-none resize-none border border-iron bg-loriga-soft text-folsom placeholder:text-halford/60"></textarea>
         <input v-model="newAction.dueDate" type="date" class="w-full px-4 py-3 mb-6 font-mono text-sm outline-none border border-iron bg-loriga-soft text-halford" />
         <div class="flex gap-3">
-          <button @click="addAction" class="flex-1 py-3 font-mono text-xs tracking-wider uppercase bg-solstis text-loriga hover:brightness-110">Guardar</button>
+          <button @click="addAction" class="flex-1 py-3 font-mono text-xs tracking-wider uppercase btn-gold hover:brightness-110">Guardar</button>
           <button @click="showAddAction = false" class="flex-1 py-3 font-mono text-xs tracking-wider uppercase border border-iron text-halford hover:bg-loriga-soft">Cancelar</button>
         </div>
       </div>

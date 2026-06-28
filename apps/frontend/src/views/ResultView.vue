@@ -241,7 +241,7 @@
       </div>
 
       <!-- CTA de pago -->
-      <div class="p-12 text-center border bg-bocanada border-solstis/20">
+      <div class="p-12 text-center border bg-folsom border-solstis/20">
         <h2 class="mb-4 text-3xl font-display md:text-4xl text-loriga">
           Tu Setlist de 12 Semanas te espera
         </h2>
@@ -271,7 +271,7 @@
         <div v-else class="flex flex-col justify-center gap-6 md:flex-row">
           <button
             @click="goToCheckout('premium')"
-            class="px-10 py-5 text-lg transition-all bg-solstis text-folsom font-body hover:scale-105 gold-glow interactive-button"
+            class="px-10 py-5 text-lg transition-all btn-gold font-body hover:scale-105 gold-glow interactive-button"
           >
             <span class="button-glow"></span>
             <span class="relative z-20">Escenario Principal — $9.99/mes</span>

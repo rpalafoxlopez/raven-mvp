@@ -12,7 +12,7 @@
     <button
       @click="$emit('next')"
       :disabled="!canProceed"
-      class="px-8 py-3 font-body text-label-caps bg-solstis text-folsom hover:scale-105 transition-all duration-300 disabled:opacity-30 disabled:cursor-not-allowed gold-glow interactive-button"
+      class="px-8 py-3 font-body text-label-caps btn-gold hover:scale-105 transition-all duration-300 disabled:opacity-30 disabled:cursor-not-allowed gold-glow interactive-button"
     >
       <span class="button-glow"></span>
       <span class="relative z-20">

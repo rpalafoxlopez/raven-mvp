@@ -32,7 +32,7 @@
         </p>
         <button
           @click="goToDashboard"
-          class="px-10 py-4 bg-solstis text-folsom font-mono text-sm font-bold hover:bg-solstis/80 transition-colors tracking-[0.1em]"
+          class="px-10 py-4 btn-gold font-mono text-sm font-bold hover:brightness-[1.06] transition-colors tracking-[0.1em]"
         >
           ENTRAR AL BACKSTAGE →
         </button>
@@ -52,7 +52,7 @@
         <div class="flex justify-center gap-4">
           <button
             @click="paymentCanceled = false"
-            class="px-8 py-4 font-mono text-sm font-bold transition-colors bg-solstis text-folsom hover:bg-solstis/80"
+            class="px-8 py-4 font-mono text-sm font-bold transition-colors btn-gold hover:brightness-[1.06]"
           >
             Ver planes →
           </button>
@@ -206,7 +206,7 @@
               v-else
               @click="checkout('premium')"
               :disabled="loadingPlan === 'premium'"
-              class="w-full py-4 bg-solstis text-folsom font-mono text-sm font-bold hover:bg-solstis/80 transition-colors disabled:opacity-60 tracking-[0.08em]"
+              class="w-full py-4 btn-gold font-mono text-sm font-bold hover:brightness-[1.06] transition-colors disabled:opacity-60 tracking-[0.08em]"
             >
               {{ loadingPlan === 'premium' ? 'CONECTANDO...' : 'EMPEZAR →' }}
             </button>
