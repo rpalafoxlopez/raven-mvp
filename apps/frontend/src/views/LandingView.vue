@@ -272,9 +272,10 @@ const pilaresPlan = [
   { color: '#5C5C54', title: 'La Arquitectura de Cerati', subtitle: '"La Arquitectura del Pop"', desc: 'Hábitos, foco, claridad. Diseñar un estado de flow tan impecable y obsesivo que tu ejecución diaria se convierta en una pieza de arte ejecutable.' }
 ]
 
+
 const arquetipos = [
   { codigo: 'P2', nombre: 'El Alienígena Camaleón', rockstar: 'David Bowie', imagen: '/bowie.webp', color: '#9b59b6', question: '¿Eres un Bowie?', desc: 'Flexibilidad radical, cambio de código, reinvención constante. Abandonas barcos que se hunden y te despojas de identidades obsoletas para sobrevivir en cualquier entorno.' },
-  { codigo: 'P3', nombre: 'El Chamán de la Tribu', rockstar: 'Bono', imagen: '/mercury.webp', color: '#e67e22', question: '¿Eres un Bono?', desc: 'Cohesión, reciprocidad, empatía operativa. Unificas a las personas, resuelves conflictos internos y operas en bloque como una tribu.' },
+  { codigo: 'P3', nombre: 'El Chamán de la Tribu', rockstar: 'Mercury', imagen: '/mercury.webp', color: '#e67e22', question: '¿Eres un Mercury?', desc: 'Cohesión, reciprocidad, empatía operativa. Unificas a las personas, resuelves conflictos internos y operas en bloque como una tribu.' },
   { codigo: 'P4', nombre: 'El Nobel Errante', rockstar: 'Bob Dylan', imagen: '/dylan.webp', color: '#34495e', question: '¿Eres un Dylan?', desc: 'Pausa, introspección, abstracción conceptual. Detienes el ruido del entorno para observar el panorama completo sin reaccionar impulsivamente.' },
   { codigo: 'P8', nombre: 'El Canalla Dionisíaco', rockstar: 'Jimi Hendrix', imagen: '/hendrix.webp', color: '#e74c3c', question: '¿Eres un Hendrix?', desc: 'Impulso corporal, instinto animal, riesgo calculado. Tomas decisiones rápidas con las tripas y disfrutas de la intensidad del momento.' }
 ]
