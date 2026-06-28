@@ -67,7 +67,7 @@
             <span class="button-glow"></span>
             <span class="relative z-20">🎸 Descubre tu arquetipo</span>
           </button>
-          <a href="#plan" class="w-full px-10 py-5 text-lg transition-all duration-300 border md:w-auto border-halford/30 text-halford font-body hover:bg-solstis/10 hover:border-solstis hover:text-solstis">
+          <a href="#plan" class="w-full px-10 py-5 text-lg transition-all duration-300 border bg-carbon md:w-auto border-halford/30 text-halford font-body hover:bg-solstis/10 hover:border-solstis hover:text-solstis">
             Ver cómo funciona
           </a>
         </div>

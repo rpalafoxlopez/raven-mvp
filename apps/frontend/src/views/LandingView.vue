@@ -62,7 +62,7 @@
         <div class="flex flex-col items-center justify-center gap-6 hero-entrance md:flex-row" style="animation-delay: 0.6s">
           <button 
             @click="startQuiz"
-            class="w-full md:w-auto btn-gold px-10 py-5 font-body text-lg hover:scale-105 transition-all duration-300 gold-glow interactive-button shadow-[0_0_15px_rgba(212,175,55,0.3)]"
+            class="w-full md:w-auto btn-gold px-10 py-5 font-body text-lg hover:scale-105 bg-carbon transition-all duration-300 gold-glow interactive-button shadow-[0_0_15px_rgba(212,175,55,0.3)]"
           >
             <span class="button-glow"></span>
             <span class="relative z-20">🎸 Descubre tu arquetipo</span>
