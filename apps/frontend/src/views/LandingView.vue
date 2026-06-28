@@ -137,9 +137,13 @@
           <div v-for="(arq, i) in arquetipos" :key="i"
                class="reveal arquetipo-card relative group aspect-[3/4] overflow-hidden bg-surface cursor-pointer border border-outline-variant/10 transition-all duration-500 hover:-translate-y-2"
                :style="`--hover-color: ${arq.color}; transition-delay: ${(i+1)*0.1}s`">
-            <div class="absolute inset-0 z-20 bg-gradient-to-t from-background via-transparent to-transparent opacity-90"></div>
+            <!-- Silueta del rockstar: desaturada en reposo, a color en hover -->
+            <img :src="arq.imagen" :alt="arq.rockstar"
+                 class="absolute inset-0 z-10 object-cover object-top w-full h-full transition-all duration-500 saturate-0 contrast-105 brightness-[0.85] group-hover:saturate-100 group-hover:brightness-95" />
+            <div class="absolute inset-0 z-20 bg-gradient-to-t from-loriga via-loriga/10 to-transparent opacity-90"></div>
             <div class="absolute inset-0 z-30 transition-all duration-500 border-4 opacity-0 group-hover:opacity-40" :style="`border-color: ${arq.color}`"></div>
             <div class="absolute bottom-0 left-0 z-40 p-8 transition-transform duration-500 transform translate-y-4 group-hover:translate-y-0">
+              <div class="mb-1 font-mono text-[10px] tracking-widest uppercase" :style="`color: ${arq.color}`">{{ arq.codigo }} · {{ arq.rockstar }}</div>
               <h4 class="text-2xl font-display md:text-3xl text-loriga">{{ arq.question }}</h4>
               <p class="mt-2 text-base transition-opacity duration-500 opacity-0 font-body text-halford group-hover:opacity-100">{{ arq.desc }}</p>
             </div>
@@ -269,10 +273,10 @@ const pilaresPlan = [
 ]
 
 const arquetipos = [
-  { color: '#0A0A0A', question: '¿Eres un Cerati?', desc: 'Sofisticado, perfeccionista, con una obsesión técnica implacable. Creas universos enteros donde otros solo ven bits.' },
-  { color: '#C9A227', question: '¿Eres un Cash?', desc: 'Resiliente, auténtico, el que hace el trabajo sucio que otros evitan. Tu fuerza está en tu honestidad brutal.' },
-  { color: '#5C5C54', question: '¿Eres un Bunbury?', desc: 'El mutante maduro. Camuflas tu ego en la perfección, eres odiado por los pulcros que buscan la regla cuadrada y amado por los melodiosos que entienden tu complejidad.' },
-  { color: '#E8D690', question: '¿Eres un Halford?', desc: 'El Metal God. No pides permiso para entrar a la oficina; reclamas el trono porque sabes que eres el nuevo Dios de tu área.' }
+  { codigo: 'P2', nombre: 'El Alienígena Camaleón', rockstar: 'David Bowie', imagen: '/bowie.webp', color: '#9b59b6', question: '¿Eres un Bowie?', desc: 'Flexibilidad radical, cambio de código, reinvención constante. Abandonas barcos que se hunden y te despojas de identidades obsoletas para sobrevivir en cualquier entorno.' },
+  { codigo: 'P3', nombre: 'El Chamán de la Tribu', rockstar: 'Bono', imagen: '/mercury.webp', color: '#e67e22', question: '¿Eres un Bono?', desc: 'Cohesión, reciprocidad, empatía operativa. Unificas a las personas, resuelves conflictos internos y operas en bloque como una tribu.' },
+  { codigo: 'P4', nombre: 'El Nobel Errante', rockstar: 'Bob Dylan', imagen: '/dylan.webp', color: '#34495e', question: '¿Eres un Dylan?', desc: 'Pausa, introspección, abstracción conceptual. Detienes el ruido del entorno para observar el panorama completo sin reaccionar impulsivamente.' },
+  { codigo: 'P8', nombre: 'El Canalla Dionisíaco', rockstar: 'Jimi Hendrix', imagen: '/hendrix.webp', color: '#e74c3c', question: '¿Eres un Hendrix?', desc: 'Impulso corporal, instinto animal, riesgo calculado. Tomas decisiones rápidas con las tripas y disfrutas de la intensidad del momento.' }
 ]
 
 const testimonios = [
