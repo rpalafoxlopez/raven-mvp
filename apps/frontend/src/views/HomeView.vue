@@ -75,7 +75,7 @@
     </section>
 
     <!-- El Viaje Section -->
-    <section class="px-5 py-20 md:py-40 md:px-16 bg-surface-container-low" id="viaje">
+    <section class="px-5 py-20 md:py-40 md:px-16 bg-surface" id="viaje">
       <div class="max-w-[1280px] mx-auto">
         <div class="flex flex-col items-end justify-between gap-8 mb-20 reveal md:flex-row">
           <div class="max-w-2xl">
