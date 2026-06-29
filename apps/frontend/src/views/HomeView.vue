@@ -132,19 +132,18 @@
     <section class="px-5 py-20 md:py-40 md:px-16 bg-surface-container-lowest" id="arquetipos">
       <div class="max-w-[1280px] mx-auto">
         <h2 class="mb-16 text-3xl text-center reveal font-display md:text-5xl">El Supergrupo</h2>
-        <p class="max-w-2xl mx-auto mb-12 text-base text-center reveal font-body text-halford">Cada tarjeta brilla con el color de su disco emblemático al pasar el mouse.</p>
         <div class="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4">
           <div v-for="(arq, i) in arquetipos" :key="i"
                class="reveal arquetipo-card relative group aspect-[3/4] overflow-hidden bg-surface cursor-pointer border border-outline-variant/10 transition-all duration-500 hover:-translate-y-2"
                :style="`--hover-color: ${arq.color}; transition-delay: ${(i+1)*0.1}s`">
             <!-- Silueta del rockstar: desaturada en reposo, a color en hover -->
             <img :src="arq.imagen" :alt="arq.rockstar"
-                 class="absolute inset-0 z-10 object-cover object-top w-full h-full transition-all duration-500 saturate-0 contrast-105 brightness-[0.85] group-hover:saturate-100 group-hover:brightness-95" />
+                 class="absolute inset-0 z-10 object-cover object-top w-full h-full transition-all duration-500 saturate-0 contrast-105 brightness-[0.85] group-hover:saturate-100 group-hover:brightness-95 opacity-40" />
             <div class="absolute inset-0 z-20 bg-gradient-to-t from-loriga via-loriga/10 to-transparent opacity-90"></div>
             <div class="absolute inset-0 z-30 transition-all duration-500 border-4 opacity-0 group-hover:opacity-40" :style="`border-color: ${arq.color}`"></div>
             <div class="absolute bottom-0 left-0 z-40 p-8 transition-transform duration-500 transform translate-y-4 group-hover:translate-y-0">
               <div class="mb-1 font-mono text-[10px] tracking-widest uppercase" :style="`color: ${arq.color}`">{{ arq.codigo }} · {{ arq.rockstar }}</div>
-              <h4 class="text-2xl font-display md:text-3xl text-loriga">{{ arq.question }}</h4>
+              <h4 class="text-2xl font-display md:text-3xl" :style="`color: ${arq.color}`">{{ arq.question }}</h4>
               <p class="mt-2 text-base transition-opacity duration-500 opacity-0 font-body text-halford group-hover:opacity-100">{{ arq.desc }}</p>
             </div>
           </div>
@@ -153,7 +152,7 @@
     </section>
 
     <!-- Testimonials Section -->
-    <section class="px-5 py-20 md:py-40 md:px-16 bg-surface" id="testimonios">
+    <section class="px-5 py-20 md:py-40 md:px-16 bg-loriga-soft" id="testimonios">
       <div class="max-w-[1280px] mx-auto">
         <h2 class="reveal font-mono text-xs tracking-[0.3em] uppercase text-solstis text-center mb-16">DESDE EL BACKSTAGE</h2>
         <div class="grid grid-cols-1 gap-12 md:grid-cols-3">
